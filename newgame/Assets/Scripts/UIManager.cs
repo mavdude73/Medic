@@ -16,8 +16,8 @@ public class UIManager : MonoBehaviour {
 	public GameObject currentTreatmentLabel;
 	public GameObject computerScreen;
 	public GameObject computerScreenText;
+	public GameObject bleepAlert;
 	
-//	PatientData patientData;
 
 	GameObject medicalRecord;
 	GameObject biographicsPages;
@@ -37,6 +37,7 @@ public class UIManager : MonoBehaviour {
 		treatmentPages = GameObject.Find ("TreatmentPages");
 		medicalRecord = GameObject.Find ("MedicalRecord");
 		pauseMenu = GameObject.Find ("PauseMenu");
+		bleepAlert = GameObject.Find ("BleepAlert");
 		
 		medicalPages.Add (medicalRecord);
 		medicalPages.Add (biographicsPages);
@@ -50,6 +51,7 @@ public class UIManager : MonoBehaviour {
 
 		computerScreen.SetActive(false);
 		pauseMenu.SetActive (false);
+		bleepAlert.SetActive (false);
 		
 	}
 	
@@ -63,6 +65,11 @@ public class UIManager : MonoBehaviour {
 //		}
 //	}
 //	
+	
+
+	
+	
+	
 	
 	public void RedX()
 	{
