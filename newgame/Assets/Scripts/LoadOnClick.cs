@@ -17,7 +17,7 @@ public class LoadOnClick : MonoBehaviour {
 
 	public void LoadOptions(int level) //2
 	{
-		loadingImage.SetActive(true);
+//		loadingImage.SetActive(true);
 		Application.LoadLevel(level);
 	}
 

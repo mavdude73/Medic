@@ -39,13 +39,13 @@ public class Reception : MonoBehaviour {
 	{
 		if(!bleepAnswered)
 		{
-			Debug.Log("YOU SUCK. YOU DIDNT ANSWER");
+			Debug.Log("Bleep unanswered");
 			bleepResponded();
 			StartCoroutine(MatronBleep(4f));
 		}
 		else if(bleepAnswered)
 		{
-			Debug.Log("GOOD JOB SLAVE");
+			Debug.Log("GJ slave");
 			StartCoroutine(MatronBleep(8f));
 		}
 	}
