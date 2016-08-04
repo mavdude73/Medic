@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\BedManager.cs" />
      <Compile Include="Assets\Scripts\BedZone.cs" />
+     <Compile Include="Assets\Scripts\Bleep.cs" />
      <Compile Include="Assets\Scripts\BloodSample.cs" />
      <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\ClockAnimator.cs" />
@@ -68,7 +69,6 @@
      <Compile Include="Assets\Scripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\PlayerData.cs" />
      <Compile Include="Assets\Scripts\RNGManager.cs" />
-     <Compile Include="Assets\Scripts\Reception.cs" />
      <Compile Include="Assets\Scripts\SlotManager.cs" />
      <Compile Include="Assets\Scripts\SluiceItems.cs" />
      <Compile Include="Assets\Scripts\UIManager.cs" />

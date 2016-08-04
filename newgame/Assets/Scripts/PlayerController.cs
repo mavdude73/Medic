@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour {
 	}
 	
 	
-	void SpriteRotation(int degree)
+	void SpriteOrientation(int degree)
 	{
 		sprite.transform.rotation = Quaternion.Lerp(sprite.transform.rotation, Quaternion.Euler(0f, 0f, degree), fixationSpeed);
 	}
@@ -42,19 +42,19 @@ public class PlayerController : MonoBehaviour {
 		
 		if(moveHorizonal > 0)
 		{
-			SpriteRotation(90);
+			SpriteOrientation(90);
 		}
 		else if(moveHorizonal < 0)
 		{
-			SpriteRotation(270);
+			SpriteOrientation(270);
 		}
 		else if(moveVertical > 0)
 		{
-			SpriteRotation(180);
+			SpriteOrientation(180);
 		}
 		else if(moveVertical < 0)
 		{
-			SpriteRotation(0);
+			SpriteOrientation(0);
 		}
 		
 				
@@ -62,8 +62,16 @@ public class PlayerController : MonoBehaviour {
 	
 	void PlayerMovement()
 	{
-		transform.Translate(-Vector2.right * Input.GetAxis("Horizontal") * Time.deltaTime * speed, Space.Self);
-		transform.Translate(-Vector2.up * Input.GetAxis("Vertical") * Time.deltaTime * speed, Space.Self);
+		if(Input.GetAxis("Horizontal") != 0 && Input.GetAxis("Vertical") != 0)
+		{
+			transform.Translate(-Vector2.right * Input.GetAxis("Horizontal") * Time.deltaTime * speed * 0.85f, Space.Self);
+			transform.Translate(-Vector2.up * Input.GetAxis("Vertical") * Time.deltaTime * speed * 0.85f, Space.Self);
+		}
+		else 
+		{
+			transform.Translate(-Vector2.right * Input.GetAxis("Horizontal") * Time.deltaTime * speed, Space.Self);
+			transform.Translate(-Vector2.up * Input.GetAxis("Vertical") * Time.deltaTime * speed, Space.Self);
+		}
 	}
 
 

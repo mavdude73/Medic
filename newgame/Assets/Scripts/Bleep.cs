@@ -2,34 +2,38 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class Reception : MonoBehaviour {
+public class Bleep : MonoBehaviour {
 
 	
 	GameObject player;
 	bool playerInZone;
 	public UIManager uim;
-	
-	bool bleepAnswered = true;
+	public PlayerData pd;
+	bool bleepAnswered;
 
 
 	void Start ()
 	{
 		player = GameObject.Find("Player1");
-		StartCoroutine(MatronBleep(2f));
+		StartCoroutine(MatronBleep(3f));
 	}
 	
 
 	public IEnumerator MatronBleep (float delay)
 	{
 		yield return new WaitForSeconds(delay);
-		bool hasBleep = true;
-		if(hasBleep)
+//		bool hasBleep = true;
+		if(pd.hasBleep)
 		{
 			uim.bleepAlert.SetActive(true);
 			bleepAnswered = false;
 			Debug.Log("ANSWER YOUR BLEEP!!");
 			yield return new WaitForSeconds(10);
 			bleepOutcome();
+		}
+		else 
+		{
+			StartCoroutine(MatronBleep(3f));
 		}
 //		yield return new WaitForSeconds(delay);
 //		StartCoroutine(MatronBleep(20f));
@@ -41,12 +45,12 @@ public class Reception : MonoBehaviour {
 		{
 			Debug.Log("Bleep unanswered");
 			bleepResponded();
-			StartCoroutine(MatronBleep(4f));
+			StartCoroutine(MatronBleep(5f));
 		}
 		else if(bleepAnswered)
 		{
-			Debug.Log("GJ slave");
-			StartCoroutine(MatronBleep(8f));
+			Debug.Log("Good job slave");
+			StartCoroutine(MatronBleep(15f));
 		}
 	}
 	

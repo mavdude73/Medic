@@ -12,6 +12,7 @@ public class PlayerData : MonoBehaviour {
 
 	public bool hasDrugKey;
 	public bool hasMRSA;
+	public bool hasBleep;
 	
 
 	// Data
