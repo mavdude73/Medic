@@ -52,9 +52,10 @@ public class Inventory : MonoBehaviour {
 
 	void Update()
 	{
-//		removeItem (0,1);
-//		Debug.Log (hotkey);
-			
+		if(Input.GetKeyDown(KeyCode.Delete))
+		{
+			deleteItem0();
+		}
 	}
 
 	public void HotkeyPress()
@@ -145,7 +146,15 @@ public class Inventory : MonoBehaviour {
 			}
 		}
 	}
-
+	
+	public void deleteItem0()
+	{
+		if(Items[0].itemObj != null)
+		{
+			Destroy(Items[0].itemObj);
+		}
+		Items[0] = new Item();
+	}
 	
 
 }

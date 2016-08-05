@@ -16,25 +16,58 @@ public class PatientTreatment : MonoBehaviour {
 	
 	public void HasTreatment()
 	{
-
-		if (inv.Items[0].itemName == "Pillow")
+		
+		if(inv.Items[0].itemType == "Drug")
 		{
-			pd.health--;
-			CheckHealth();
+			pd.currentTreatment = inv.Items[0].itemDesc;
+			inv.deleteItem0();
+			
+			
+			if (pd.currentTreatment == "Expired")
+			{
+				Debug.Log ("Drug has expired - no effect");
+			}
+			
+			else if (pd.currentTreatment == pd.correctTreatment)
+			{
+				Debug.Log ("You healed me");
+			}
+			
+			else if (pd.currentTreatment != pd.correctTreatment)
+			{
+				pd.health--;
+				CheckHealth();
+				Debug.Log ("Wrong drug - you monster");
+			}
+			
 		}
+		else
+		{
+			
+			if (inv.Items[0].itemName == "Pillow")
+			{
+				pd.health--;
+				CheckHealth();
+			}
+			
+			
+		}
+	
+		
+		
 	}
 	
 	void CheckHealth()
 	{
 		if(pd.health == 1)
 		{
-			Debug.Log("Why are you doing this to me?");
+			Debug.Log("Health minus 1");
 		}
 		else if(pd.health == 0)
 		{
 			pd.patientDead = true;
 			playerData.harmed++;
-			Debug.Log ("RIP me");
+			Debug.Log ("Patient dead");
 		}
 	}
 	

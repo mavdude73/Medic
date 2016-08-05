@@ -8,7 +8,7 @@ public class SluiceItems: MonoBehaviour
 	private GameObject player1;
 //	private PlayerData playerData;
 	Inventory inventory;
-	bool collision;
+	bool playerInZone;
 	
 	void Awake ()
 	{
@@ -22,20 +22,25 @@ public class SluiceItems: MonoBehaviour
 	public void OnTriggerEnter2D(Collider2D other){
 		if(other.gameObject == player1)
 		{
-		collision = true;
+		playerInZone = true;
 		}
 	}
 	
 	public void OnTriggerExit2D(Collider2D other){
 		if(other.gameObject == player1)
 		{
-		collision = false;
+		playerInZone = false;
 		}
 	}
 
 	void ItemPickup()
 	{
-		if (Input.GetMouseButtonDown (0) && collision)
+		if (!playerInZone)
+		{
+			return;
+		}
+		
+		if (Input.GetMouseButtonDown (0))
 		{
 			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 			RaycastHit2D hit = Physics2D.Raycast (ray.origin, ray.direction, Mathf.Infinity);
@@ -63,6 +68,7 @@ public class SluiceItems: MonoBehaviour
 				}
 			}
 		}
+		
 	}
 
 

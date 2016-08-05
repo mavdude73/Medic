@@ -17,6 +17,7 @@ public class UIManager : MonoBehaviour {
 	public GameObject computerScreen;
 	public GameObject computerScreenText;
 	public GameObject bleepAlert;
+	public GameObject pharmacyMenu;
 	
 
 	GameObject medicalRecord;
@@ -37,8 +38,7 @@ public class UIManager : MonoBehaviour {
 		treatmentPages = GameObject.Find ("TreatmentPages");
 		medicalRecord = GameObject.Find ("MedicalRecord");
 		pauseMenu = GameObject.Find ("PauseMenu");
-		bleepAlert = GameObject.Find ("BleepAlert");
-		
+				
 		medicalPages.Add (medicalRecord);
 		medicalPages.Add (biographicsPages);
 		medicalPages.Add (diagnosticsPages);
@@ -52,6 +52,7 @@ public class UIManager : MonoBehaviour {
 		computerScreen.SetActive(false);
 		pauseMenu.SetActive (false);
 		bleepAlert.SetActive (false);
+		pharmacyMenu.SetActive (false);
 		
 	}
 	
@@ -88,6 +89,15 @@ public class UIManager : MonoBehaviour {
 		if (computerScreen.activeSelf)
 		{
 			computerScreen.SetActive(false);
+		} 
+		
+	}
+	
+	public void ClosePharmacy()
+	{
+		if (pharmacyMenu.activeSelf)
+		{
+			pharmacyMenu.SetActive(false);
 		} 
 		
 	}

@@ -10,7 +10,7 @@ public class PatientZone : MonoBehaviour {
 	PatientInvestigations pi;
 	PatientTreatment pt;
 	UIManager uim;
-	Inventory inv;
+//	Inventory inv;
 	GameObject player;
 	bool playerInZone;
 	
@@ -21,7 +21,7 @@ public class PatientZone : MonoBehaviour {
 		pd = this.gameObject.GetComponent<PatientData> ();
 		pi = this.gameObject.GetComponent<PatientInvestigations> ();
 		pt = this.gameObject.GetComponent<PatientTreatment> ();
-		inv = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
+//		inv = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
 		uim = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager> ();
 
 	}
@@ -79,14 +79,14 @@ public class PatientZone : MonoBehaviour {
 			}
 		}
 		
-		if(Input.GetKeyDown(KeyCode.Delete))
-		{
-			if(inv.Items[0].itemObj != null)
-			{
-				Destroy(inv.Items[0].itemObj);
-			}
-			inv.Items[0] = new Item();
-		}
+//		if(Input.GetKeyDown(KeyCode.Delete))
+//		{
+//			if(inv.Items[0].itemObj != null)
+//			{
+//				Destroy(inv.Items[0].itemObj);
+//			}
+//			inv.Items[0] = new Item();
+//		}
 		
 		
 	}

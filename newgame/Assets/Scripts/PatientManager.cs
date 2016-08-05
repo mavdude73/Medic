@@ -62,21 +62,20 @@ public class PatientManager : MonoBehaviour {
 	}
 	
 	
-	
-	
-	// Use this for initialization
-	void Awake () {
+
+	void Awake ()
+	{
 		SpawnPatient();
 	}
 	
-	
-	// Use this for initialization
-	void Start () {
+
+	void Start ()
+	{
 	
 	}
+
+	void Update ()
+	{
 	
-	// Update is called once per frame
-	void Update () {
-		
 	}
 }

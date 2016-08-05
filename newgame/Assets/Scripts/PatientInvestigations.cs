@@ -26,7 +26,7 @@ public class PatientInvestigations : MonoBehaviour {
 			GameObject bloodGameobject = (GameObject)Instantiate(bloodsamplePrefab);
 			bloodGameobject.transform.SetParent(bloodTransform, false); //this.gameObject.transform
 			bloodGameobject.name = "BloodSample" + pd.visitorNumber;
-			Item item = new Item(-1, "Blood", "Some thick red stuff.", pd.visitorNumber, bloodGameobject);
+			Item item = new Item(-1, "Blood", "Utility", "Some thick red stuff.", pd.visitorNumber, bloodGameobject);
 			
 			inv.Items[0] = item;
 			
