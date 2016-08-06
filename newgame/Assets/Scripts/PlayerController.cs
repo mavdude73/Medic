@@ -40,19 +40,41 @@ public class PlayerController : MonoBehaviour {
 		}
 		
 		
-		if(moveHorizonal > 0)
+		if(moveHorizonal > 0)  // D
 		{
-			SpriteOrientation(90);
+			if(moveVertical == 0)
+			{
+				SpriteOrientation(90);
+			}
+			else if(moveVertical < 0) // W + D
+			{
+				SpriteOrientation(45);
+			}
+			else if(moveVertical > 0) // S + D
+			{
+				SpriteOrientation(135);
+			}
 		}
-		else if(moveHorizonal < 0)
+		else if(moveHorizonal < 0) // A
 		{
-			SpriteOrientation(270);
+			if(moveVertical == 0) 
+			{
+				SpriteOrientation(270);
+			}
+			else if(moveVertical < 0) // A + W
+			{
+				SpriteOrientation(315); 
+			}
+			else if(moveVertical > 0) // A + S
+			{
+				SpriteOrientation(225);
+			}
 		}
-		else if(moveVertical > 0)
+		else if(moveVertical > 0) // W
 		{
 			SpriteOrientation(180);
 		}
-		else if(moveVertical < 0)
+		else if(moveVertical < 0) // S
 		{
 			SpriteOrientation(0);
 		}
@@ -64,8 +86,8 @@ public class PlayerController : MonoBehaviour {
 	{
 		if(Input.GetAxis("Horizontal") != 0 && Input.GetAxis("Vertical") != 0)
 		{
-			transform.Translate(-Vector2.right * Input.GetAxis("Horizontal") * Time.deltaTime * speed * 0.85f, Space.Self);
-			transform.Translate(-Vector2.up * Input.GetAxis("Vertical") * Time.deltaTime * speed * 0.85f, Space.Self);
+			transform.Translate(-Vector2.right * Input.GetAxis("Horizontal") * Time.deltaTime * speed * 0.8f, Space.Self);
+			transform.Translate(-Vector2.up * Input.GetAxis("Vertical") * Time.deltaTime * speed * 0.8f, Space.Self);
 		}
 		else 
 		{
