@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class ItemDatabase : MonoBehaviour {
 
 	public List<Item> items = new List<Item>();
-	public GameObject empty;
+	GameObject empty;
 
 
 	// Use this for initialization

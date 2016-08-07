@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[System.Serializable]
+
 public class Item {
 
 	public int itemID;
@@ -12,7 +14,7 @@ public class Item {
 	public GameObject itemObj;
 
 	public Sprite itemIcon;
-//	public GameObject itemModel;
+	public GameObject itemModel;
 
 //	public enum ItemType
 //	{
@@ -31,6 +33,7 @@ public class Item {
 		visitorID = patientid;
 		itemObj = obj;
 		itemIcon = Resources.Load<Sprite> ("" + name);
+//		itemModel = Resources.Load<GameObject>("DroppedItem");
 
 	}
 	public Item(){}
