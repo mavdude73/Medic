@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -8,6 +9,10 @@ public class Inventory : MonoBehaviour {
 	public List<GameObject> Slots = new List<GameObject> ();
 	public List<Item> Items = new List<Item> ();
 	public GameObject slots;
+	public GameObject draggedItemGameobject;
+	public bool draggingItem = false;
+	public Item draggedItem;
+	public int draggedItemSlotOrigin;
 	ItemDatabase db;
 	UIManager uim;
 	int hotkey;	
@@ -55,55 +60,30 @@ public class Inventory : MonoBehaviour {
 		{
 			deleteItem0();
 		}
-	}
-
-	public void HotkeyPress()
-	{
-		if(Input.GetKeyDown(KeyCode.Alpha1)){hotkey = 1;}
-		if(Input.GetKeyDown(KeyCode.Alpha2)){hotkey = 2;}
-		if(Input.GetKeyDown(KeyCode.Alpha3)){hotkey = 3;}
-		if(Input.GetKeyDown(KeyCode.Alpha4)){hotkey = 4;}
-		if(Input.GetKeyDown(KeyCode.Alpha5)){hotkey = 5;}
-		if(Input.GetKeyDown(KeyCode.Alpha6)){hotkey = 6;}
-		if(Input.GetKeyDown(KeyCode.Alpha7)){hotkey = 7;}
-		if(Input.GetKeyDown(KeyCode.Alpha8)){hotkey = 8;}
-		if(Input.GetKeyDown(KeyCode.Alpha9)){hotkey = 9;}
-	}
-
-	public void removeItem(int itemid, int keypressed)
-	{
-		HotkeyPress ();
-		keypressed = hotkey;
-		if(hotkey != 0)
+		
+		if(draggingItem)
 		{
-		keypressed = hotkey;
-		int h = keypressed - 1;
-		if (Items [h].itemID == itemid)
-			{
-				Items [h] = new Item ();
-				hotkey = 0;
-			} 
+			Vector3 posi = (Input.mousePosition - GameObject.FindGameObjectWithTag("UIManager").GetComponent<RectTransform>().localPosition);
+			draggedItemGameobject.GetComponent<RectTransform>().localPosition = new Vector3 (posi.x + 15, posi.y - 15, posi.z);
 		}
-
 	}
 
-	public bool checkHasItemInSlot (int itemid, int keypressed)
+	
+	public void showDraggedItem(Item item, int slotnumber)
 	{
-
-		HotkeyPress ();
-		keypressed = hotkey;
-		if(hotkey != 0)
-		{
-		keypressed = hotkey;
-		int h = keypressed - 1;		
-		if (Items [h].itemID == itemid) {
-						return true;
-				} else {
-						return false;
-				}
-		}else{ return false;}
-
+		draggedItemSlotOrigin = slotnumber;
+		draggedItemGameobject.SetActive(true);
+		draggedItem = item;
+		draggingItem = true;
+		draggedItemGameobject.GetComponent<Image>().sprite = item.itemIcon;
 	}
+	
+	public void closeDraggedItem()
+	{
+		draggingItem = false;
+		draggedItemGameobject.SetActive(false);
+	}
+	
 
 	public bool checkHasItem (int itemid)
 	{

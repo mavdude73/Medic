@@ -43,17 +43,6 @@ public class KeyPickup : MonoBehaviour
 		
 		if(inKeyzone)
 		{
-			playerData = player1.GetComponent<PlayerData>();
-			playerData.hasDrugKey = true;
-			if (inventory.checkHasItemInSlot(5,0))
-			{
-				Debug.Log("Scissors!!!");
-//			inventory.removeItem(3,0);
-			}
-			else {
-				Debug.Log("dont point that thing at me");
-			}
-//			Destroy(gameObject);
 
 		}
 

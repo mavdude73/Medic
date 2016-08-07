@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class SlotManager : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler {
+public class SlotManager : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler, IDragHandler {
 
 	public int slotNumber;
 	public Item item;
@@ -38,15 +38,36 @@ public class SlotManager : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 
 	public void OnPointerDown(PointerEventData data)
 	{
-		if (inv.Items[slotNumber].itemName != null)
+		if (inv.Items[slotNumber].itemName == null && inv.draggingItem)
 		{
-			Debug.Log (transform.name);
-			Debug.Log (item.itemDesc);
+			inv.Items[slotNumber] = inv.draggedItem;
+			inv.closeDraggedItem();
+		}
+		else if(inv.Items[slotNumber].itemName != null && inv.draggingItem)
+		{
+			inv.Items[inv.draggedItemSlotOrigin] = inv.Items[slotNumber];
+			inv.Items[slotNumber] = inv.draggedItem;
+			inv.closeDraggedItem();
 		}
 	}
+	
 	public void OnPointerEnter(PointerEventData data)
 	{
 //		Debug.Log ("Entered");
+	}
+	
+	public void OnPointerExit(PointerEventData data)
+	{
+		//		Debug.Log ("Entered");
+	}
+	
+	public void OnDrag(PointerEventData data)
+	{
+		if (inv.Items[slotNumber].itemName != null)
+		{
+			inv.showDraggedItem(inv.Items[slotNumber], slotNumber);
+			inv.Items[slotNumber] = new Item();
+		}
 	}
 
 
