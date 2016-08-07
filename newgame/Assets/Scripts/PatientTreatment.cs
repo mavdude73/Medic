@@ -6,23 +6,28 @@ public class PatientTreatment : MonoBehaviour {
 	PlayerData playerData;
 	PatientData pd;
 	Inventory inv;
+	UIManager uim;
 	
 	void Awake ()
 	{
 		playerData = GameObject.Find("Player1").GetComponent<PlayerData>();
 		pd = this.gameObject.GetComponent<PatientData> ();
 		inv = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
+		uim = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager> ();
 	}
 	
-	public void HasTreatment()
+	public void AdministerTreatment()
 	{
 		
-		if(inv.Items[0].itemType == "Drug")
+		if (uim.HotkeyPress() > inv.Items.Count)
 		{
-			pd.currentTreatment = inv.Items[0].itemDesc;
+			return;
+		}
+		else if(inv.Items[uim.HotkeyPress()].itemType == "Drug")
+		{
+			pd.currentTreatment = inv.Items[uim.HotkeyPress()].itemDesc;
 			inv.deleteItem0();
-			
-			
+
 			if (pd.currentTreatment == "Expired")
 			{
 				Debug.Log ("Drug has expired - no effect");
@@ -36,25 +41,16 @@ public class PatientTreatment : MonoBehaviour {
 			else if (pd.currentTreatment != pd.correctTreatment)
 			{
 				pd.health--;
-				CheckHealth();
 				Debug.Log ("Wrong drug - you monster");
 			}
-			
 		}
-		else
+		else if (inv.Items[uim.HotkeyPress()].itemName == "Pillow")
 		{
-			
-			if (inv.Items[0].itemName == "Pillow")
-			{
-				pd.health--;
-				CheckHealth();
-			}
-			
-			
+			pd.health--;
 		}
-	
 		
-		
+		CheckHealth();
+			
 	}
 	
 	void CheckHealth()

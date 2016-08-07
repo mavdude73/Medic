@@ -30,14 +30,20 @@ public class PatientZone : MonoBehaviour {
 	
 	void OpenMedicalRecord()
 	{
-			
-		uim.medicalPages[0].SetActive(true);
-
-		uim.stickyLabels[0].GetComponent<Text>().text = pd.patientLabel;
-		uim.stickyLabels[1].GetComponent<Text>().text = pd.patientLabel;
-		uim.stickyLabels[2].GetComponent<Text>().text = pd.patientLabel;
-		uim.stickyLabels[3].GetComponent<Text>().text = pd.patientLabel;
-		uim.currentTreatmentLabel.GetComponent<Text>().text = pd.currentTreatment;
+		if(!Input.GetMouseButtonDown (0))
+		{
+			return;
+		}
+		else
+		{
+			uim.medicalPages[0].SetActive(true);
+	
+			uim.stickyLabels[0].GetComponent<Text>().text = pd.patientLabel;
+			uim.stickyLabels[1].GetComponent<Text>().text = pd.patientLabel;
+			uim.stickyLabels[2].GetComponent<Text>().text = pd.patientLabel;
+			uim.stickyLabels[3].GetComponent<Text>().text = pd.patientLabel;
+			uim.currentTreatmentLabel.GetComponent<Text>().text = pd.currentTreatment;
+		}
 	
 	}
 	
@@ -67,16 +73,9 @@ public class PatientZone : MonoBehaviour {
 	{
 		if(playerInZone && !pd.patientDead)
 		{
-			if(Input.GetMouseButtonDown (0)) //&& !medicalRecord.gameObject.activeSelf
-			{
-				OpenMedicalRecord();			
-			}
-			
-			if(Input.GetMouseButtonDown (1))
-			{
-				pi.TakeBlood();
-				pt.HasTreatment();			
-			}
+			pi.ObtainBloodSample();
+			pt.AdministerTreatment();
+			OpenMedicalRecord();
 		}
 		
 //		if(Input.GetKeyDown(KeyCode.Delete))

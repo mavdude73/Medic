@@ -9,10 +9,11 @@ public class Inventory : MonoBehaviour {
 	public List<Item> Items = new List<Item> ();
 	public GameObject slots;
 	ItemDatabase db;
-	int hotkey;
+	UIManager uim;
+	int hotkey;	
 //	UIManager uim;
 //	int x = -160;
-	int slotCount = 1;
+	public int slotCount = 1;
 //	int x = 0;
 //	int y = 0;
 
@@ -42,12 +43,10 @@ public class Inventory : MonoBehaviour {
 	void Awake ()
 		{
 			db = GameObject.FindGameObjectWithTag ("ItemDatabase").GetComponent<ItemDatabase>();
-//			uim = GameObject.FindGameObjectWithTag ("UIManager").GetComponent<UIManager>();
+			uim = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager> ();
+			
 			CreateHotbar ();
 			addItem (0);
-
-//			Debug.Log (Items[0].itemName);
-//			
 		}
 
 	void Update()
@@ -149,11 +148,11 @@ public class Inventory : MonoBehaviour {
 	
 	public void deleteItem0()
 	{
-		if(Items[0].itemObj != null)
+		if(Items[uim.HotkeyPress()].itemObj != null)
 		{
-			Destroy(Items[0].itemObj);
+			Destroy(Items[uim.HotkeyPress()].itemObj);
 		}
-		Items[0] = new Item();
+		Items[uim.HotkeyPress()] = new Item();
 	}
 	
 

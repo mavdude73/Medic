@@ -42,12 +42,16 @@ public class Laboratory : MonoBehaviour {
 	
 	void CheckForSamples ()
 	{
-		if(inv.Items[0].itemName == "Blood")
+		if(uim.HotkeyPress() > inv.Items.Count)
 		{
-			bloodQueue.Enqueue(inv.Items[0].itemObj);
+			return;
+		}
+		else if(inv.Items[uim.HotkeyPress()].itemName == "Blood")
+		{
+			bloodQueue.Enqueue(inv.Items[uim.HotkeyPress()].itemObj);
 //			Debug.Log (inv.Items[0].itemObj.GetComponent<BloodSample>().bloodresult);
 //			Debug.Log(inv.Items[0].itemObj + " added to queue");
-			inv.Items[0] = new Item();
+			inv.Items[uim.HotkeyPress()] = new Item();
 		}
 	}
 	

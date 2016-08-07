@@ -12,7 +12,7 @@ public class Item {
 	public GameObject itemObj;
 
 	public Sprite itemIcon;
-	public GameObject itemModel;
+//	public GameObject itemModel;
 
 //	public enum ItemType
 //	{

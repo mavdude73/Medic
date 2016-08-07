@@ -54,6 +54,7 @@ public class UIManager : MonoBehaviour {
 		bleepAlert.SetActive (false);
 		pharmacyMenu.SetActive (false);
 		
+	
 	}
 	
 //	void StickyLabelArray()
@@ -165,11 +166,46 @@ public class UIManager : MonoBehaviour {
 		medicalPages[3].SetActive(false);
 	}
 
+	
+	
+	public int HotkeyPress()
+	{
+		if(Input.GetKeyDown(KeyCode.Alpha1))
+		{
+			Debug.Log("key 1");
+			return 0;
+		}
+		
+		else if(Input.GetKeyDown(KeyCode.Alpha2))
+		{
+			Debug.Log("key 2");
+			return 1;
+		}
+		
+		else if(Input.GetKeyDown(KeyCode.Alpha3))
+		{
+			Debug.Log("key 3");
+			return 2;
+		}
+		else
+		{
+			return 10;
+		}
+//		if(Input.GetKeyDown(KeyCode.Alpha2)){hotkey = 2;}
+//		if(Input.GetKeyDown(KeyCode.Alpha3)){hotkey = 3;}
+//		if(Input.GetKeyDown(KeyCode.Alpha4)){hotkey = 4;}
+//		if(Input.GetKeyDown(KeyCode.Alpha5)){hotkey = 5;}
+//		if(Input.GetKeyDown(KeyCode.Alpha6)){hotkey = 6;}
+//		if(Input.GetKeyDown(KeyCode.Alpha7)){hotkey = 7;}
+//		if(Input.GetKeyDown(KeyCode.Alpha8)){hotkey = 8;}
+//		if(Input.GetKeyDown(KeyCode.Alpha9)){hotkey = 9;}
+	}
+
 
 
 	void Update()
 		{
-//			HotkeyPress ();
+
 		}
 //
 //		if (Input.GetMouseButtonDown (0) &&  bedZone.BedAreaCheck() && !medicalRecord.gameObject.activeSelf) {

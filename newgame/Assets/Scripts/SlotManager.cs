@@ -8,12 +8,12 @@ public class SlotManager : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 	public int slotNumber;
 	public Item item;
 	Image itemImage;
-	Inventory inventory;
+	Inventory inv;
 
 
 	void Start ()
 	{
-		inventory = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
+		inv = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
 		itemImage = gameObject.transform.GetChild (0).GetComponent<Image> ();
 	}
 	
@@ -24,11 +24,11 @@ public class SlotManager : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 
 	void SlotUpdater()
 	{
-		if (inventory.Items[slotNumber].itemName != null)
+		if (inv.Items[slotNumber].itemName != null)
 		{
-			item = inventory.Items[slotNumber];
+			item = inv.Items[slotNumber];
 			itemImage.enabled = true;
-			itemImage.sprite = inventory.Items[slotNumber].itemIcon;
+			itemImage.sprite = inv.Items[slotNumber].itemIcon;
 		}
 		else
 		{
@@ -38,7 +38,7 @@ public class SlotManager : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 
 	public void OnPointerDown(PointerEventData data)
 	{
-		if (inventory.Items[slotNumber].itemName != null)
+		if (inv.Items[slotNumber].itemName != null)
 		{
 			Debug.Log (transform.name);
 			Debug.Log (item.itemDesc);
