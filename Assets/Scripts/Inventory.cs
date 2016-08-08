@@ -13,8 +13,10 @@ public class Inventory : MonoBehaviour {
 	public bool draggingItemBool = false;
 	public Item draggedItem;
 	public int draggedItemSlotOrigin;
+	public Transform flooritemtransform;
 	ItemDatabase db;
 	UIManager uim;
+	GameObject player;
 	int hotkey;	
 //	UIManager uim;
 //	int x = -160;
@@ -47,20 +49,16 @@ public class Inventory : MonoBehaviour {
 	// Use this for initialization
 	void Awake ()
 		{
+			player = GameObject.Find ("Player1");
 			db = GameObject.FindGameObjectWithTag ("ItemDatabase").GetComponent<ItemDatabase>();
 			uim = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager> ();
 			
 			CreateHotbar ();
-			addItem (0);
+//			addItem (0);
 		}
 
 	void Update()
 	{
-		if(Input.GetKeyDown(KeyCode.Delete))
-		{
-			deleteItem0();
-		}
-		
 		if(draggingItemBool)
 		{
 			Vector3 posi = (Input.mousePosition - GameObject.FindGameObjectWithTag("UIManager").GetComponent<RectTransform>().localPosition);
@@ -82,8 +80,41 @@ public class Inventory : MonoBehaviour {
 	{
 		draggingItemBool = false;
 		draggedItemGameobject.SetActive(false);
+		draggedItem = new Item();
 	}
 	
+	public void DropItem()
+	{
+		if(!draggingItemBool)
+		{
+			return;
+		}
+		else if(Input.GetButtonDown("RMB"))
+		{
+			
+			if(draggedItem.itemName == "Blood")
+			{
+				Vector3 posi = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z + 1f);
+				
+				GameObject itemAsGameObject = (GameObject)Instantiate(Resources.Load<GameObject>("Bloodspill"), posi, Quaternion.identity);
+				itemAsGameObject.GetComponent<DroppedItem>().item = db.items[0];
+				itemAsGameObject.transform.SetParent(flooritemtransform, true);
+				itemAsGameObject.name = "Bloodspill";
+				closeDraggedItem();
+			}
+			else
+			{
+				Vector3 posi = new Vector3(player.transform.position.x + 0.75f, player.transform.position.y);
+				
+				GameObject itemAsGameObject = (GameObject)Instantiate(draggedItem.itemModel, posi, Quaternion.identity);
+				itemAsGameObject.GetComponent<DroppedItem>().item = draggedItem;
+				itemAsGameObject.GetComponentInChildren<SpriteRenderer>().sprite = draggedItem.itemIcon;
+				itemAsGameObject.transform.SetParent(flooritemtransform, true);
+				itemAsGameObject.name = draggedItem.itemName;
+				closeDraggedItem();
+			}
+		}
+	}
 
 	public bool checkHasItem (int itemid)
 	{
@@ -114,16 +145,17 @@ public class Inventory : MonoBehaviour {
 	}
 
 
-	public void addItemIfEmpty(Item item)
+	public bool addItemIfEmpty(Item item)
 	{
 		for (int k = 0; k < Items.Count; k++)
 		{
 			if(Items[k].itemName == null)
 			{
 				Items[k] = item;
-				break;
+				return true;				
 			}
 		}
+		return false;
 	}
 	
 	public void deleteItem0()

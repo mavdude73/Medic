@@ -19,7 +19,8 @@ public class UIManager : MonoBehaviour {
 	public GameObject bleepAlert;
 	public GameObject pharmacyMenu;
 	
-
+	Inventory inv;
+	
 	GameObject medicalRecord;
 	GameObject biographicsPages;
 	GameObject diagnosticsPages;
@@ -54,7 +55,7 @@ public class UIManager : MonoBehaviour {
 		bleepAlert.SetActive (false);
 		pharmacyMenu.SetActive (false);
 		
-	
+		inv = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
 	}
 	
 //	void StickyLabelArray()

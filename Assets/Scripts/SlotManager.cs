@@ -9,6 +9,7 @@ public class SlotManager : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 	public Item item;
 	Image itemImage;
 	Inventory inv;
+	bool mouseOverHotbar = false;
 
 
 	void Start ()
@@ -20,6 +21,12 @@ public class SlotManager : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 	void Update ()
 	{
 		SlotUpdater ();
+		
+		if(!mouseOverHotbar)
+		{
+			inv.DropItem();
+		}
+		
 	}
 
 	void SlotUpdater()
@@ -35,7 +42,9 @@ public class SlotManager : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 			itemImage.enabled = false;
 		}
 	}
-
+	
+	
+	
 	public void OnPointerDown(PointerEventData data)
 	{
 		if (inv.Items[slotNumber].itemName == null && inv.draggingItemBool)
@@ -53,12 +62,12 @@ public class SlotManager : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 	
 	public void OnPointerEnter(PointerEventData data)
 	{
-//		Debug.Log ("Entered");
+		mouseOverHotbar = true;
 	}
 	
 	public void OnPointerExit(PointerEventData data)
 	{
-		//		Debug.Log ("Entered");
+		mouseOverHotbar = false;
 	}
 	
 	public void OnDrag(PointerEventData data)
