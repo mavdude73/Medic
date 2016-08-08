@@ -6,13 +6,12 @@ public class SluiceItems: MonoBehaviour
 	
 	
 	private GameObject player1;
-//	private PlayerData playerData;
-	Inventory inventory;
+	Inventory inv;
 	bool playerInZone;
 	
 	void Awake ()
 	{
-		inventory = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
+		inv = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
 		player1 = GameObject.Find ("Player1");
 	//	playerData = player1.GetComponent<PlayerData>();
 	//	player2 = GameObject.Find ("FPSController2");
@@ -48,23 +47,23 @@ public class SluiceItems: MonoBehaviour
 			if(hit)
 			{
 				if (hit.collider.gameObject.name == "Pillow") {
-					inventory.addItem(2);
+					inv.addItem(2);
 				}
 				
 				if (hit.collider.gameObject.name == "Scissors") {
-					inventory.addItem(5);
+					inv.addItem(5);
 				}
 				
 				if (hit.collider.gameObject.name == "Scalpel") {
-					inventory.addItem(3);
+					inv.addItem(3);
 				}
 				
 				if (hit.collider.gameObject.name == "Defibrillator") {
-					inventory.addItem(4);
+					inv.addItem(4);
 				}
 				
 				if (hit.collider.gameObject.name == "Syringe") {
-					inventory.addItem(6);
+					inv.addItem(6);
 				}
 			}
 		}

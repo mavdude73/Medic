@@ -17,7 +17,30 @@ public class PlayerController : MonoBehaviour {
 	{
 		PlayerMovement();
 		MouseDirection();
+//		DetectDroppedItem();
 	}
+	
+	
+//	void DetectDroppedItem()
+//	{
+//		if (Input.GetMouseButtonDown (0))
+//		{
+//			Ray2D ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+////			RaycastHit2D hit = Physics2D.Raycast (ray.origin, ray.direction, Mathf.Infinity);
+//			RaycastHit2D hit;
+//			
+//			if(Physics2D.Raycast(ray, out hit))
+//			{
+//				float distance = Vector2.Distance(hit.transform.position, this.transform.position);
+//				Debug.Log(distance);
+//			}
+//			
+//		}
+//	}
+//	
+	
+	
+	
 	
 	
 	void SpriteOrientation(int degree)

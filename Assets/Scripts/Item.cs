@@ -33,7 +33,7 @@ public class Item {
 		visitorID = patientid;
 		itemObj = obj;
 		itemIcon = Resources.Load<Sprite> ("" + name);
-//		itemModel = Resources.Load<GameObject>("DroppedItem");
+		itemModel = Resources.Load<GameObject>("DroppedItem");
 
 	}
 	public Item(){}

@@ -10,7 +10,7 @@ public class Inventory : MonoBehaviour {
 	public List<Item> Items = new List<Item> ();
 	public GameObject slots;
 	public GameObject draggedItemGameobject;
-	public bool draggingItem = false;
+	public bool draggingItemBool = false;
 	public Item draggedItem;
 	public int draggedItemSlotOrigin;
 	ItemDatabase db;
@@ -61,7 +61,7 @@ public class Inventory : MonoBehaviour {
 			deleteItem0();
 		}
 		
-		if(draggingItem)
+		if(draggingItemBool)
 		{
 			Vector3 posi = (Input.mousePosition - GameObject.FindGameObjectWithTag("UIManager").GetComponent<RectTransform>().localPosition);
 			draggedItemGameobject.GetComponent<RectTransform>().localPosition = new Vector3 (posi.x + 15, posi.y - 15, posi.z);
@@ -74,13 +74,13 @@ public class Inventory : MonoBehaviour {
 		draggedItemSlotOrigin = slotnumber;
 		draggedItemGameobject.SetActive(true);
 		draggedItem = item;
-		draggingItem = true;
+		draggingItemBool = true;
 		draggedItemGameobject.GetComponent<Image>().sprite = item.itemIcon;
 	}
 	
 	public void closeDraggedItem()
 	{
-		draggingItem = false;
+		draggingItemBool = false;
 		draggedItemGameobject.SetActive(false);
 	}
 	

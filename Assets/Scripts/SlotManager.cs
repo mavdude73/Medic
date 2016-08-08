@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -38,12 +38,12 @@ public class SlotManager : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 
 	public void OnPointerDown(PointerEventData data)
 	{
-		if (inv.Items[slotNumber].itemName == null && inv.draggingItem)
+		if (inv.Items[slotNumber].itemName == null && inv.draggingItemBool)
 		{
 			inv.Items[slotNumber] = inv.draggedItem;
 			inv.closeDraggedItem();
 		}
-		else if(inv.Items[slotNumber].itemName != null && inv.draggingItem)
+		else if(inv.Items[slotNumber].itemName != null && inv.draggingItemBool)
 		{
 			inv.Items[inv.draggedItemSlotOrigin] = inv.Items[slotNumber];
 			inv.Items[slotNumber] = inv.draggedItem;
