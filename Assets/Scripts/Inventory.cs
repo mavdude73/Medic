@@ -160,7 +160,7 @@ public class Inventory : MonoBehaviour {
 	
 	public void deleteItem0()
 	{
-		if(Items[uim.HotkeyPress()].itemObj != null)
+		if(Items[uim.HotkeyPress()].itemName != null)
 		{
 			Destroy(Items[uim.HotkeyPress()].itemObj);
 		}

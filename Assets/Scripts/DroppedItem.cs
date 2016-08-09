@@ -60,7 +60,7 @@ public class DroppedItem : MonoBehaviour {
 		}
 		else
 		{
-			if (uim.HotkeyPress() > inv.Items.Count)
+			if (uim.HotkeyPress() < 0)
 			{
 				return;
 			}

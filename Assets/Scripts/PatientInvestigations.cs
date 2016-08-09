@@ -24,11 +24,10 @@ public class PatientInvestigations : MonoBehaviour {
 		{
 			return;
 		}
-		else if (uim.HotkeyPress() < inv.Items.Count)
+		else if (uim.HotkeyPress() >= 0)
 		{
-//			uim.HotkeyPress();
-//			if(uim.HotkeyPress() != 100)
-//			{
+
+
 				if(inv.Items[uim.HotkeyPress()].itemID == 6)
 				{
 	

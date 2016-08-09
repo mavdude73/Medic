@@ -90,11 +90,11 @@ public class SlotManager : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 	
 	public void OnDrag(PointerEventData data)
 	{
-		if (inv.Items[slotNumber].itemName != null)
-		{
-			inv.showDraggedItem(inv.Items[slotNumber], slotNumber);
-			inv.Items[slotNumber] = new Item();
-		}
+//		if (inv.Items[slotNumber].itemName != null)
+//		{
+//			inv.showDraggedItem(inv.Items[slotNumber], slotNumber);
+//			inv.Items[slotNumber] = new Item();
+//		}
 	}
 
 

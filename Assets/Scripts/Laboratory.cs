@@ -42,7 +42,7 @@ public class Laboratory : MonoBehaviour {
 	
 	void CheckForSamples ()
 	{
-		if(uim.HotkeyPress() > inv.Items.Count)
+		if(uim.HotkeyPress() < 0)
 		{
 			return;
 		}
