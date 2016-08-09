@@ -47,16 +47,34 @@ public class SlotManager : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 	
 	public void OnPointerDown(PointerEventData data)
 	{
-		if (inv.Items[slotNumber].itemName == null && inv.draggingItemBool)
+		if(data.button == PointerEventData.InputButton.Left)
 		{
-			inv.Items[slotNumber] = inv.draggedItem;
-			inv.closeDraggedItem();
+			if (inv.Items[slotNumber].itemName == null && inv.draggingItemBool)
+			{
+				inv.Items[slotNumber] = inv.draggedItem;
+				inv.closeDraggedItem();
+			}
+			else if(inv.Items[slotNumber].itemName != null && inv.draggingItemBool)
+			{
+				inv.Items[inv.draggedItemSlotOrigin] = inv.Items[slotNumber];
+				inv.Items[slotNumber] = inv.draggedItem;
+				inv.closeDraggedItem();
+			}
+			else if(inv.Items[slotNumber].itemName != null && !inv.draggingItemBool)
+			{
+				inv.showDraggedItem(inv.Items[slotNumber], slotNumber);
+				inv.Items[slotNumber] = new Item();
+			}
 		}
-		else if(inv.Items[slotNumber].itemName != null && inv.draggingItemBool)
+		
+		if(data.button == PointerEventData.InputButton.Right)
 		{
-			inv.Items[inv.draggedItemSlotOrigin] = inv.Items[slotNumber];
-			inv.Items[slotNumber] = inv.draggedItem;
-			inv.closeDraggedItem();
+			if (inv.Items[slotNumber].itemName != null)
+			{
+				inv.showDraggedItem(inv.Items[slotNumber], slotNumber);
+				inv.Items[slotNumber] = new Item();
+				inv.DropItem();
+			}
 		}
 	}
 	

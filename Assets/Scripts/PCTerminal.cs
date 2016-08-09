@@ -46,7 +46,7 @@ public class PCTerminal : MonoBehaviour {
 	{
 		if(playerInZone)
 		{
-			if(Input.GetButtonDown ("Interact")) //&& !medicalRecord.gameObject.activeSelf
+			if(Input.GetButtonDown ("LMB")) //&& !medicalRecord.gameObject.activeSelf
 			{
 				OpenComputerScreen();			
 			}

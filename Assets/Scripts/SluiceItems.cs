@@ -39,12 +39,12 @@ public class SluiceItems: MonoBehaviour
 			return;
 		}
 		
-		if (Input.GetMouseButtonDown (0))
+		if (Input.GetButtonDown ("LMB"))
 		{
 			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 			RaycastHit2D hit = Physics2D.Raycast (ray.origin, ray.direction, Mathf.Infinity);
 
-			if(hit)
+			if(hit && !inv.draggingItemBool)
 			{
 				if (hit.collider.gameObject.name == "Pillow") {
 					inv.addItem(2);
