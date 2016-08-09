@@ -102,7 +102,7 @@ public class Pharmacy : MonoBehaviour {
 	{
 		if(playerInZone)
 		{
-			if(Input.GetMouseButtonDown (0)) //&& !medicalRecord.gameObject.activeSelf
+			if(Input.GetButtonDown ("LMB")) //&& !medicalRecord.gameObject.activeSelf
 			{
 				OpenPharmacy();			
 			}

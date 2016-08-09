@@ -53,15 +53,15 @@ public class PlayerController : MonoBehaviour {
 		float moveHorizonal = Input.GetAxis("Horizontal");
 		float moveVertical = Input.GetAxis("Vertical");
 		
-		if(moveVertical == 0 && moveHorizonal == 0)
-		{
-			var mousePosition = Camera.main.ScreenToWorldPoint (Input.mousePosition);
-			Vector3 deltaPosition = (mousePosition - sprite.transform.position);  
-			float atan2 = Mathf.Atan2 (deltaPosition.y, deltaPosition.x);
-			sprite.transform.rotation = Quaternion.Lerp(sprite.transform.rotation, Quaternion.Euler(0f, 0f, atan2 * Mathf.Rad2Deg + 90), fixationSpeed);
-			sprite.transform.eulerAngles = new Vector3 (0, 0, sprite.transform.eulerAngles.z);
-		}
-		
+//		if(moveVertical == 0 && moveHorizonal == 0)
+//		{
+//			var mousePosition = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+//			Vector3 deltaPosition = (mousePosition - sprite.transform.position);  
+//			float atan2 = Mathf.Atan2 (deltaPosition.y, deltaPosition.x);
+//			sprite.transform.rotation = Quaternion.Lerp(sprite.transform.rotation, Quaternion.Euler(0f, 0f, atan2 * Mathf.Rad2Deg + 90), fixationSpeed);
+//			sprite.transform.eulerAngles = new Vector3 (0, 0, sprite.transform.eulerAngles.z);
+//		}
+//		
 		
 		if(moveHorizonal > 0)  // D
 		{
