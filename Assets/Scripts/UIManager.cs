@@ -19,13 +19,15 @@ public class UIManager : MonoBehaviour {
 	public GameObject bleepAlert;
 	public GameObject pharmacyMenu;
 	
-	Inventory inv;
+//	Inventory inv;
 	
 	GameObject medicalRecord;
 	GameObject biographicsPages;
 	GameObject diagnosticsPages;
 	GameObject treatmentPages;
 	GameObject pauseMenu;
+	
+//	int hotkey;
 	
 	
 	void Start()
@@ -55,7 +57,7 @@ public class UIManager : MonoBehaviour {
 		bleepAlert.SetActive (false);
 		pharmacyMenu.SetActive (false);
 		
-		inv = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
+//		inv = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
 	}
 	
 //	void StickyLabelArray()
@@ -190,7 +192,7 @@ public class UIManager : MonoBehaviour {
 		}
 		else
 		{
-			return 10;
+			return 1000;
 		}
 //		if(Input.GetKeyDown(KeyCode.Alpha2)){hotkey = 2;}
 //		if(Input.GetKeyDown(KeyCode.Alpha3)){hotkey = 3;}
