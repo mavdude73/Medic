@@ -7,14 +7,14 @@ public class Pharmacy : MonoBehaviour {
 	
 	GameObject player;
 	bool playerInZone;
-	Inventory inventory;
+	Inventory inv;
 	public UIManager uim;
 
 
 	void Awake ()
 	{
 		player = GameObject.Find("Player1");
-		inventory = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
+		inv = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
 	}
 	
 	void OpenPharmacy()
@@ -27,55 +27,55 @@ public class Pharmacy : MonoBehaviour {
 
 	public void Red1()
 	{
-		inventory.addItem(7);
+		inv.addItem(7);
 		uim.ClosePharmacy();
 	}
 	
 	public void Red2()
 	{
-		inventory.addItem(8);
+		inv.addItem(8);
 		uim.ClosePharmacy();
 	}
 	
 	public void Red3()
 	{
-		inventory.addItem(9);
+		inv.addItem(9);
 		uim.ClosePharmacy();
 	}
 	
 	public void Blue1()
 	{
-		inventory.addItem(10);
+		inv.addItem(10);
 		uim.ClosePharmacy();
 	}
 	
 	public void Blue2()
 	{
-		inventory.addItem(11);
+		inv.addItem(11);
 		uim.ClosePharmacy();
 	}
 	
 	public void Blue3()
 	{
-		inventory.addItem(12);
+		inv.addItem(12);
 		uim.ClosePharmacy();
 	}
 	
 	public void Purple1()
 	{
-		inventory.addItem(13);
+		inv.addItem(13);
 		uim.ClosePharmacy();
 	}
 	
 	public void Purple2()
 	{
-		inventory.addItem(14);
+		inv.addItem(14);
 		uim.ClosePharmacy();
 	}
 	
 	public void Purple3()
 	{
-		inventory.addItem(15);
+		inv.addItem(15);
 		uim.ClosePharmacy();
 	}
 	
@@ -100,14 +100,16 @@ public class Pharmacy : MonoBehaviour {
 	
 	void Update()
 	{
-		if(playerInZone)
+		if(!playerInZone)
 		{
-			if(Input.GetButtonDown ("LMB")) //&& !medicalRecord.gameObject.activeSelf
-			{
-				OpenPharmacy();			
-			}
-			
+			return;
 		}
+		else if(inv.HitSpecificObject("PharmacyCollider") && Input.GetButtonDown ("LMB")) //&& !medicalRecord.gameObject.activeSelf
+		{
+			OpenPharmacy();			
+		}
+			
 	}
+
 	
 }

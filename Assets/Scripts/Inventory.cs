@@ -79,7 +79,7 @@ public class Inventory : MonoBehaviour {
 		//		Ray ray = Camera.main.ScreenPointToRay (deltaPosition);
 		
 		//		Vector3 direction = new Vector3(ray.origin.x - pc.playerVector3.x, ray.origin.y - pc.playerVector3.y, pc.playerVector3.z);
-		RaycastHit2D hit = Physics2D.Raycast (pc.playerVector3, deltaPosition, 0.9f);
+		RaycastHit2D hit = Physics2D.Raycast (pc.playerVector3, deltaPosition, 2f);
 		
 		
 		//		RaycastHit2D nohit = Physics2D.Raycast (new Vector3(0,0,0), new Vector3(0,0,0), 0f);
