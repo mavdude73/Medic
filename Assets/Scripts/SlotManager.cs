@@ -69,7 +69,7 @@ public class SlotManager : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 		
 		if(data.button == PointerEventData.InputButton.Right)
 		{
-			if (inv.Items[slotNumber].itemName != null)
+			if (!inv.draggingItemBool && inv.Items[slotNumber].itemName != null)
 			{
 				inv.showDraggedItem(inv.Items[slotNumber], slotNumber);
 				inv.Items[slotNumber] = new Item();

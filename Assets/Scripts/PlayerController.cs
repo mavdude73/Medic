@@ -6,6 +6,8 @@ public class PlayerController : MonoBehaviour {
 	public float speed;
 	public float fixationSpeed;
 	public GameObject sprite;
+	public GameObject player1;
+	public Vector3 playerVector3;
 
 
 	void FixedUpdate()
@@ -17,6 +19,9 @@ public class PlayerController : MonoBehaviour {
 	{
 		PlayerMovement();
 		MouseDirection();
+		
+		playerVector3 = player1.transform.position;
+		
 //		DetectDroppedItem();
 	}
 	
@@ -38,8 +43,6 @@ public class PlayerController : MonoBehaviour {
 //		}
 //	}
 //	
-	
-	
 	
 	
 	

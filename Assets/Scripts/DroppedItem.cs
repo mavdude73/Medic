@@ -45,11 +45,7 @@ public class DroppedItem : MonoBehaviour {
 		}
 		else if (!inv.draggingItemBool && Input.GetButtonDown("LMB"))
 		{
-			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-			RaycastHit2D hit = Physics2D.Raycast (ray.origin, ray.direction, Mathf.Infinity);
-			
-			
-			if(hit && item.itemName != "Bloodspill")
+			if(inv.HitObjectCheck() && item.itemName != "Bloodspill")
 			{
 				if(inv.addItemIfEmpty(item))
 				{
@@ -58,20 +54,12 @@ public class DroppedItem : MonoBehaviour {
 			}
 
 		}
-		else
+		else if(uim.HotkeyPress() >= 0 && inv.Items[uim.HotkeyPress()].itemName == "Mop")
 		{
-			if (uim.HotkeyPress() < 0)
-			{
-				return;
-			}
-			else if(inv.Items[uim.HotkeyPress()].itemName == "Mop")
-			{
-				Destroy(this.gameObject);
-				Debug.Log("Clean up in Aisle 7");
-			}
-			
+			Destroy(this.gameObject);
+			Debug.Log("Clean up in Aisle 7");
 		}
-		
+
 	}
 	
 }
