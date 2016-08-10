@@ -68,16 +68,40 @@ public class Inventory : MonoBehaviour {
 		HitObjectCheck();
 	}
 
-
+	
 	
 	public RaycastHit2D HitObjectCheck()
 	{
-		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-//		Vector3 direction = new Vector3(ray.origin.x - pc.playerVector3.x, ray.origin.y - pc.playerVector3.y, pc.playerVector3.z);
-		RaycastHit2D hit = Physics2D.Raycast (ray.origin, ray.direction, Mathf.Infinity);
-		Debug.Log(ray.direction);
-		return hit;
+		Vector3 mousePosition = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+		mousePosition = new Vector3(mousePosition.x, mousePosition.y, 0);
+		Vector3 deltaPosition = (mousePosition - pc.playerVector3);
+		
+		//		Ray ray = Camera.main.ScreenPointToRay (deltaPosition);
+		
+		//		Vector3 direction = new Vector3(ray.origin.x - pc.playerVector3.x, ray.origin.y - pc.playerVector3.y, pc.playerVector3.z);
+		RaycastHit2D hit = Physics2D.Raycast (pc.playerVector3, deltaPosition, 0.9f);
+		
+		
+		//		RaycastHit2D nohit = Physics2D.Raycast (new Vector3(0,0,0), new Vector3(0,0,0), 0f);
+		
+		Debug.DrawLine(pc.playerVector3, hit.point);
+		return hit;	
+		
 	}
+	
+	public bool HitSpecificObject(string objectName)
+	{
+		if(HitObjectCheck())
+		{
+			if(HitObjectCheck().collider.gameObject.name == objectName)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
+
 	
 	
 	

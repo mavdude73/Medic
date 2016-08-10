@@ -34,7 +34,7 @@ public class PatientZone : MonoBehaviour {
 		{
 			return;
 		}
-		else if(!inv.draggingItemBool)
+		else if(!inv.draggingItemBool && inv.HitSpecificObject("Patientsprite"))
 		{
 			uim.medicalPages[0].SetActive(true);
 	
