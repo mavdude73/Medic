@@ -19,7 +19,7 @@ public class UIManager : MonoBehaviour {
 	public GameObject bleepAlert;
 	public GameObject pharmacyMenu;
 	
-//	Inventory inv;
+	Inventory inv;
 	
 	GameObject medicalRecord;
 	GameObject biographicsPages;
@@ -57,7 +57,7 @@ public class UIManager : MonoBehaviour {
 		bleepAlert.SetActive (false);
 		pharmacyMenu.SetActive (false);
 		
-//		inv = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
+		inv = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
 	}
 	
 //	void StickyLabelArray()
@@ -170,45 +170,73 @@ public class UIManager : MonoBehaviour {
 	}
 
 	
-	
-	public int HotkeyPress()
+	private KeyCode[] keyCodes =
 	{
-		if(Input.GetKeyDown(KeyCode.Alpha1))
+		KeyCode.Alpha1,
+		KeyCode.Alpha2,
+		KeyCode.Alpha3,
+		KeyCode.Alpha4,
+		KeyCode.Alpha5,
+		KeyCode.Alpha6,
+		KeyCode.Alpha7,
+		KeyCode.Alpha8,
+		KeyCode.Alpha9,
+	};
+	
+	public int HotkeyPress ()
+	{
+		for(int i = 0 ; i < inv.Items.Count; i ++ )
 		{
-			Debug.Log("key 1");
-			return 0;
+			if(Input.GetKeyDown(keyCodes[i]))
+			{
+				int numberPressed = i+1;
+				Debug.Log("Hotkey: " + numberPressed);
+				return i;
+			}
 		}
-		
-		else if(Input.GetKeyDown(KeyCode.Alpha2))
-		{
-			Debug.Log("key 2");
-			return 1;
-		}
-		
-		else if(Input.GetKeyDown(KeyCode.Alpha3))
-		{
-			Debug.Log("key 3");
-			return 2;
-		}
-		else
-		{
-			return 1000;
-		}
-//		if(Input.GetKeyDown(KeyCode.Alpha2)){hotkey = 2;}
-//		if(Input.GetKeyDown(KeyCode.Alpha3)){hotkey = 3;}
-//		if(Input.GetKeyDown(KeyCode.Alpha4)){hotkey = 4;}
-//		if(Input.GetKeyDown(KeyCode.Alpha5)){hotkey = 5;}
-//		if(Input.GetKeyDown(KeyCode.Alpha6)){hotkey = 6;}
-//		if(Input.GetKeyDown(KeyCode.Alpha7)){hotkey = 7;}
-//		if(Input.GetKeyDown(KeyCode.Alpha8)){hotkey = 8;}
-//		if(Input.GetKeyDown(KeyCode.Alpha9)){hotkey = 9;}
+		return -1;
 	}
+	
+
+//	
+//	public int HotkeyPress()
+//	{
+//		if(Input.GetKeyDown(KeyCode.Alpha1))
+//		{
+//			Debug.Log("key 1");
+//			return 0;
+//		}
+//		
+//		else if(Input.GetKeyDown(KeyCode.Alpha2))
+//		{
+//			Debug.Log("key 2");
+//			return 1;
+//		}
+//		
+//		else if(Input.GetKeyDown(KeyCode.Alpha3))
+//		{
+//			Debug.Log("key 3");
+//			return 2;
+//		}
+//		else
+//		{
+//			return 666;
+//		}
+////		if(Input.GetKeyDown(KeyCode.Alpha2)){hotkey = 2;}
+////		if(Input.GetKeyDown(KeyCode.Alpha3)){hotkey = 3;}
+////		if(Input.GetKeyDown(KeyCode.Alpha4)){hotkey = 4;}
+////		if(Input.GetKeyDown(KeyCode.Alpha5)){hotkey = 5;}
+////		if(Input.GetKeyDown(KeyCode.Alpha6)){hotkey = 6;}
+////		if(Input.GetKeyDown(KeyCode.Alpha7)){hotkey = 7;}
+////		if(Input.GetKeyDown(KeyCode.Alpha8)){hotkey = 8;}
+////		if(Input.GetKeyDown(KeyCode.Alpha9)){hotkey = 9;}
+//	}
 
 
 
 	void Update()
 		{
-
+			
 		}
 //
 //		if (Input.GetMouseButtonDown (0) &&  bedZone.BedAreaCheck() && !medicalRecord.gameObject.activeSelf) {

@@ -10,7 +10,7 @@ public class PatientZone : MonoBehaviour {
 	PatientInvestigations pi;
 	PatientTreatment pt;
 	UIManager uim;
-//	Inventory inv;
+	Inventory inv;
 	GameObject player;
 	bool playerInZone;
 	
@@ -21,7 +21,7 @@ public class PatientZone : MonoBehaviour {
 		pd = this.gameObject.GetComponent<PatientData> ();
 		pi = this.gameObject.GetComponent<PatientInvestigations> ();
 		pt = this.gameObject.GetComponent<PatientTreatment> ();
-//		inv = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
+		inv = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
 		uim = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager> ();
 
 	}
@@ -30,11 +30,11 @@ public class PatientZone : MonoBehaviour {
 	
 	void OpenMedicalRecord()
 	{
-		if(!Input.GetButtonDown ("Interact"))
+		if(!Input.GetButtonDown ("LMB"))
 		{
 			return;
 		}
-		else
+		else if(!inv.draggingItemBool)
 		{
 			uim.medicalPages[0].SetActive(true);
 	

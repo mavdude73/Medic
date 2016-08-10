@@ -14,6 +14,7 @@ public class Inventory : MonoBehaviour {
 	public Item draggedItem;
 	public int draggedItemSlotOrigin;
 	public Transform flooritemtransform;
+	public PlayerController pc;
 	ItemDatabase db;
 	UIManager uim;
 	GameObject player;
@@ -64,8 +65,21 @@ public class Inventory : MonoBehaviour {
 			Vector3 posi = (Input.mousePosition - GameObject.FindGameObjectWithTag("UIManager").GetComponent<RectTransform>().localPosition);
 			draggedItemGameobject.GetComponent<RectTransform>().localPosition = new Vector3 (posi.x + 15, posi.y - 15, posi.z);
 		}
+		HitObjectCheck();
 	}
 
+
+	
+	public RaycastHit2D HitObjectCheck()
+	{
+		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+//		Vector3 direction = new Vector3(ray.origin.x - pc.playerVector3.x, ray.origin.y - pc.playerVector3.y, pc.playerVector3.z);
+		RaycastHit2D hit = Physics2D.Raycast (ray.origin, ray.direction, Mathf.Infinity);
+		Debug.Log(ray.direction);
+		return hit;
+	}
+	
+	
 	
 	public void showDraggedItem(Item item, int slotnumber)
 	{
@@ -92,14 +106,14 @@ public class Inventory : MonoBehaviour {
 		else if(Input.GetButtonDown("RMB"))
 		{
 			
-			if(draggedItem.itemName == "Blood")
+			if(draggedItem.itemType == "Sample")
 			{
 				Vector3 posi = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z + 1f);
 				
-				GameObject itemAsGameObject = (GameObject)Instantiate(Resources.Load<GameObject>("Bloodspill"), posi, Quaternion.identity);
+				GameObject itemAsGameObject = (GameObject)Instantiate(Resources.Load<GameObject>(draggedItem.itemName+"spill"), posi, Quaternion.identity);
 				itemAsGameObject.GetComponent<DroppedItem>().item = db.items[0];
 				itemAsGameObject.transform.SetParent(flooritemtransform, true);
-				itemAsGameObject.name = "Bloodspill";
+				itemAsGameObject.name = draggedItem.itemName+"spill";
 				closeDraggedItem();
 			}
 			else
@@ -160,7 +174,7 @@ public class Inventory : MonoBehaviour {
 	
 	public void deleteItem0()
 	{
-		if(Items[uim.HotkeyPress()].itemObj != null)
+		if(Items[uim.HotkeyPress()].itemName != null)
 		{
 			Destroy(Items[uim.HotkeyPress()].itemObj);
 		}
