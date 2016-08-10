@@ -21,16 +21,20 @@ public class PatientInvestigations : MonoBehaviour {
 	
 	public void ObtainBloodSample() // code 6 = empty blood syringe
 	{
-		if (uim.HotkeyPress() >= 0 && inv.Items[uim.HotkeyPress()].itemID == 6)
+		if(!inv.mouseOverHotbar)
 		{
-			inv.Items[uim.HotkeyPress()] = new Item (); 								// sets the empty syringe slot to empty	
-			inv.Items[uim.HotkeyPress()] = GenerateSampleFunction(); 					// sets the empty slot into a blood filled syringe				
-		}
-		else if (Input.GetButtonDown("LMB") && inv.draggedItem.itemID == 6)
-		{
-			inv.draggedItem = new Item (); 												// sets the empty syringe slot to empty	
-			inv.draggedItem = GenerateSampleFunction(); 								// sets the empty slot into a blood filled syringe
-			inv.draggedItemGameobject.GetComponent<Image>().sprite = inv.draggedItem.itemIcon;
+		
+			if (uim.HotkeyPress() >= 0 && inv.Items[uim.HotkeyPress()].itemID == 6)
+			{
+				inv.Items[uim.HotkeyPress()] = new Item (); 								// sets the empty syringe slot to empty	
+				inv.Items[uim.HotkeyPress()] = GenerateSampleFunction(); 					// sets the empty slot into a blood filled syringe				
+			}
+			else if (Input.GetButtonDown("LMB") && inv.draggedItem.itemID == 6)
+			{
+				inv.draggedItem = new Item (); 												// sets the empty syringe slot to empty	
+				inv.draggedItem = GenerateSampleFunction(); 								// sets the empty slot into a blood filled syringe
+				inv.draggedItemGameobject.GetComponent<Image>().sprite = inv.draggedItem.itemIcon;
+			}
 		}
 	}
 

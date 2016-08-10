@@ -15,6 +15,7 @@ public class Inventory : MonoBehaviour {
 	public int draggedItemSlotOrigin;
 	public Transform flooritemtransform;
 	public PlayerController pc;
+	public bool mouseOverHotbar = false;
 	ItemDatabase db;
 	UIManager uim;
 	GameObject player;
@@ -65,7 +66,6 @@ public class Inventory : MonoBehaviour {
 			Vector3 posi = (Input.mousePosition - GameObject.FindGameObjectWithTag("UIManager").GetComponent<RectTransform>().localPosition);
 			draggedItemGameobject.GetComponent<RectTransform>().localPosition = new Vector3 (posi.x + 15, posi.y - 15, posi.z);
 		}
-		HitObjectCheck();
 	}
 
 	
@@ -102,7 +102,17 @@ public class Inventory : MonoBehaviour {
 	}
 	
 
-	
+	public void IsMouseOverHotbar(bool verdict)
+	{
+		if (verdict)
+		{
+			mouseOverHotbar = true;
+		}
+		else
+		{
+			mouseOverHotbar = false;
+		}
+	}
 	
 	
 	public void showDraggedItem(Item item, int slotnumber)

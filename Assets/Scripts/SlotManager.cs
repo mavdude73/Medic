@@ -81,12 +81,15 @@ public class SlotManager : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 	public void OnPointerEnter(PointerEventData data)
 	{
 		mouseOverHotbar = true;
+		inv.IsMouseOverHotbar(mouseOverHotbar);
 	}
 	
 	public void OnPointerExit(PointerEventData data)
 	{
 		mouseOverHotbar = false;
+		inv.IsMouseOverHotbar(mouseOverHotbar);
 	}
+	
 	
 	public void OnDrag(PointerEventData data)
 	{
