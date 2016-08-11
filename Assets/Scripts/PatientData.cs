@@ -151,7 +151,7 @@ public class PatientData : MonoBehaviour {
 		List<string> dialoguePlan = new List<string>();
 		dialoguePlan.Add("Admit to ward for further assessment.");
 		dialoguePlan.Add("As clinically worsening, admit for treatment.");
-		dialoguePlan.Add("Ward based care and follow-up.");
+		dialoguePlan.Add("For ward-based care and treatment.");
 		dialoguePlan.Add("Not for discharge presently. Admit for observation and treatment.");
 		dialoguePlan.Add("Requires hospital treatment - for admission.");
 		string dialoguePlanText = dialoguePlan [Random.Range (0,dialoguePlan.Count)];

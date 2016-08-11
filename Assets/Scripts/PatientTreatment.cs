@@ -23,15 +23,13 @@ public class PatientTreatment : MonoBehaviour {
 		
 			if(uim.HotkeyPress() >= 0 && inv.Items[uim.HotkeyPress()].itemType == "Drug")
 			{
-				pd.currentTreatment = inv.Items[uim.HotkeyPress()].itemDesc;
 				inv.Items[uim.HotkeyPress()] = new Item ();
-				DrugEffect();
+				StartCoroutine(DrugEffect(inv.Items[uim.HotkeyPress()].itemDesc));
 			}
 			else if(Input.GetButtonDown("LMB") && inv.draggedItem.itemType == "Drug")
 			{
-				pd.currentTreatment = inv.draggedItem.itemDesc;
 				inv.closeDraggedItem();
-				DrugEffect();
+				StartCoroutine(DrugEffect(inv.draggedItem.itemDesc));
 			}
 			
 			if (uim.HotkeyPress() >= 0 && inv.Items[uim.HotkeyPress()].itemName == "Pillow")
@@ -49,38 +47,33 @@ public class PatientTreatment : MonoBehaviour {
 			
 	}
 	
-	void DrugEffect()
+	IEnumerator DrugEffect(string treatment)
 	{
 		pd.treatmentInProgress = true;
-		int timer = 0;
-		while(pd.treatmentInProgress && timer < 100 && !pd.patientDead)
+		yield return new WaitForSeconds(5);
+		if(!pd.patientDead)
 		{
-			timer++;
-			if (timer == 100)
+			pd.treatmentInProgress = false;
+			for(int i = 0; i < pd.treatment.Count; i++)
 			{
-				
+				if(treatment == pd.treatment[i])
+				{
+					Debug.Log("Treatment successful");
+					break;
+				}
+				if(treatment == "Expired")
+				{
+					Debug.Log ("Expired medicine");
+					break;
+				}
 			}
-		}
-		
-		
-		if (pd.currentTreatment == "Expired")
-		{
-			Debug.Log ("Drug has expired - no effect");
-		}
-		
-		else if (pd.currentTreatment == pd.correctTreatment)
-		{
-			Debug.Log ("You healed me");
-		}
-		
-		else if (pd.currentTreatment != pd.correctTreatment)
-		{
 			pd.health--;
-			Debug.Log ("Wrong drug - you monster");
+			Debug.Log("WRONG TREATMENT");
+			CheckHealth();
 		}
-		
-		CheckHealth();
 	}
+		
+
 	
 	void CheckHealth()
 	{
