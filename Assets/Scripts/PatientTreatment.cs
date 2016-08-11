@@ -18,7 +18,7 @@ public class PatientTreatment : MonoBehaviour {
 	
 	public void AdministerTreatment()
 	{
-		if(!inv.mouseOverHotbar)
+		if(!inv.mouseOverHotbar && !pd.treatmentInProgress)
 		{
 		
 			if(uim.HotkeyPress() >= 0 && inv.Items[uim.HotkeyPress()].itemType == "Drug")
@@ -51,6 +51,18 @@ public class PatientTreatment : MonoBehaviour {
 	
 	void DrugEffect()
 	{
+		pd.treatmentInProgress = true;
+		int timer = 0;
+		while(pd.treatmentInProgress && timer < 100 && !pd.patientDead)
+		{
+			timer++;
+			if (timer == 100)
+			{
+				
+			}
+		}
+		
+		
 		if (pd.currentTreatment == "Expired")
 		{
 			Debug.Log ("Drug has expired - no effect");
