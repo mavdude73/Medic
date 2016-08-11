@@ -30,20 +30,21 @@ public class PatientTreatment : MonoBehaviour {
 			else if(Input.GetButtonDown("LMB") && inv.draggedItem.itemType == "Drug")
 			{
 				pd.currentTreatment = inv.draggedItem.itemDesc;
-				inv.draggedItem = new Item ();
+				inv.closeDraggedItem();
 				DrugEffect();
 			}
 			
 			if (uim.HotkeyPress() >= 0 && inv.Items[uim.HotkeyPress()].itemName == "Pillow")
 			{
 				pd.health--;
+				CheckHealth();
 			}
 			else if (Input.GetButtonDown("LMB") && inv.draggedItem.itemName == "Pillow")
 			{
 				pd.health--;
+				CheckHealth();
 			}
 			
-			CheckHealth();
 		}
 			
 	}
@@ -65,6 +66,8 @@ public class PatientTreatment : MonoBehaviour {
 			pd.health--;
 			Debug.Log ("Wrong drug - you monster");
 		}
+		
+		CheckHealth();
 	}
 	
 	void CheckHealth()
