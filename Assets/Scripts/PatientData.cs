@@ -66,6 +66,7 @@ public class PatientData : MonoBehaviour {
 	List<string> treatment_start = new List<string>();
 	public List<string> treatment = new List<string>();
 	
+	public bool treatmentInProgress = false;
 		
 	void DiagnosisRNG()
 	{
