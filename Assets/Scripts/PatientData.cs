@@ -48,6 +48,8 @@ public class PatientData : MonoBehaviour {
 	public int diagnosisID;
 	public string diagnosisName;
 	public string conditionType;
+	public string consultantName;
+	public string seniorReview;
 	
 	List<string> symptoms_start = new List<string>();
 	public List<string> symptoms = new List<string>();
@@ -64,8 +66,8 @@ public class PatientData : MonoBehaviour {
 	List<string> treatment_start = new List<string>();
 	public List<string> treatment = new List<string>();
 	
-	
-	void diagnosisRNG()
+		
+	void DiagnosisRNG()
 	{
 		diagnoses.Add ("MI");
 		diagnoses.Add ("LRTI");
@@ -74,12 +76,16 @@ public class PatientData : MonoBehaviour {
 		int r = Random.Range (0,diagnoses.Count);
 		string diagName = diagnoses [r];
 		
-		Invoke ("d_" + diagName, 0);
+		Invoke ("D_" + diagName, 0);
 		
-		Invoke ("modifyOrder", 0);
+		Invoke ("ModifyOrder", 0);
+		
+		Invoke ("Consultant", 0);
+		
+		Invoke ("SeniorReview", 0);
 	}
 	
-	void modifyOrder()
+	void ModifyOrder()
 	{
 		while (symptoms_start.Count > 0)
 		{
@@ -88,26 +94,90 @@ public class PatientData : MonoBehaviour {
 			symptoms_start.RemoveAt (r);
 		}
 		
+		while (examination_start.Count > 0)
+		{
+			int r = Random.Range (0,examination_start.Count);
+			examination.Add (examination_start [r]);
+			examination_start.RemoveAt (r);
+		}
+		
+		while (treatment_start.Count > 0)
+		{
+			int r = Random.Range (0,treatment_start.Count);
+			treatment.Add (treatment_start [r]);
+			treatment_start.RemoveAt (r);
+		}
+		
+		
+		
 		//		for (int i = 0; i < symptoms.Count; i++)
 		//		{
 		//			Debug.Log (blood [i]);
 		//		}
 	}
 	
-	void d_MI()
+	void Consultant()
+	{
+		if(conditionType == "cardiac")
+		{
+			consultantName = "Payne";
+		}
+		else if(conditionType == "respiratory")
+		{
+			consultantName = "Hope";
+		}
+		else if(conditionType == "gastroenterology")
+		{
+			consultantName = "Butt";
+		}
+		else
+		{
+			consultantName = "Cope";
+		}
+	}
+	
+	void SeniorReview()
+	{
+		int rngDays = Random.Range (2,8);
+		List<string> dialogueOTC = new List<string>();
+		dialogueOTC.Add("Over the counter remedies have poorly helped here namely because none have been tried yet.");
+		dialogueOTC.Add("The lazy sod has not tried any treatment at home and is clearly getting worse.");
+		dialogueOTC.Add("No attempt has been made with OTC remedies as they are too cheap to purchase.");
+		dialogueOTC.Add("Reports no improvement with homeopathic medicine but is clinically well hydrated.");
+		dialogueOTC.Add("The patient has more than 100 allergies including saline. Nurse to kindly use 'hydrolating infusions'.");
+		string dialogueOTCText = dialogueOTC [Random.Range (0,dialogueOTC.Count)];
+		
+		List<string> dialoguePlan = new List<string>();
+		dialoguePlan.Add("Admit to ward for further assessment.");
+		dialoguePlan.Add("As clinically worsening, admit for treatment.");
+		dialoguePlan.Add("Ward based care and follow-up.");
+		dialoguePlan.Add("Not for discharge presently. Admit for observation and treatment.");
+		dialoguePlan.Add("Requires hospital treatment - for admission.");
+		string dialoguePlanText = dialoguePlan [Random.Range (0,dialoguePlan.Count)];
+		
+		string line1 = patientName + " has been complaining over the last " + rngDays + " days with a history of " + symptoms[0] + " and " + symptoms[1] + ". ";
+		string line2 = dialogueOTCText + "\n \n";
+		string line3 = "Examination findings: " + examination[0] + "\n \n";
+		string line4 = "This patient may benefit from a blood test but they clearly have a " + conditionType + " problem, like " + diagnosisName + ", and " + treatment[0] + " may prove effective." + "\n \n";
+		string line5 = "Plan: " + dialoguePlanText;
+		
+		seniorReview = line1 + line2 + line3 + line4 + line5;
+	}
+	
+	void D_MI()
 	{
 		diagnosisID = 0;
 		diagnosisName = "MI";
 		conditionType = "cardiac";
 		
-		symptoms_start.Add ("cough");
-		symptoms_start.Add ("breathless");
+		symptoms_start.Add ("nausea");
+		symptoms_start.Add ("breathlessness");
 		symptoms_start.Add ("palpitations");
 		symptoms_start.Add ("chest pain");
 		
-		examination_start.Add ("fever");
-		examination_start.Add ("chest crackles");
-		examination_start.Add ("tachypnoea");
+		examination_start.Add ("murmur");
+		examination_start.Add ("raised JVP");
+		examination_start.Add ("irregular pulse");
 		
 		blood_start.Add ("high CK");
 		blood_start.Add ("high Trop T");
@@ -115,24 +185,23 @@ public class PatientData : MonoBehaviour {
 		xray_start.Add ("normal");
 		
 		treatment_start.Add ("tixabrufen");
-		
-		
+
 	}
 	
-	void d_LRTI()
+	void D_LRTI()
 	{
 		diagnosisID = 1;
 		diagnosisName = "LRTI";
-		conditionType = "chest";
+		conditionType = "respiratory";
 		
 		symptoms_start.Add ("cough");
-		symptoms_start.Add ("breathless");
+		symptoms_start.Add ("breathlessness");
 		symptoms_start.Add ("fever");
 		symptoms_start.Add ("chest pain");
 		
 		examination_start.Add ("fever");
 		examination_start.Add ("chest crackles");
-		examination_start.Add ("tachypnoea");
+		examination_start.Add ("fast breathing");
 		
 		blood_start.Add ("high WCC");
 		blood_start.Add ("high CRP");
@@ -142,16 +211,14 @@ public class PatientData : MonoBehaviour {
 		
 		treatment_start.Add ("amoxcitol");
 		treatment_start.Add ("placebolin");
-		
-		
-		
+	
 	}
 	
-	void d_GORD()
+	void D_GORD()
 	{
-		diagnosisID = 3;
+		diagnosisID = 2;
 		diagnosisName = "GORD";
-		conditionType = "gastro";
+		conditionType = "gastroenterology";
 		
 		symptoms_start.Add ("cough");
 		symptoms_start.Add ("nausea");
@@ -165,8 +232,7 @@ public class PatientData : MonoBehaviour {
 		xray_start.Add ("normal");
 		
 		treatment_start.Add ("synapticol");
-		
-		
+
 	}
 	
 	
@@ -181,7 +247,7 @@ public class PatientData : MonoBehaviour {
 		rng = GameObject.Find ("RNGManager").GetComponent<RNGManager> ();
 		AcquirePatientData ();
 		BreachTarget();
-		diagnosisRNG ();
+		DiagnosisRNG ();
 		
 		//		player = GameObject.Find("Player1");
 		
@@ -212,7 +278,7 @@ public class PatientData : MonoBehaviour {
 		patientCured = false;
 		health = 2;
 		deathTimer = 20000;
-		targetTimer = 200;
+		targetTimer = 300;
 		
 		patientInBedZone = false;
 		//		patientPositionX = gameObject.transform.position.x;
