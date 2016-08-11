@@ -29,7 +29,7 @@ public class PatientInvestigations : MonoBehaviour {
 				inv.Items[uim.HotkeyPress()] = new Item (); 								// sets the empty syringe slot to empty	
 				inv.Items[uim.HotkeyPress()] = GenerateSampleFunction(); 					// sets the empty slot into a blood filled syringe				
 			}
-			else if (Input.GetButtonDown("LMB") && inv.draggedItem.itemID == 6)
+			else if (Input.GetButtonDown("LMB") && inv.HitSpecificObject("Patientsprite") && inv.draggedItem.itemID == 6)
 			{
 				inv.draggedItem = new Item (); 												// sets the empty syringe slot to empty	
 				inv.draggedItem = GenerateSampleFunction(); 								// sets the empty slot into a blood filled syringe

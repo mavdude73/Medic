@@ -18,46 +18,75 @@ public class PatientTreatment : MonoBehaviour {
 	
 	public void AdministerTreatment()
 	{
+		if(!inv.mouseOverHotbar && !pd.treatmentInProgress)
+		{
 		
-		if (uim.HotkeyPress() < 0)
-		{
-			return;
-		}
-		else if(inv.Items[uim.HotkeyPress()].itemType == "Drug")
-		{
-			pd.currentTreatment = inv.Items[uim.HotkeyPress()].itemDesc;
-			inv.deleteItem0();
-
-			if (pd.currentTreatment == "Expired")
+			if(uim.HotkeyPress() >= 0 && inv.Items[uim.HotkeyPress()].itemType == "Drug")
 			{
-				Debug.Log ("Drug has expired - no effect");
+				pd.currentTreatment = inv.Items[uim.HotkeyPress()].itemDesc;
+				inv.Items[uim.HotkeyPress()] = new Item ();
+				DrugEffect();
+			}
+			else if(Input.GetButtonDown("LMB") && inv.draggedItem.itemType == "Drug")
+			{
+				pd.currentTreatment = inv.draggedItem.itemDesc;
+				inv.closeDraggedItem();
+				DrugEffect();
 			}
 			
-			else if (pd.currentTreatment == pd.correctTreatment)
-			{
-				Debug.Log ("You healed me");
-			}
-			
-			else if (pd.currentTreatment != pd.correctTreatment)
+			if (uim.HotkeyPress() >= 0 && inv.Items[uim.HotkeyPress()].itemName == "Pillow")
 			{
 				pd.health--;
-				Debug.Log ("Wrong drug - you monster");
+				CheckHealth();
+			}
+			else if (Input.GetButtonDown("LMB") && inv.draggedItem.itemName == "Pillow")
+			{
+				pd.health--;
+				CheckHealth();
+			}
+			
+		}
+			
+	}
+	
+	void DrugEffect()
+	{
+		pd.treatmentInProgress = true;
+		int timer = 0;
+		while(pd.treatmentInProgress && timer < 100 && !pd.patientDead)
+		{
+			timer++;
+			if (timer == 100)
+			{
+				
 			}
 		}
-		else if (inv.Items[uim.HotkeyPress()].itemName == "Pillow")
+		
+		
+		if (pd.currentTreatment == "Expired")
+		{
+			Debug.Log ("Drug has expired - no effect");
+		}
+		
+		else if (pd.currentTreatment == pd.correctTreatment)
+		{
+			Debug.Log ("You healed me");
+		}
+		
+		else if (pd.currentTreatment != pd.correctTreatment)
 		{
 			pd.health--;
+			Debug.Log ("Wrong drug - you monster");
 		}
 		
 		CheckHealth();
-			
 	}
 	
 	void CheckHealth()
 	{
 		if(pd.health == 1)
 		{
-			Debug.Log("Health minus 1");
+			Debug.Log("1 health remaining");
 		}
 		else if(pd.health == 0)
 		{
