@@ -178,7 +178,19 @@ public class Inventory : MonoBehaviour {
 		
 	}
 
-
+	public Item PharmacyRequest(int itemid)
+	{
+		for (int i = 0; i < db.items.Count; i++)
+		{
+			if(db.items[i].itemID == itemid)
+			{
+				Item item = db.items[i];
+				return item;
+			}
+		}
+		return new Item();
+	}
+	
 	public void addItem(int itemid)
 	{
 		for (int i = 0; i < db.items.Count; i++)
