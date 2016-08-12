@@ -43,7 +43,7 @@ public class PatientZone : MonoBehaviour {
 			uim.stickyLabels[2].GetComponent<Text>().text = pd.patientLabel;
 			uim.stickyLabels[3].GetComponent<Text>().text = pd.patientLabel;
 			uim.seniorReviewText.GetComponent<Text>().text = pd.seniorReview;
-			uim.currentTreatmentLabel.GetComponent<Text>().text = pd.currentTreatment;
+			uim.treatmentHistoryLabel.GetComponent<Text>().text = pd.treatmentLog;
 			if(pd.patientDead)
 			{
 				uim.deceasedStamp.SetActive(true);
@@ -61,6 +61,7 @@ public class PatientZone : MonoBehaviour {
 		if(other.gameObject == player)
 		{
 			playerInZone = true;
+			pd.PlayerInZoneBool (true);
 //			Debug.Log(pd.patientName);
 //			patientData = this.gameObject.GetComponentInParent<PatientData>();
 		}
@@ -70,16 +71,19 @@ public class PatientZone : MonoBehaviour {
 		if(other.gameObject == player)
 		{
 			playerInZone = false;
+			pd.PlayerInZoneBool (false);
 		}
 	}
 	
-	bool PlayerInZone() {return playerInZone;}
+
 	
 
 	
 	
 	void Update()
 	{
+		
+		
 		if(playerInZone && !pd.patientDead)
 		{
 			pi.ObtainBloodSample();

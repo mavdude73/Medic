@@ -23,15 +23,13 @@ public class PatientTreatment : MonoBehaviour {
 		
 			if(uim.HotkeyPress() >= 0 && inv.Items[uim.HotkeyPress()].itemType == "Drug")
 			{
-				pd.currentTreatment = inv.Items[uim.HotkeyPress()].itemDesc;
+				StartCoroutine(DrugEffect(inv.Items[uim.HotkeyPress()].itemDesc));
 				inv.Items[uim.HotkeyPress()] = new Item ();
-				DrugEffect();
 			}
 			else if(Input.GetButtonDown("LMB") && inv.draggedItem.itemType == "Drug")
 			{
-				pd.currentTreatment = inv.draggedItem.itemDesc;
+				StartCoroutine(DrugEffect(inv.draggedItem.itemDesc));
 				inv.closeDraggedItem();
-				DrugEffect();
 			}
 			
 			if (uim.HotkeyPress() >= 0 && inv.Items[uim.HotkeyPress()].itemName == "Pillow")
@@ -49,38 +47,44 @@ public class PatientTreatment : MonoBehaviour {
 			
 	}
 	
-	void DrugEffect()
+	public IEnumerator DrugEffect(string treatment)
 	{
-		pd.treatmentInProgress = true;
-		int timer = 0;
-		while(pd.treatmentInProgress && timer < 100 && !pd.patientDead)
+		if(!pd.patientCured)
 		{
-			timer++;
-			if (timer == 100)
+			pd.treatmentInProgress = true;
+			int timer = 5;
+			yield return new WaitForSeconds(timer);
+			if(!pd.patientDead)
 			{
-				
+				pd.treatmentInProgress = false;
+				for(int i = 0; i < pd.treatments.Count; i++)
+				{
+					if(treatment == pd.treatments[i])
+					{
+						Debug.Log("Treatment successful");
+						
+						pd.TreatmentProgress(treatment, "successful");
+						pd.treatments.RemoveAt(i);
+						break;
+					}
+					else if(treatment == "Expired")
+					{
+						Debug.Log ("Expired medicine");
+						pd.TreatmentProgress(treatment, "expired");
+						break;
+					}
+					else if(treatment != pd.treatments[i])
+					{
+						pd.TreatmentProgress(treatment, "failed");
+						pd.health--;
+						CheckHealth();
+					}
+				}
 			}
-		}
-		
-		
-		if (pd.currentTreatment == "Expired")
-		{
-			Debug.Log ("Drug has expired - no effect");
-		}
-		
-		else if (pd.currentTreatment == pd.correctTreatment)
-		{
-			Debug.Log ("You healed me");
-		}
-		
-		else if (pd.currentTreatment != pd.correctTreatment)
-		{
-			pd.health--;
-			Debug.Log ("Wrong drug - you monster");
-		}
-		
-		CheckHealth();
+		}	
 	}
+		
+
 	
 	void CheckHealth()
 	{

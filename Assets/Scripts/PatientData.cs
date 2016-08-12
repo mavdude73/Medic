@@ -8,6 +8,25 @@ public class PatientData : MonoBehaviour {
 	
 	
 	RNGManager rng;
+	UIManager uim;
+	
+	void Awake ()
+	{
+		rng = GameObject.Find ("RNGManager").GetComponent<RNGManager> ();
+		uim = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager> ();
+		AcquirePatientData ();
+		BreachTarget();
+		GeneratePatientInfo ();
+		
+		//		player = GameObject.Find("Player1");
+		
+	}
+	
+	void Update ()
+	{
+		
+	}
+
 	
 	
 	public bool questPatient;
@@ -33,9 +52,22 @@ public class PatientData : MonoBehaviour {
 	public int deathTimer;
 	public int targetTimer;
 	
+	
+	public bool playerInZone = false;
 	public bool patientInBedZone;
 	public Vector3 allocatedBedVector3;
 	
+	public void PlayerInZoneBool (bool inZone)
+	{
+		if(inZone)
+		{
+			playerInZone = true;
+		}
+		else if (!inZone)
+		{
+			playerInZone = false;
+		}
+	}
 	
 	//	GameObject medicalRecord;
 	//	GameObject biographicsPages;
@@ -50,6 +82,7 @@ public class PatientData : MonoBehaviour {
 	public string conditionType;
 	public string consultantName;
 	public string seniorReview;
+
 	
 	List<string> symptoms_start = new List<string>();
 	public List<string> symptoms = new List<string>();
@@ -64,11 +97,16 @@ public class PatientData : MonoBehaviour {
 	public List<string> xray = new List<string>();
 	
 	List<string> treatment_start = new List<string>();
-	public List<string> treatment = new List<string>();
+	public List<string> treatments = new List<string>();
 	
+	public bool treatmentInProgress = false;
+	
+	public List<string> treatmentLogList = new List<string>();
+	public string treatmentLog;
 		
-	void DiagnosisRNG()
+	void GeneratePatientInfo()
 	{
+		// list diagnoses here then add the corresponding function
 		diagnoses.Add ("MI");
 		diagnoses.Add ("LRTI");
 		diagnoses.Add ("GORD");
@@ -77,7 +115,7 @@ public class PatientData : MonoBehaviour {
 		string diagName = diagnoses [r];
 		
 		Invoke ("D_" + diagName, 0);
-		
+
 		Invoke ("ModifyOrder", 0);
 		
 		Invoke ("Consultant", 0);
@@ -104,16 +142,10 @@ public class PatientData : MonoBehaviour {
 		while (treatment_start.Count > 0)
 		{
 			int r = Random.Range (0,treatment_start.Count);
-			treatment.Add (treatment_start [r]);
+			treatments.Add (treatment_start [r]);
 			treatment_start.RemoveAt (r);
 		}
-		
-		
-		
-		//		for (int i = 0; i < symptoms.Count; i++)
-		//		{
-		//			Debug.Log (blood [i]);
-		//		}
+
 	}
 	
 	void Consultant()
@@ -150,7 +182,7 @@ public class PatientData : MonoBehaviour {
 		List<string> dialoguePlan = new List<string>();
 		dialoguePlan.Add("Admit to ward for further assessment.");
 		dialoguePlan.Add("As clinically worsening, admit for treatment.");
-		dialoguePlan.Add("Ward based care and follow-up.");
+		dialoguePlan.Add("For ward-based care and treatment.");
 		dialoguePlan.Add("Not for discharge presently. Admit for observation and treatment.");
 		dialoguePlan.Add("Requires hospital treatment - for admission.");
 		string dialoguePlanText = dialoguePlan [Random.Range (0,dialoguePlan.Count)];
@@ -158,11 +190,44 @@ public class PatientData : MonoBehaviour {
 		string line1 = patientName + " has been complaining over the last " + rngDays + " days with a history of " + symptoms[0] + " and " + symptoms[1] + ". ";
 		string line2 = dialogueOTCText + "\n \n";
 		string line3 = "Examination findings: " + examination[0] + "\n \n";
-		string line4 = "This patient may benefit from a blood test but they clearly have a " + conditionType + " problem, like " + diagnosisName + ", and " + treatment[0] + " may prove effective." + "\n \n";
+		string line4 = "This patient may benefit from a blood test but they clearly have a " + conditionType + " problem, like " + diagnosisName + ", and " + treatments[0] + " may prove effective." + "\n \n";
 		string line5 = "Plan: " + dialoguePlanText;
 		
 		seniorReview = line1 + line2 + line3 + line4 + line5;
 	}
+	
+	public void TreatmentProgress(string treatment, string response)
+	{
+		string answer = treatment + " " + response + "\n";
+		StartCoroutine(TreatmentLog(answer));
+	}
+	
+	public IEnumerator TreatmentLog(string answer)
+	{
+		yield return new WaitForSeconds(1);
+		treatmentLogList.Add(answer);
+		
+		for(int tl = 0; tl < treatmentLogList.Count; tl++)
+		{
+			treatmentLog = treatmentLog + treatmentLogList[tl];
+		}
+		treatmentLogList.Clear();
+		
+//		yield return new WaitForSeconds(1);
+		if(treatments.Count == 0)
+		{
+			patientCured = true;
+			treatmentLog = treatmentLog + "\n\n" + "CURED";
+		}
+				
+		if(playerInZone)
+		{
+			uim.treatmentHistoryLabel.GetComponent<Text>().text = treatmentLog;
+		}
+		
+	}
+	
+
 	
 	void D_MI()
 	{
@@ -184,7 +249,7 @@ public class PatientData : MonoBehaviour {
 		
 		xray_start.Add ("normal");
 		
-		treatment_start.Add ("tixabrufen");
+		treatment_start.Add ("Tixabrufen");
 
 	}
 	
@@ -209,8 +274,8 @@ public class PatientData : MonoBehaviour {
 		xray_start.Add ("consolidation");
 		xray_start.Add ("shadowing");
 		
-		treatment_start.Add ("amoxcitol");
-		treatment_start.Add ("placebolin");
+		treatment_start.Add ("Amoxcitol");
+		treatment_start.Add ("Placebolin");
 	
 	}
 	
@@ -231,7 +296,7 @@ public class PatientData : MonoBehaviour {
 		
 		xray_start.Add ("normal");
 		
-		treatment_start.Add ("synapticol");
+		treatment_start.Add ("Synapticol");
 
 	}
 	
@@ -242,17 +307,7 @@ public class PatientData : MonoBehaviour {
 	//		visitorNumber = gameObject.name;
 	//	}
 	
-	void Awake ()
-	{
-		rng = GameObject.Find ("RNGManager").GetComponent<RNGManager> ();
-		AcquirePatientData ();
-		BreachTarget();
-		DiagnosisRNG ();
-		
-		//		player = GameObject.Find("Player1");
-		
-	}
-	
+
 	
 	
 	void AcquirePatientData()
