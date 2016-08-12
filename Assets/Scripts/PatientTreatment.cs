@@ -23,13 +23,13 @@ public class PatientTreatment : MonoBehaviour {
 		
 			if(uim.HotkeyPress() >= 0 && inv.Items[uim.HotkeyPress()].itemType == "Drug")
 			{
-				inv.Items[uim.HotkeyPress()] = new Item ();
 				StartCoroutine(DrugEffect(inv.Items[uim.HotkeyPress()].itemDesc));
+				inv.Items[uim.HotkeyPress()] = new Item ();
 			}
 			else if(Input.GetButtonDown("LMB") && inv.draggedItem.itemType == "Drug")
 			{
-				inv.closeDraggedItem();
 				StartCoroutine(DrugEffect(inv.draggedItem.itemDesc));
+				inv.closeDraggedItem();
 			}
 			
 			if (uim.HotkeyPress() >= 0 && inv.Items[uim.HotkeyPress()].itemName == "Pillow")
@@ -47,30 +47,41 @@ public class PatientTreatment : MonoBehaviour {
 			
 	}
 	
-	IEnumerator DrugEffect(string treatment)
+	public IEnumerator DrugEffect(string treatment)
 	{
-		pd.treatmentInProgress = true;
-		yield return new WaitForSeconds(5);
-		if(!pd.patientDead)
+		if(!pd.patientCured)
 		{
-			pd.treatmentInProgress = false;
-			for(int i = 0; i < pd.treatment.Count; i++)
+			pd.treatmentInProgress = true;
+			int timer = 5;
+			yield return new WaitForSeconds(timer);
+			if(!pd.patientDead)
 			{
-				if(treatment == pd.treatment[i])
+				pd.treatmentInProgress = false;
+				for(int i = 0; i < pd.treatments.Count; i++)
 				{
-					Debug.Log("Treatment successful");
-					break;
-				}
-				if(treatment == "Expired")
-				{
-					Debug.Log ("Expired medicine");
-					break;
+					if(treatment == pd.treatments[i])
+					{
+						Debug.Log("Treatment successful");
+						
+						pd.TreatmentProgress(treatment, "successful");
+						pd.treatments.RemoveAt(i);
+						break;
+					}
+					else if(treatment == "Expired")
+					{
+						Debug.Log ("Expired medicine");
+						pd.TreatmentProgress(treatment, "expired");
+						break;
+					}
+					else if(treatment != pd.treatments[i])
+					{
+						pd.TreatmentProgress(treatment, "failed");
+						pd.health--;
+						CheckHealth();
+					}
 				}
 			}
-			pd.health--;
-			Debug.Log("WRONG TREATMENT");
-			CheckHealth();
-		}
+		}	
 	}
 		
 
