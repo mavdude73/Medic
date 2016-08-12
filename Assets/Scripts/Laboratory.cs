@@ -8,8 +8,8 @@ public class Laboratory : MonoBehaviour {
 	GameObject player;
 	bool playerInZone;
 	public int bloodAnalysisTimer;
-	public Inventory inv;
-	public UIManager uim;
+	Inventory inv;
+	UIManager uim;
 	public string allBloodResults;
 	
 	public List<string> bloodList = new List<string>();
@@ -18,6 +18,8 @@ public class Laboratory : MonoBehaviour {
 
 	void Awake ()
 	{
+		uim = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager> ();
+		inv = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
 		player = GameObject.Find("Player1");
 		StartCoroutine(AnalyseBlood(0f));
 	}

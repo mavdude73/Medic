@@ -13,11 +13,13 @@ public class UIManager : MonoBehaviour {
 	public List<GameObject> medicalPages = new List<GameObject> ();
 	public GameObject[] stickyLabels;
 //	public List<GameObject> medicalLabels = new List<GameObject> ();
-	public GameObject currentTreatmentLabel;
+	public GameObject treatmentHistoryLabel;
 	public GameObject computerScreen;
 	public GameObject computerScreenText;
+	public GameObject seniorReviewText;
 	public GameObject bleepAlert;
 	public GameObject pharmacyMenu;
+	public GameObject deceasedStamp;
 	
 	Inventory inv;
 	
@@ -56,6 +58,7 @@ public class UIManager : MonoBehaviour {
 		pauseMenu.SetActive (false);
 		bleepAlert.SetActive (false);
 		pharmacyMenu.SetActive (false);
+		deceasedStamp.SetActive (false);
 		
 		inv = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
 	}
@@ -153,6 +156,7 @@ public class UIManager : MonoBehaviour {
 			if (!pauseMenu.gameObject.activeSelf)
 			{
 				pauseMenu.SetActive (true);
+				
 				Time.timeScale = Time.timeScale == 0 ? 1 : 0;
 			}
 			else
@@ -189,8 +193,8 @@ public class UIManager : MonoBehaviour {
 		{
 			if(Input.GetKeyDown(keyCodes[i]))
 			{
-				int numberPressed = i+1;
-				Debug.Log("Hotkey: " + numberPressed);
+//				int numberPressed = i+1;
+//				Debug.Log("Hotkey: " + numberPressed);
 				return i;
 			}
 		}

@@ -43,9 +43,9 @@ public class DroppedItem : MonoBehaviour {
 		{
 			return;
 		}
-		else if (!inv.draggingItemBool && Input.GetButtonDown("LMB"))
+		else if (!inv.draggingItemBool && inv.HitObjectCheck() && Input.GetButtonDown("LMB"))
 		{
-			if(inv.HitObjectCheck() && item.itemName != "Bloodspill")
+			if(item.itemName != "Bloodspill")
 			{
 				if(inv.addItemIfEmpty(item))
 				{
@@ -55,6 +55,11 @@ public class DroppedItem : MonoBehaviour {
 
 		}
 		else if(uim.HotkeyPress() >= 0 && inv.Items[uim.HotkeyPress()].itemName == "Mop")
+		{
+			Destroy(this.gameObject);
+			Debug.Log("Clean up in Aisle 7");
+		}
+		else if(Input.GetButtonDown("LMB") && inv.draggedItem.itemName == "Mop")
 		{
 			Destroy(this.gameObject);
 			Debug.Log("Clean up in Aisle 7");

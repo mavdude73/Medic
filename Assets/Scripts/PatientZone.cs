@@ -34,7 +34,7 @@ public class PatientZone : MonoBehaviour {
 		{
 			return;
 		}
-		else if(!inv.draggingItemBool)
+		else if(!inv.draggingItemBool && inv.HitSpecificObject("Patientsprite"))
 		{
 			uim.medicalPages[0].SetActive(true);
 	
@@ -42,7 +42,16 @@ public class PatientZone : MonoBehaviour {
 			uim.stickyLabels[1].GetComponent<Text>().text = pd.patientLabel;
 			uim.stickyLabels[2].GetComponent<Text>().text = pd.patientLabel;
 			uim.stickyLabels[3].GetComponent<Text>().text = pd.patientLabel;
-			uim.currentTreatmentLabel.GetComponent<Text>().text = pd.currentTreatment;
+			uim.seniorReviewText.GetComponent<Text>().text = pd.seniorReview;
+			uim.treatmentHistoryLabel.GetComponent<Text>().text = pd.treatmentLog;
+			if(pd.patientDead)
+			{
+				uim.deceasedStamp.SetActive(true);
+			}
+			else if (!pd.patientDead)
+			{
+				uim.deceasedStamp.SetActive(false);
+			}
 		}
 	
 	}
@@ -52,6 +61,7 @@ public class PatientZone : MonoBehaviour {
 		if(other.gameObject == player)
 		{
 			playerInZone = true;
+			pd.PlayerInZoneBool (true);
 //			Debug.Log(pd.patientName);
 //			patientData = this.gameObject.GetComponentInParent<PatientData>();
 		}
@@ -61,20 +71,27 @@ public class PatientZone : MonoBehaviour {
 		if(other.gameObject == player)
 		{
 			playerInZone = false;
+			pd.PlayerInZoneBool (false);
 		}
 	}
 	
-	bool PlayerInZone() {return playerInZone;}
+
 	
 
 	
 	
 	void Update()
 	{
+		
+		
 		if(playerInZone && !pd.patientDead)
 		{
 			pi.ObtainBloodSample();
 			pt.AdministerTreatment();
+//			OpenMedicalRecord();
+		}
+		if(playerInZone)
+		{
 			OpenMedicalRecord();
 		}
 		

@@ -18,46 +18,79 @@ public class PatientTreatment : MonoBehaviour {
 	
 	public void AdministerTreatment()
 	{
+		if(!inv.mouseOverHotbar && !pd.treatmentInProgress)
+		{
 		
-		if (uim.HotkeyPress() < 0)
-		{
-			return;
-		}
-		else if(inv.Items[uim.HotkeyPress()].itemType == "Drug")
-		{
-			pd.currentTreatment = inv.Items[uim.HotkeyPress()].itemDesc;
-			inv.deleteItem0();
-
-			if (pd.currentTreatment == "Expired")
+			if(uim.HotkeyPress() >= 0 && inv.Items[uim.HotkeyPress()].itemType == "Drug")
 			{
-				Debug.Log ("Drug has expired - no effect");
+				StartCoroutine(DrugEffect(inv.Items[uim.HotkeyPress()].itemDesc));
+				inv.Items[uim.HotkeyPress()] = new Item ();
+			}
+			else if(Input.GetButtonDown("LMB") && inv.draggedItem.itemType == "Drug")
+			{
+				StartCoroutine(DrugEffect(inv.draggedItem.itemDesc));
+				inv.closeDraggedItem();
 			}
 			
-			else if (pd.currentTreatment == pd.correctTreatment)
-			{
-				Debug.Log ("You healed me");
-			}
-			
-			else if (pd.currentTreatment != pd.correctTreatment)
+			if (uim.HotkeyPress() >= 0 && inv.Items[uim.HotkeyPress()].itemName == "Pillow")
 			{
 				pd.health--;
-				Debug.Log ("Wrong drug - you monster");
+				CheckHealth();
 			}
+			else if (Input.GetButtonDown("LMB") && inv.draggedItem.itemName == "Pillow")
+			{
+				pd.health--;
+				CheckHealth();
+			}
+			
 		}
-		else if (inv.Items[uim.HotkeyPress()].itemName == "Pillow")
-		{
-			pd.health--;
-		}
-		
-		CheckHealth();
 			
 	}
+	
+	public IEnumerator DrugEffect(string treatment)
+	{
+		if(!pd.patientCured)
+		{
+			pd.treatmentInProgress = true;
+			int timer = 5;
+			yield return new WaitForSeconds(timer);
+			if(!pd.patientDead)
+			{
+				pd.treatmentInProgress = false;
+				for(int i = 0; i < pd.treatments.Count; i++)
+				{
+					if(treatment == pd.treatments[i])
+					{
+						Debug.Log("Treatment successful");
+						
+						pd.TreatmentProgress(treatment, "successful");
+						pd.treatments.RemoveAt(i);
+						break;
+					}
+					else if(treatment == "Expired")
+					{
+						Debug.Log ("Expired medicine");
+						pd.TreatmentProgress(treatment, "expired");
+						break;
+					}
+					else if(treatment != pd.treatments[i])
+					{
+						pd.TreatmentProgress(treatment, "failed");
+						pd.health--;
+						CheckHealth();
+					}
+				}
+			}
+		}	
+	}
+		
+
 	
 	void CheckHealth()
 	{
 		if(pd.health == 1)
 		{
-			Debug.Log("Health minus 1");
+			Debug.Log("1 health remaining");
 		}
 		else if(pd.health == 0)
 		{

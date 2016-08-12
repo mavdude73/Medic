@@ -7,12 +7,14 @@ public class PCTerminal : MonoBehaviour {
 	
 	GameObject player;
 	bool playerInZone;
+	Inventory inv;
 	public UIManager uim;
 
 
 	void Awake ()
 	{
 		player = GameObject.Find("Player1");
+		inv = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
 	}
 	
 	void OpenComputerScreen()
@@ -44,14 +46,16 @@ public class PCTerminal : MonoBehaviour {
 	
 	void Update()
 	{
-		if(playerInZone)
+		if(!playerInZone)
 		{
-			if(Input.GetButtonDown ("LMB")) //&& !medicalRecord.gameObject.activeSelf
-			{
-				OpenComputerScreen();			
-			}
-			
+			return;
 		}
+		else if(inv.HitSpecificObject("PCTerminalCollider") && Input.GetButtonDown ("LMB")) //&& !medicalRecord.gameObject.activeSelf
+		{
+			OpenComputerScreen();			
+		}
+			
 	}
+
 	
 }

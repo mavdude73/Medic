@@ -43,25 +43,25 @@ public class SluiceItems: MonoBehaviour
 		
 		if (Input.GetButtonDown ("LMB"))
 		{
-			if(!inv.draggingItemBool && inv.HitObjectCheck())
+			if(!inv.draggingItemBool)
 			{
-				if (inv.HitObjectCheck().collider.gameObject.name == "Pillow") {
+				if (inv.HitSpecificObject("Pillow")) {
 					inv.addItem(2);
 				}
-				
-				if (inv.HitObjectCheck().collider.gameObject.name == "Scissors") {
-					inv.addItem(5);
-				}
-				
-				if (inv.HitObjectCheck().collider.gameObject.name == "Scalpel") {
+							
+				if (inv.HitSpecificObject("Scalpel")) {
 					inv.addItem(3);
 				}
 				
-				if (inv.HitObjectCheck().collider.gameObject.name == "Defibrillator") {
+				if (inv.HitSpecificObject("Defibrillator")) {
 					inv.addItem(4);
 				}
 				
-				if (inv.HitObjectCheck().collider.gameObject.name == "Syringe") {
+				if (inv.HitSpecificObject("Scissors")) {
+					inv.addItem(5);
+				}
+				
+				if (inv.HitSpecificObject("Syringe")) {
 					inv.addItem(6);
 				}
 			}

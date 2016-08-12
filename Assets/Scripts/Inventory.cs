@@ -15,6 +15,7 @@ public class Inventory : MonoBehaviour {
 	public int draggedItemSlotOrigin;
 	public Transform flooritemtransform;
 	public PlayerController pc;
+	public bool mouseOverHotbar = false;
 	ItemDatabase db;
 	UIManager uim;
 	GameObject player;
@@ -65,20 +66,53 @@ public class Inventory : MonoBehaviour {
 			Vector3 posi = (Input.mousePosition - GameObject.FindGameObjectWithTag("UIManager").GetComponent<RectTransform>().localPosition);
 			draggedItemGameobject.GetComponent<RectTransform>().localPosition = new Vector3 (posi.x + 15, posi.y - 15, posi.z);
 		}
-		HitObjectCheck();
 	}
 
-
+	
 	
 	public RaycastHit2D HitObjectCheck()
 	{
-		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-//		Vector3 direction = new Vector3(ray.origin.x - pc.playerVector3.x, ray.origin.y - pc.playerVector3.y, pc.playerVector3.z);
-		RaycastHit2D hit = Physics2D.Raycast (ray.origin, ray.direction, Mathf.Infinity);
-		Debug.Log(ray.direction);
-		return hit;
+		Vector3 mousePosition = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+		mousePosition = new Vector3(mousePosition.x, mousePosition.y, 0);
+		Vector3 deltaPosition = (mousePosition - pc.playerVector3);
+		
+		//		Ray ray = Camera.main.ScreenPointToRay (deltaPosition);
+		
+		//		Vector3 direction = new Vector3(ray.origin.x - pc.playerVector3.x, ray.origin.y - pc.playerVector3.y, pc.playerVector3.z);
+		RaycastHit2D hit = Physics2D.Raycast (pc.playerVector3, deltaPosition, 2f);
+		
+		
+		//		RaycastHit2D nohit = Physics2D.Raycast (new Vector3(0,0,0), new Vector3(0,0,0), 0f);
+		
+		Debug.DrawLine(pc.playerVector3, hit.point);
+		return hit;	
+		
 	}
 	
+	public bool HitSpecificObject(string objectName)
+	{
+		if(HitObjectCheck())
+		{
+			if(HitObjectCheck().collider.gameObject.name == objectName)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
+
+	public void IsMouseOverHotbar(bool verdict)
+	{
+		if (verdict)
+		{
+			mouseOverHotbar = true;
+		}
+		else
+		{
+			mouseOverHotbar = false;
+		}
+	}
 	
 	
 	public void showDraggedItem(Item item, int slotnumber)
