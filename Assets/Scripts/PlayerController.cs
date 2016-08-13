@@ -5,6 +5,7 @@ public class PlayerController : MonoBehaviour {
 
 	public float speed;
 	public float fixationSpeed;
+	public string rayHitobject;
 	public GameObject sprite;
 	public GameObject player1;
 	public Vector3 playerVector3;
@@ -19,31 +20,43 @@ public class PlayerController : MonoBehaviour {
 	{
 		PlayerMovement();
 		MouseDirection();
-		
 		playerVector3 = player1.transform.position;
+		Raycasting();
 		
-//		DetectDroppedItem();
 	}
 	
-	
-//	void DetectDroppedItem()
-//	{
-//		if (Input.GetMouseButtonDown (0))
-//		{
-//			Ray2D ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-////			RaycastHit2D hit = Physics2D.Raycast (ray.origin, ray.direction, Mathf.Infinity);
-//			RaycastHit2D hit;
-//			
-//			if(Physics2D.Raycast(ray, out hit))
-//			{
-//				float distance = Vector2.Distance(hit.transform.position, this.transform.position);
-//				Debug.Log(distance);
-//			}
-//			
-//		}
-//	}
-//	
-	
+
+	public void Raycasting ()
+	{
+		if(Input.GetButtonDown("LMB"))
+		{
+			Vector3 mousePosition = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+			mousePosition = new Vector3(mousePosition.x, mousePosition.y, 0);
+			Vector3 deltaPosition = (mousePosition - playerVector3);
+
+			RaycastHit2D hit = Physics2D.Raycast (playerVector3, deltaPosition, 2f);
+			
+			Debug.DrawLine(playerVector3, hit.point);
+
+			if(hit == false)
+			{
+				return;
+			}
+					
+			if(hit.collider.gameObject.name == null)
+			{
+				return;
+			}
+
+			if(hit.collider.gameObject.name != null)
+			{
+				rayHitobject = hit.collider.gameObject.name;
+				return;
+			}
+		}
+
+
+	}
 	
 	
 	void SpriteOrientation(int degree)
