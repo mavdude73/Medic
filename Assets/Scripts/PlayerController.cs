@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour {
 	public GameObject player1;
 	public Vector3 playerVector3;
 	public bool itemOnCursor;
+	private  SluiceItems sluiceItems = new SluiceItems(); 
 
 
 	void FixedUpdate()
@@ -22,15 +23,14 @@ public class PlayerController : MonoBehaviour {
 		PlayerMovement();
 		MouseDirection();
 		playerVector3 = player1.transform.position;
-		Raycasting();
-		
+		Raycasting();		
 	}
 	
 
 	public void Raycasting ()
 	{
 		rayHitobject = null;
-		
+
 		if (Input.GetButtonDown("LMB"))
 		{
 			Vector3 mousePosition = Camera.main.ScreenToWorldPoint (Input.mousePosition);
