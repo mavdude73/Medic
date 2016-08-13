@@ -57,7 +57,7 @@ public class PatientTreatment : MonoBehaviour {
 			if(!pd.patientDead)
 			{
 				pd.treatmentInProgress = false;
-				for(int i = 0; i < pd.treatments.Count; i++)
+				for(int i = 0; i < pd.treatments.Count; i++) // dictionary suggested
 				{
 					if(treatment == pd.treatments[i])
 					{
