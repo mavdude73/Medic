@@ -21,7 +21,7 @@ public class PatientInvestigations : MonoBehaviour {
 	
 	public void ObtainBloodSample() // code 6 = empty blood syringe
 	{
-		if(!inv.mouseOverHotbar)
+		if(!inv.mouseOverHotbar && !pd.patientDead)
 		{
 		
 			if (uim.HotkeyPress() >= 0 && inv.Items[uim.HotkeyPress()].itemID == 6)

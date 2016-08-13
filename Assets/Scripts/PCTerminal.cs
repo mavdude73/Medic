@@ -22,7 +22,16 @@ public class PCTerminal : MonoBehaviour {
 		if (!uim.computerScreen.activeSelf && !uim.medicalPages[0].activeSelf)
 		{
 			uim.computerScreen.SetActive(true);
-		} 
+		}
+
+	}
+
+	void CloseComputerScreen()
+	{
+		if (uim.computerScreen.activeSelf)
+		{
+			uim.computerScreen.SetActive(false);
+		}
 	}
 
 	
@@ -39,10 +48,10 @@ public class PCTerminal : MonoBehaviour {
 		if(other.gameObject == player)
 		{
 			playerInZone = false;
+			CloseComputerScreen();
 		}
 	}
-	
-	bool PlayerInZone() {return playerInZone;}
+
 	
 	void Update()
 	{

@@ -55,6 +55,18 @@ public class PatientZone : MonoBehaviour {
 		}
 	
 	}
+
+	void CloseMedicalRecord()
+	{
+		if (uim.medicalPages[0].activeSelf)
+		{
+			uim.medicalPages[0].SetActive(false);
+			uim.medicalPages[1].SetActive(false);
+			uim.medicalPages[2].SetActive(false);
+			uim.medicalPages[3].SetActive(false);
+		}
+	}
+
 	
 	public void OnTriggerEnter2D(Collider2D other)
 	{
@@ -62,8 +74,6 @@ public class PatientZone : MonoBehaviour {
 		{
 			playerInZone = true;
 			pd.PlayerInZoneBool (true);
-//			Debug.Log(pd.patientName);
-//			patientData = this.gameObject.GetComponentInParent<PatientData>();
 		}
 	}
 	public void OnTriggerExit2D(Collider2D other)
@@ -72,6 +82,7 @@ public class PatientZone : MonoBehaviour {
 		{
 			playerInZone = false;
 			pd.PlayerInZoneBool (false);
+			CloseMedicalRecord();
 		}
 	}
 	
@@ -82,19 +93,18 @@ public class PatientZone : MonoBehaviour {
 	
 	void Update()
 	{
-		
-		
-		if(playerInZone && !pd.patientDead)
+		if (!playerInZone)
+		{
+			return;
+		}
+		else if(playerInZone)
 		{
 			pi.ObtainBloodSample();
 			pt.AdministerTreatment();
-//			OpenMedicalRecord();
-		}
-		if(playerInZone)
-		{
 			OpenMedicalRecord();
 		}
-		
+
+
 //		if(Input.GetKeyDown(KeyCode.Delete))
 //		{
 //			if(inv.Items[0].itemObj != null)

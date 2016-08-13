@@ -20,6 +20,9 @@ public class UIManager : MonoBehaviour {
 	public GameObject bleepAlert;
 	public GameObject pharmacyMenu;
 	public GameObject deceasedStamp;
+
+	public GameObject pharmacyProgressBar;
+	public GameObject pharmacyProgressText;
 	
 	Inventory inv;
 	
@@ -28,14 +31,12 @@ public class UIManager : MonoBehaviour {
 	GameObject diagnosticsPages;
 	GameObject treatmentPages;
 	GameObject pauseMenu;
-	
-//	int hotkey;
-	
+
+
 	
 	void Start()
 	{
 		
-//		StickyLabelArray();
 		stickyLabels = GameObject.FindGameObjectsWithTag("StickyLabel");
 		
 		biographicsPages = GameObject.Find ("BiographicsPages");
@@ -59,20 +60,14 @@ public class UIManager : MonoBehaviour {
 		bleepAlert.SetActive (false);
 		pharmacyMenu.SetActive (false);
 		deceasedStamp.SetActive (false);
+
+//		pharmacyProgressBar.SetActive(false);
+
 		
 		inv = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
 	}
 	
-//	void StickyLabelArray()
-//	{
-//		stickyLabels = GameObject.FindGameObjectsWithTag("StickyLabel");
-//		Debug.Log(stickyLabels[0]);
-//		foreach(GameObject obj in stickyLabels)
-//		{
-//			medicalLabels.Add(obj);
-//		}
-//	}
-//	
+
 	
 
 	

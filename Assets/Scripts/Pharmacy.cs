@@ -10,10 +10,15 @@ public class Pharmacy : MonoBehaviour {
 	UIManager uim;
 	Inventory inv;
 	Transform floorItemTransform;
+
 	
 	bool playerInZone;
 	public bool PharmacyProcessingBool = false;
 	public Queue<int> pharmacyQueue = new Queue<int>();
+
+	float timer;
+	float elapsedTime = 0f;
+	public string sponsor;
 	
 	
 	void Awake ()
@@ -24,12 +29,20 @@ public class Pharmacy : MonoBehaviour {
 		floorItemTransform = GameObject.Find ("Flooritems").transform;
 	}
 	
-	void OpenPharmacy()
+	void OpenPharmacyScreen()
 	{
 		if (!uim.pharmacyMenu.activeSelf)
 		{
 			uim.pharmacyMenu.SetActive(true);
 		} 
+	}
+
+	void ClosePharmacyScreen()
+	{
+		if (uim.pharmacyMenu.activeSelf)
+		{
+			uim.pharmacyMenu.SetActive(false);
+		}
 	}
 	
 	public void Medicine(int i)
@@ -37,18 +50,49 @@ public class Pharmacy : MonoBehaviour {
 		pharmacyQueue.Enqueue (i);
 		StartCoroutine (ProcessPharmacyRequest());
 	}
-	
+
+
+	IEnumerator ProgressBar(float fTimer)
+	{
+		if (fTimer - elapsedTime >= 0)
+		{
+			elapsedTime += Time.deltaTime;
+			uim.pharmacyProgressBar.GetComponent<Image>().fillAmount = elapsedTime/fTimer;
+			uim.pharmacyProgressText.GetComponent<Text>().text = "Processing...";
+			yield return new WaitForSeconds(0);
+			StartCoroutine(ProgressBar(fTimer));
+		}
+	}
+
+
+	void CheckForPharmacyUpgrade(int i)
+	{
+		if (inv.PharmacyRequest (i).itemName == sponsor)
+		{
+			timer = 1f;
+		}
+		else
+		{
+			timer = 6f;
+		}
+	}
+
 	IEnumerator ProcessPharmacyRequest()
 	{
 		if (pharmacyQueue.Count > 0 && !PharmacyProcessingBool)
 		{
-			int timer = 5;
-			PharmacyProcessingBool = true;
-			yield return new WaitForSeconds (timer);
+			elapsedTime = 0f;
 			int i = pharmacyQueue.Peek ();
-			
-			float rngVectModifierX = Random.Range (0.5f, 1.1f);
-			float rngVectModifierY = Random.Range (-0.4f, 0.4f);
+			PharmacyProcessingBool = true;
+			CheckForPharmacyUpgrade(i);
+
+			StartCoroutine(ProgressBar(timer));
+
+			yield return new WaitForSecondsRealtime(timer);
+
+
+			float rngVectModifierX = Random.Range (0.8f, 1.7f);
+			float rngVectModifierY = Random.Range (-0.6f, 0.6f);
 			Vector3 posi = new Vector3 (transform.position.x + rngVectModifierX, transform.position.y + rngVectModifierY);
 			
 			GameObject itemAsGameObject = (GameObject)Instantiate (Resources.Load<GameObject> ("DroppedItem"), posi, Quaternion.identity);
@@ -60,18 +104,20 @@ public class Pharmacy : MonoBehaviour {
 			
 			// temporary fix until sprite scale standardised
 			GameObject spriteObj = itemAsGameObject.GetComponentInChildren<SpriteRenderer> ().gameObject;
-			spriteObj.transform.localScale = new Vector3 (0.15f, 0.15f, 1f); 
+			spriteObj.transform.localScale = new Vector3 (0.13f, 0.13f, 1f); 
 			//
 			
 			itemAsGameObject.transform.SetParent (floorItemTransform, true);
 			itemAsGameObject.name = medicine.itemName;
-			
+
 			pharmacyQueue.Dequeue ();
 			PharmacyProcessingBool = false;
+			uim.pharmacyProgressBar.GetComponent<Image>().fillAmount = 0f;
+			uim.pharmacyProgressText.GetComponent<Text>().text = "Open";
 			StartCoroutine (ProcessPharmacyRequest());
 		}
 	}
-	
+
 	
 	
 	public void OnTriggerEnter2D(Collider2D other)
@@ -87,6 +133,7 @@ public class Pharmacy : MonoBehaviour {
 		if(other.gameObject == player)
 		{
 			playerInZone = false;
+			ClosePharmacyScreen();
 		}
 	}
 	
@@ -98,7 +145,7 @@ public class Pharmacy : MonoBehaviour {
 		}
 		else if(inv.HitSpecificObject("PharmacyCollider") && Input.GetButtonDown ("LMB"))
 		{
-			OpenPharmacy();			
+			OpenPharmacyScreen();			
 		}
 		
 	}

@@ -18,7 +18,7 @@ public class PatientTreatment : MonoBehaviour {
 	
 	public void AdministerTreatment()
 	{
-		if(!inv.mouseOverHotbar && !pd.treatmentInProgress)
+		if(!inv.mouseOverHotbar && !pd.treatmentInProgress && !pd.patientDead)
 		{
 		
 			if(uim.HotkeyPress() >= 0 && inv.Items[uim.HotkeyPress()].itemType == "Drug")
@@ -65,20 +65,20 @@ public class PatientTreatment : MonoBehaviour {
 						
 						pd.TreatmentProgress(treatment, "successful");
 						pd.treatments.RemoveAt(i);
-						break;
+						return true;
 					}
-					else if(treatment == "Expired")
-					{
-						Debug.Log ("Expired medicine");
-						pd.TreatmentProgress(treatment, "expired");
-						break;
-					}
-					else if(treatment != pd.treatments[i])
-					{
-						pd.TreatmentProgress(treatment, "failed");
-						pd.health--;
-						CheckHealth();
-					}
+				}
+				if(treatment == "Expired")
+				{
+					Debug.Log ("Expired medicine");
+					pd.TreatmentProgress(treatment, "expired");
+
+				}
+				else
+				{
+					pd.TreatmentProgress(treatment, "failed");
+					pd.health--;
+					CheckHealth();
 				}
 			}
 		}	

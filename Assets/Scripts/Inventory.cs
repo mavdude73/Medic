@@ -20,11 +20,9 @@ public class Inventory : MonoBehaviour {
 	UIManager uim;
 	GameObject player;
 	int hotkey;	
-//	UIManager uim;
-//	int x = -160;
+
 	public int slotCount = 1;
-//	int x = 0;
-//	int y = 0;
+
 
 	void CreateHotbar()
 	{
