@@ -11,7 +11,6 @@ public class SluiceItems: MonoBehaviour
 		pc = GameObject.Find ("Player1").GetComponent<PlayerController>();
 		inv = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
 	}
-	
 
 	void ItemPickup()
 	{
