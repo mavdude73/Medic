@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour {
 
 	public void Raycasting ()
 	{
+		rayHitobject = null;
+		
 		if (Input.GetButtonDown("LMB"))
 		{
 			Vector3 mousePosition = Camera.main.ScreenToWorldPoint (Input.mousePosition);
