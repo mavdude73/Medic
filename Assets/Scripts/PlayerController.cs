@@ -10,8 +10,11 @@ public class PlayerController : MonoBehaviour {
 	public GameObject player1;
 	public Vector3 playerVector3;
 	public bool itemOnCursor;
-	private  SluiceItems sluiceItems = new SluiceItems(); 
+	private  SluiceItems sluiceItems; 
 
+	void Awake(){
+		sluiceItems = new SluiceItems();
+	}
 
 	void FixedUpdate()
 	{
@@ -53,6 +56,7 @@ public class PlayerController : MonoBehaviour {
 
 			if(hit.collider.gameObject.name != null)
 			{
+				sluiceItems.ItemPickup(hit.collider.gameObject.name);
 				rayHitobject = hit.collider.gameObject.name;
 				return;
 			}

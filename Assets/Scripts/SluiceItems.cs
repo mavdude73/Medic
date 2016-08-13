@@ -1,56 +1,40 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SluiceItems: MonoBehaviour
+public class SluiceItems
 {
 	Inventory inv;
-	PlayerController pc;
 	
-	void Awake ()
+	public SluiceItems()
 	{
-		pc = GameObject.Find ("Player1").GetComponent<PlayerController>();
 		inv = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
 	}
 
-	void ItemPickup()
+	public void ItemPickup(string name)
 	{
-		if(!pc.itemOnCursor)
+		if (name == "Pillow") 
 		{
-			if (pc.rayHitobject == "Pillow") 
-			{
-				inv.AddItem(2);
-			}
-						
-			if (pc.rayHitobject == "Scalpel")
-			{
-				inv.AddItem(3);
-			}
-			
-			if (pc.rayHitobject == "Defibrillator") 
-			{
-				inv.AddItem(4);
-			}
-			
-			if (pc.rayHitobject == "Scissors")
-			{
-				inv.AddItem(5);
-			}
-			
-			if (pc.rayHitobject == "Syringe")
-			{
-				inv.AddItem(6);
-			}
-		}	
+			inv.AddItem(2);
+		}
+					
+		if (name == "Scalpel")
+		{
+			inv.AddItem(3);
+		}
+		
+		if (name == "Defibrillator") 
+		{
+			inv.AddItem(4);
+		}
+		
+		if (name == "Scissors")
+		{
+			inv.AddItem(5);
+		}
+		
+		if (name == "Syringe")
+		{
+			inv.AddItem(6);
+		}
 	}
-	
-	
-	
-
-
-	void Update()
-	{
-		ItemPickup ();
-				
-	}
-
 }
