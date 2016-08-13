@@ -49,7 +49,7 @@ public class PatientInvestigations : MonoBehaviour {
 		bs.visitorID = pd.visitorNumber;
 		bs.visitorName = pd.patientName;
 		bs.hospitalID = pd.patientHospitalNumber;
-		bs.bloodresult = pd.patientBlood;
+		bs.bloodresult = pd.blood[0];
 		bs.itemdata = item;
 		
 		return item;

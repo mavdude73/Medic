@@ -6,17 +6,14 @@ using UnityEngine.UI;
 [System.Serializable]
 public class PatientData : MonoBehaviour {
 	
-	
-	RNGManager rng;
+
 	UIManager uim;
 	
 	void Awake ()
 	{
-		rng = GameObject.Find ("RNGManager").GetComponent<RNGManager> ();
 		uim = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager> ();
-		AcquirePatientData ();
-		BreachTarget();
 		GeneratePatientInfo ();
+		BreachTarget();
 		
 		//		player = GameObject.Find("Player1");
 		
@@ -29,23 +26,13 @@ public class PatientData : MonoBehaviour {
 
 	
 	
-	public bool questPatient;
 	public int visitorNumber;
 	public int assignedBedNumber;
 	public string patientName;
 	public string patientAge;
 	public string patientHospitalNumber;
 	public string patientLabel;
-	public string patientDiagnosis;
-	public string patientSymptom;
-	public string patientExamination;
-	public string patientThermometer;
-	public string patientBlood;
-	public string patientUs;
-	public string patientXr;
-	public string patientMri;
-	public string correctTreatment;
-	public string currentTreatment;
+
 	public bool patientDead;
 	public bool patientCured;
 	public int health;
@@ -107,6 +94,8 @@ public class PatientData : MonoBehaviour {
 	void GeneratePatientInfo()
 	{
 		// list diagnoses here then add the corresponding function
+		PatientBio();
+
 		diagnoses.Add ("MI");
 		diagnoses.Add ("LRTI");
 		diagnoses.Add ("GORD");
@@ -308,41 +297,28 @@ public class PatientData : MonoBehaviour {
 	//	}
 	
 
-	
-	
-	void AcquirePatientData()
+	void PatientBio()
 	{
-		rng.getRNG ();
-		
-		//		Invoke("UpdateVisitorNumber",1f);
-		patientName = rng.GetArray (0);
-		patientAge = rng.GetArray (1);
-		patientHospitalNumber = rng.GetArray (2);
-		patientDiagnosis = rng.GetArray (3);
-		patientSymptom = rng.GetArray (4);
-		patientExamination = rng.GetArray (5);
-		patientThermometer = rng.GetArray (6);
-		patientBlood = rng.GetArray (7);
-		patientUs = rng.GetArray (8);
-		patientXr = rng.GetArray (9);
-		patientMri = rng.GetArray (10);
-		correctTreatment = rng.GetArray (11);
-		currentTreatment = "No treatment";
-		questPatient = false;
-		patientDead = false;
-		patientCured = false;
+		string[] patientFName = new string[] {"Harry","John","Will","Thomas","Charlie","Felix","Dave","Mike","Steven","Ben","Rob","Matthew","Dennis","Brett","Joe","Justin","Lenny","Gavin"};
+		string firstName = patientFName[Random.Range (0, patientFName.Length)];
+
+		string[] patientLName = new string[] {"Hobart","Smith","Dickinson","Cope","Gilder","Seddon","Swann","Dixon","Gellar","Green","Wright","Jackson","Moyes","Harris","Petit","Morgan","Biddle","Tank","Lewis","Robinson"};
+		string lastName = patientLName[Random.Range (0, patientLName.Length)];
+
+		patientName = firstName + " " + lastName;
+
+		patientAge = Random.Range (26, 80) + "Y";
+
+		patientHospitalNumber = "DIS0" + Random.Range (10000, 99999);
+
+		patientLabel = patientName + ", " + patientAge + "\n" + patientHospitalNumber;
+
 		health = 2;
 		deathTimer = 20000;
-		targetTimer = 300;
-		
-		patientInBedZone = false;
-		//		patientPositionX = gameObject.transform.position.x;
-		//		patientPositionY = gameObject.transform.position.y;
-		
-		
-		patientLabel = patientName + ", " + patientAge + "\n" + patientHospitalNumber;
-		
+		targetTimer = 400;
 	}
+	
+
 	
 	
 	void BreachTarget()
@@ -359,54 +335,6 @@ public class PatientData : MonoBehaviour {
 		}
 	}
 	
-	
-	//	public void OpenMedicalRecord()
-	//	{
-	//		medicalRecord = GameObject.Find ("MedicalRecord");
-	//		biographicsPages = GameObject.Find ("BiographicsPages");
-	//		diagnosticsPages = GameObject.Find ("DiagnosticsPages");
-	//		treatmentPages = GameObject.Find ("TreatmentPages");
-	//		
-	//		medicalRecord.SetActive (true);	
-	//		// Populate pages
-	//		biographicsPages.SetActive (true);
-	//		diagnosticsPages.SetActive (true);
-	//		treatmentPages.SetActive (true);
-	//		// Update patientlabels
-	//		
-	//		GameObject.Find("MainLabel").GetComponent<Text>().text = patientLabel;
-	//		GameObject.Find("BiographicsLabel").GetComponent<Text>().text = patientLabel;
-	//		GameObject.Find("DiagnosticsLabel").GetComponent<Text>().text = patientLabel;
-	//		GameObject.Find("TreatmentLabel").GetComponent<Text>().text = patientLabel;
-	//		GameObject.Find("CurrentTreatmentLabel").GetComponent<Text>().text = currentTreatment;
-	//		// Close pages
-	//		biographicsPages.SetActive (false);
-	//		diagnosticsPages.SetActive (false);
-	//		treatmentPages.SetActive (false);
-	//	}
-	
-	//			result = rng.GetArray (value);
-	
-	//	rng = GameObject.Find ("GameManager");
-	//	
-	//				rng.getRNG ();
-	//
-	
-	//
-	//		patientName = rng.MyRNG[0];
-	//		patientAge;
-	//		patientHospitalNumber;
-	//		patientDiagnosis;
-	//		patientSymptom;
-	//		patientExamination;
-	//		patientThermometer;
-	//		patientBlood;
-	//		patientUs;
-	//		patientXr;
-	//		patientMri;
-	//		patientTreatment;
-	
-	
-	
+
 	
 }
