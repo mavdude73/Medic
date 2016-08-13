@@ -151,13 +151,12 @@ public class Inventory : MonoBehaviour {
 
 				Vector3 posi = new Vector3(player.transform.position.x + 0.75f, player.transform.position.y);
 				GameObject itemAsGameObject = (GameObject)Instantiate(draggedItem.itemModel, posi, Quaternion.identity);
-				itemAsGameObject.GetComponent<DroppedItem>().item = draggedItem;
-				itemAsGameObject.GetComponent<DroppedItem>().item.floorID = floorIDCount+1;
-				itemAsGameObject.GetComponentInChildren<SpriteRenderer>().sprite = draggedItem.itemIcon;
+				Item clonedItem = new Item(draggedItem.itemID, draggedItem.itemName, draggedItem.itemType, draggedItem.itemDesc, floorIDCount, draggedItem.itemObj);
+				itemAsGameObject.GetComponent<DroppedItem>().item = clonedItem;
+				itemAsGameObject.GetComponentInChildren<SpriteRenderer>().sprite = clonedItem.itemIcon;
 
 				itemAsGameObject.transform.SetParent(floorItemTransform, false);
-				itemAsGameObject.name = draggedItem.itemName+floorIDCount;
-
+				itemAsGameObject.name = clonedItem.itemName+clonedItem.floorID;
 
 				closeDraggedItem();
 			}

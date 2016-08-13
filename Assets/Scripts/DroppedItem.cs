@@ -22,9 +22,7 @@ public class DroppedItem : MonoBehaviour {
 
 	void Update()
 	{
-//		PickMeUp();	
-		HitSpecificObject("Syringe");
-
+		PickMeUp();	
 	}
 	
 	public void OnTriggerEnter2D(Collider2D other){
@@ -53,31 +51,31 @@ public class DroppedItem : MonoBehaviour {
 		return hit;	
 		
 	}
-	
-	void HitSpecificObject(string objectName)
+
+	bool HitSpecificObject(int floorid)
 	{
-		if(HitObjectCheck())
+		if(HitObjectCheck().collider.gameObject.name == null)
 		{
-//			Debug.Log(HitObjectCheck().collider.gameObject.name);
-//			if(HitObjectCheck().collider.gameObject.GetComponent<DroppedItem>().item.floorID == item.floorID)
-//			{
-//				Debug.Log("ping");
-//				hitByRaycast = true;
-//				return;
-//
-//			}
+			return false;
 		}
-		hitByRaycast = false;
+		if(HitObjectCheck().collider.gameObject.GetComponent<DroppedItem>() == null)
+		{
+			return false;
+		}
+		if(HitObjectCheck().collider.gameObject.GetComponent<DroppedItem>().item.floorID == floorid)
+		{
+			hitByRaycast = true;
+			return true;
+		}
+		return false;
+
 	}
 
 
 	void PickMeUp()
 	{
-		if(!playerInZone)
-		{
-			return;
-		}
-		else if (!inv.draggingItemBool && inv.HitObjectCheck() && Input.GetButtonDown("LMB"))
+
+		if (!inv.draggingItemBool && Input.GetButtonDown("LMB") && HitSpecificObject(item.floorID))
 		{
 			if(item.itemName != "Bloodspill")
 			{

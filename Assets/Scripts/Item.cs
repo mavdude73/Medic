@@ -32,7 +32,7 @@ public class Item {
 		itemDesc = desc;
 		floorID = floorid;
 		itemObj = obj;
-		itemIcon = Resources.Load<Sprite> ("" + name);
+		itemIcon = Resources.Load<Sprite> (name);
 		itemModel = Resources.Load<GameObject>("DroppedItem");
 
 	}
