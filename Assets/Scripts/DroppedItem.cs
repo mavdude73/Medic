@@ -48,11 +48,11 @@ public class DroppedItem : MonoBehaviour {
 	{
 		thisGameobjectname = this.gameObject.name;
 
-		if (!inv.draggingItemBool && Input.GetButtonDown("LMB"))
+		if (!pc.itemOnCursor && Input.GetButtonDown("LMB"))
 		{
 			if(thisGameobjectname == pc.rayHitobject && item.itemName != "Bloodspill")
 			{
-				if(inv.addItemIfEmpty(item))
+				if(inv.AddItemIfEmpty(item))
 				{
 					Destroy(this.gameObject);
 				}				

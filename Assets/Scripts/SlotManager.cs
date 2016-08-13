@@ -9,11 +9,13 @@ public class SlotManager : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 	public Item item;
 	Image itemImage;
 	Inventory inv;
+	PlayerController pc;
 	bool mouseOverHotbar = false;
 
 
 	void Start ()
 	{
+		pc = GameObject.Find ("Player1").GetComponent<PlayerController>();
 		inv = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
 		itemImage = gameObject.transform.GetChild (0).GetComponent<Image> ();
 	}
@@ -49,29 +51,29 @@ public class SlotManager : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 	{
 		if(data.button == PointerEventData.InputButton.Left)
 		{
-			if (inv.Items[slotNumber].itemName == null && inv.draggingItemBool)
+			if (inv.Items[slotNumber].itemName == null && pc.itemOnCursor)
 			{
 				inv.Items[slotNumber] = inv.draggedItem;
-				inv.closeDraggedItem();
+				inv.CloseDraggedItem();
 			}
-			else if(inv.Items[slotNumber].itemName != null && inv.draggingItemBool)
+			else if(inv.Items[slotNumber].itemName != null && pc.itemOnCursor)
 			{
 				inv.Items[inv.draggedItemSlotOrigin] = inv.Items[slotNumber];
 				inv.Items[slotNumber] = inv.draggedItem;
-				inv.closeDraggedItem();
+				inv.CloseDraggedItem();
 			}
-			else if(inv.Items[slotNumber].itemName != null && !inv.draggingItemBool)
+			else if(inv.Items[slotNumber].itemName != null && !pc.itemOnCursor)
 			{
-				inv.showDraggedItem(inv.Items[slotNumber], slotNumber);
+				inv.ShowDraggedItem(inv.Items[slotNumber], slotNumber);
 				inv.Items[slotNumber] = new Item();
 			}
 		}
 		
 		if(data.button == PointerEventData.InputButton.Right)
 		{
-			if (!inv.draggingItemBool && inv.Items[slotNumber].itemName != null)
+			if (!pc.itemOnCursor && inv.Items[slotNumber].itemName != null)
 			{
-				inv.showDraggedItem(inv.Items[slotNumber], slotNumber);
+				inv.ShowDraggedItem(inv.Items[slotNumber], slotNumber);
 				inv.Items[slotNumber] = new Item();
 				inv.DropItem();
 			}

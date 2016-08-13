@@ -8,10 +8,12 @@ public class SluiceItems: MonoBehaviour
 	private GameObject player1;
 //	PlayerData pd;
 	Inventory inv;
+	PlayerController pc;
 	bool playerInZone;
 	
 	void Awake ()
 	{
+		pc = GameObject.Find ("Player1").GetComponent<PlayerController>();
 		inv = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
 		player1 = GameObject.Find ("Player1");
 		
@@ -36,36 +38,36 @@ public class SluiceItems: MonoBehaviour
 
 	void ItemPickup()
 	{
-		if (!playerInZone)
+		if (playerInZone)
 		{
-			return;
-		}
-		
-		if (Input.GetButtonDown ("LMB"))
-		{
-			if(!inv.draggingItemBool)
+			if(!pc.itemOnCursor)
 			{
-				if (inv.HitSpecificObject("Pillow")) {
-					inv.addItem(2);
+				if (pc.rayHitobject == "Pillow") 
+				{
+					inv.AddItem(2);
 				}
 							
-				if (inv.HitSpecificObject("Scalpel")) {
-					inv.addItem(3);
+				if (pc.rayHitobject == "Scalpel")
+				{
+					inv.AddItem(3);
 				}
 				
-				if (inv.HitSpecificObject("Defibrillator")) {
-					inv.addItem(4);
+				if (pc.rayHitobject == "Defibrillator") 
+				{
+					inv.AddItem(4);
 				}
 				
-				if (inv.HitSpecificObject("Scissors")) {
-					inv.addItem(5);
+				if (pc.rayHitobject == "Scissors")
+				{
+					inv.AddItem(5);
 				}
 				
-				if (inv.HitSpecificObject("Syringe")) {
-					inv.addItem(6);
+				if (pc.rayHitobject == "Syringe")
+				{
+					inv.AddItem(6);
 				}
-			}
-		}	
+			}	
+		}
 	}
 	
 	

@@ -28,7 +28,7 @@ public class Matron : MonoBehaviour {
 	{
 		if(matronSeesYou)
 		{
-			if (inventory.checkHasItem(5))
+			if (inventory.CheckHasItem(5))
 				{
 					Debug.Log("Scissors detected");
 					move = false;

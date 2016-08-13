@@ -10,15 +10,14 @@ public class Inventory : MonoBehaviour {
 	public List<Item> Items = new List<Item> ();
 	public GameObject slots;
 	public GameObject draggedItemGameobject;
-	public bool draggingItemBool = false;
 	public Item draggedItem;
 	public int draggedItemSlotOrigin;
 	Transform floorItemTransform;
-	public PlayerController pc;
 	public bool mouseOverHotbar = false;
 	ItemDatabase db;
 	UIManager uim;
 	GameObject player;
+	PlayerController pc;
 	int hotkey;	
 
 	int floorIDCount = 0;
@@ -52,6 +51,7 @@ public class Inventory : MonoBehaviour {
 	void Awake ()
 		{
 			player = GameObject.Find ("Player1");
+			pc = GameObject.Find ("Player1").GetComponent<PlayerController>();
 			floorItemTransform = GameObject.Find ("Flooritems").transform;
 			db = GameObject.FindGameObjectWithTag ("ItemDatabase").GetComponent<ItemDatabase>();
 			uim = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager> ();
@@ -62,7 +62,7 @@ public class Inventory : MonoBehaviour {
 
 	void Update()
 	{
-		if(draggingItemBool)
+		if(pc.itemOnCursor)
 		{
 			Vector3 posi = (Input.mousePosition - GameObject.FindGameObjectWithTag("UIManager").GetComponent<RectTransform>().localPosition);
 			draggedItemGameobject.GetComponent<RectTransform>().localPosition = new Vector3 (posi.x + 15, posi.y - 15, posi.z);
@@ -110,25 +110,25 @@ public class Inventory : MonoBehaviour {
 	}
 	
 	
-	public void showDraggedItem(Item item, int slotnumber)
+	public void ShowDraggedItem(Item item, int slotnumber)
 	{
 		draggedItemSlotOrigin = slotnumber;
 		draggedItemGameobject.SetActive(true);
 		draggedItem = item;
-		draggingItemBool = true;
+		pc.itemOnCursor = true;
 		draggedItemGameobject.GetComponent<Image>().sprite = item.itemIcon;
 	}
 	
-	public void closeDraggedItem()
+	public void CloseDraggedItem()
 	{
-		draggingItemBool = false;
+		pc.itemOnCursor = false;
 		draggedItemGameobject.SetActive(false);
 		draggedItem = new Item();
 	}
 	
 	public void DropItem()
 	{
-		if(!draggingItemBool)
+		if(!pc.itemOnCursor)
 		{
 			return;
 		}
@@ -143,7 +143,7 @@ public class Inventory : MonoBehaviour {
 				itemAsGameObject.GetComponent<DroppedItem>().item = db.items[0];
 				itemAsGameObject.transform.SetParent(floorItemTransform, false);
 				itemAsGameObject.name = draggedItem.itemName+"spill";
-				closeDraggedItem();
+				CloseDraggedItem();
 			}
 			else
 			{
@@ -158,12 +158,12 @@ public class Inventory : MonoBehaviour {
 				itemAsGameObject.transform.SetParent(floorItemTransform, false);
 				itemAsGameObject.name = clonedItem.itemName+clonedItem.floorID;
 
-				closeDraggedItem();
+				CloseDraggedItem();
 			}
 		}
 	}
 
-	public bool checkHasItem (int itemid)
+	public bool CheckHasItem (int itemid)
 	{
 		for (int i = 0; i < Items.Count; i++)
 		{
@@ -190,21 +190,21 @@ public class Inventory : MonoBehaviour {
 		return new Item();
 	}
 	
-	public void addItem(int itemid)
+	public void AddItem(int itemid)
 	{
 		for (int i = 0; i < db.items.Count; i++)
 		{
 			if(db.items[i].itemID == itemid)
 			{
 				Item item = db.items[i];
-				addItemIfEmpty(item);
+				AddItemIfEmpty(item);
 				break;
 			}
 		}
 	}
 
 
-	public bool addItemIfEmpty(Item item)
+	public bool AddItemIfEmpty(Item item)
 	{
 		for (int k = 0; k < Items.Count; k++)
 		{
@@ -217,7 +217,7 @@ public class Inventory : MonoBehaviour {
 		return false;
 	}
 	
-	public void deleteItem0()
+	public void DeleteItem0()
 	{
 		if(Items[uim.HotkeyPress()].itemName != null)
 		{

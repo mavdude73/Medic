@@ -7,6 +7,7 @@ using System.Collections.Generic;
 public class PatientZone : MonoBehaviour {
 	
 	PatientData pd;
+	PlayerController pc;
 	PatientInvestigations pi;
 	PatientTreatment pt;
 	UIManager uim;
@@ -18,6 +19,7 @@ public class PatientZone : MonoBehaviour {
 	void Awake()
 	{
 		player = GameObject.Find("Player1");
+		pc = GameObject.Find ("Player1").GetComponent<PlayerController>();
 		pd = this.gameObject.GetComponent<PatientData> ();
 		pi = this.gameObject.GetComponent<PatientInvestigations> ();
 		pt = this.gameObject.GetComponent<PatientTreatment> ();
@@ -34,7 +36,7 @@ public class PatientZone : MonoBehaviour {
 		{
 			return;
 		}
-		else if(!inv.draggingItemBool && inv.HitSpecificObject("Patientsprite"))
+		else if(!pc.itemOnCursor && inv.HitSpecificObject("Patientsprite"))
 		{
 			uim.medicalPages[0].SetActive(true);
 	

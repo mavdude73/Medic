@@ -56,7 +56,7 @@ public class Laboratory : MonoBehaviour {
 		{
 			bloodQueue.Enqueue(inv.draggedItem.itemObj);
 //			inv.draggedItem = new Item();
-			inv.closeDraggedItem();
+			inv.CloseDraggedItem();
 		}
 	}
 	

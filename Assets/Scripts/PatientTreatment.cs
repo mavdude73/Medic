@@ -29,7 +29,7 @@ public class PatientTreatment : MonoBehaviour {
 			else if(Input.GetButtonDown("LMB") && inv.draggedItem.itemType == "Drug")
 			{
 				StartCoroutine(DrugEffect(inv.draggedItem.itemDesc));
-				inv.closeDraggedItem();
+				inv.CloseDraggedItem();
 			}
 			
 			if (uim.HotkeyPress() >= 0 && inv.Items[uim.HotkeyPress()].itemName == "Pillow")
