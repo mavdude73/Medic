@@ -135,6 +135,22 @@ public class PatientData : MonoBehaviour {
 			treatment_start.RemoveAt (r);
 		}
 
+		while (blood_start.Count > 0)
+		{
+			int r = Random.Range (0,blood_start.Count);
+			blood.Add (blood_start [r]);
+			blood_start.RemoveAt (r);
+		}
+
+
+		while (xray_start.Count > 0)
+		{
+			int r = Random.Range (0,xray_start.Count);
+			xray.Add (xray_start [r]);
+			xray_start.RemoveAt (r);
+		}
+
+
 	}
 	
 	void Consultant()

@@ -13,13 +13,15 @@ public class Inventory : MonoBehaviour {
 	public bool draggingItemBool = false;
 	public Item draggedItem;
 	public int draggedItemSlotOrigin;
-	public Transform flooritemtransform;
+	Transform floorItemTransform;
 	public PlayerController pc;
 	public bool mouseOverHotbar = false;
 	ItemDatabase db;
 	UIManager uim;
 	GameObject player;
 	int hotkey;	
+
+	int floorIDCount = 0;
 
 	public int slotCount = 1;
 
@@ -50,6 +52,7 @@ public class Inventory : MonoBehaviour {
 	void Awake ()
 		{
 			player = GameObject.Find ("Player1");
+			floorItemTransform = GameObject.Find ("Flooritems").transform;
 			db = GameObject.FindGameObjectWithTag ("ItemDatabase").GetComponent<ItemDatabase>();
 			uim = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager> ();
 			
@@ -73,14 +76,8 @@ public class Inventory : MonoBehaviour {
 		Vector3 mousePosition = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 		mousePosition = new Vector3(mousePosition.x, mousePosition.y, 0);
 		Vector3 deltaPosition = (mousePosition - pc.playerVector3);
-		
-		//		Ray ray = Camera.main.ScreenPointToRay (deltaPosition);
-		
-		//		Vector3 direction = new Vector3(ray.origin.x - pc.playerVector3.x, ray.origin.y - pc.playerVector3.y, pc.playerVector3.z);
+
 		RaycastHit2D hit = Physics2D.Raycast (pc.playerVector3, deltaPosition, 2f);
-		
-		
-		//		RaycastHit2D nohit = Physics2D.Raycast (new Vector3(0,0,0), new Vector3(0,0,0), 0f);
 		
 		Debug.DrawLine(pc.playerVector3, hit.point);
 		return hit;	
@@ -144,19 +141,24 @@ public class Inventory : MonoBehaviour {
 				
 				GameObject itemAsGameObject = (GameObject)Instantiate(Resources.Load<GameObject>(draggedItem.itemName+"spill"), posi, Quaternion.identity);
 				itemAsGameObject.GetComponent<DroppedItem>().item = db.items[0];
-				itemAsGameObject.transform.SetParent(flooritemtransform, true);
+				itemAsGameObject.transform.SetParent(floorItemTransform, false);
 				itemAsGameObject.name = draggedItem.itemName+"spill";
 				closeDraggedItem();
 			}
 			else
 			{
+				floorIDCount++;
+
 				Vector3 posi = new Vector3(player.transform.position.x + 0.75f, player.transform.position.y);
-				
 				GameObject itemAsGameObject = (GameObject)Instantiate(draggedItem.itemModel, posi, Quaternion.identity);
 				itemAsGameObject.GetComponent<DroppedItem>().item = draggedItem;
+				itemAsGameObject.GetComponent<DroppedItem>().item.floorID = floorIDCount+1;
 				itemAsGameObject.GetComponentInChildren<SpriteRenderer>().sprite = draggedItem.itemIcon;
-				itemAsGameObject.transform.SetParent(flooritemtransform, true);
-				itemAsGameObject.name = draggedItem.itemName;
+
+				itemAsGameObject.transform.SetParent(floorItemTransform, false);
+				itemAsGameObject.name = draggedItem.itemName+floorIDCount;
+
+
 				closeDraggedItem();
 			}
 		}

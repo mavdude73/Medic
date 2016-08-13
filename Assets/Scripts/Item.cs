@@ -9,7 +9,7 @@ public class Item {
 	public string itemName;
 	public string itemType;
 	public string itemDesc;
-	public int visitorID;
+	public int floorID;
 //	public ItemType itemType;
 	public GameObject itemObj;
 
@@ -24,13 +24,13 @@ public class Item {
 //		equipment
 //	}
 
-	public Item(int id, string name, string type, string desc, int patientid, GameObject obj)
+	public Item(int id, string name, string type, string desc, int floorid, GameObject obj)
 	{
 		itemID = id;
 		itemName = name;
 		itemType = type;
 		itemDesc = desc;
-		visitorID = patientid;
+		floorID = floorid;
 		itemObj = obj;
 		itemIcon = Resources.Load<Sprite> ("" + name);
 		itemModel = Resources.Load<GameObject>("DroppedItem");

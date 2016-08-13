@@ -73,7 +73,7 @@ public class Pharmacy : MonoBehaviour {
 		}
 		else
 		{
-			timer = 6f;
+			timer = 3f;
 		}
 	}
 
@@ -88,7 +88,7 @@ public class Pharmacy : MonoBehaviour {
 
 			StartCoroutine(ProgressBar(timer));
 
-			yield return new WaitForSecondsRealtime(timer);
+			yield return new WaitForSeconds(timer);
 
 
 			float rngVectModifierX = Random.Range (0.8f, 1.7f);
