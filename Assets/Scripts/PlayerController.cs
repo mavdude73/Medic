@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour {
 			mousePosition = new Vector3(mousePosition.x, mousePosition.y, 0);
 			Vector3 deltaPosition = (mousePosition - playerVector3);
 
-			RaycastHit2D hit = Physics2D.Raycast (playerVector3, deltaPosition, 2f);
+			RaycastHit2D hit = Physics2D.Raycast (playerVector3, deltaPosition, 1f);
 			
 			Debug.DrawLine(playerVector3, hit.point);
 

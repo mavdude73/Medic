@@ -7,7 +7,7 @@ public class DroppedItem : MonoBehaviour {
 	public Item item;
 	GameObject player;
 	public bool playerInZone;
-	public bool hitByRaycast = false;
+	public string thisGameobjectname;
 	Inventory inv;
 	UIManager uim;
 	PlayerController pc;
@@ -18,11 +18,13 @@ public class DroppedItem : MonoBehaviour {
 		pc = GameObject.Find ("Player1").GetComponent<PlayerController>();
 		inv = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
 		uim = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager> ();
+
+
 	}
 
 	void Update()
 	{
-//		PickMeUp();
+		PickMeUp();
 	}
 	
 	public void OnTriggerEnter2D(Collider2D other){
@@ -44,10 +46,11 @@ public class DroppedItem : MonoBehaviour {
 
 	void PickMeUp()
 	{
-		Debug.Log(item.floorID);
+		thisGameobjectname = this.gameObject.name;
+
 		if (!inv.draggingItemBool && Input.GetButtonDown("LMB"))
 		{
-			if(hitByRaycast && item.itemName != "Bloodspill")
+			if(thisGameobjectname == pc.rayHitobject && item.itemName != "Bloodspill")
 			{
 				if(inv.addItemIfEmpty(item))
 				{
