@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SluiceItems
+public class SluiceItems : MonoBehaviour
 {
 	Inventory inv;
 	

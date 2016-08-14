@@ -3,7 +3,8 @@ using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class Pharmacy : MonoBehaviour {
+public class Pharmacy : MonoBehaviour
+{
 	
 	
 	GameObject player;
@@ -11,8 +12,7 @@ public class Pharmacy : MonoBehaviour {
 	Inventory inv;
 	Transform floorItemTransform;
 
-	
-	bool playerInZone;
+
 	public bool PharmacyProcessingBool = false;
 	public Queue<int> pharmacyQueue = new Queue<int>();
 
@@ -20,18 +20,19 @@ public class Pharmacy : MonoBehaviour {
 	float elapsedTime = 0f;
 	public string sponsor;
 	
-	
-	void Awake ()
+
+
+	void Awake()
 	{
-		player = GameObject.Find("Player1");
 		uim = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager> ();
+		player = GameObject.Find("Player1");
 		inv = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
 		floorItemTransform = GameObject.Find ("Flooritems").transform;
 	}
 	
-	void OpenPharmacyScreen()
+	public void OpenPharmacyScreen(string name)
 	{
-		if (!uim.pharmacyMenu.activeSelf)
+		if (name == "Pharmacy" && !uim.pharmacyMenu.activeSelf)
 		{
 			uim.pharmacyMenu.SetActive(true);
 		} 
@@ -118,35 +119,10 @@ public class Pharmacy : MonoBehaviour {
 		}
 	}
 
-	
-	
-	public void OnTriggerEnter2D(Collider2D other)
-	{
-		if(other.gameObject == player)
-		{
-			playerInZone = true;
-		}
-	}
-	
-	public void OnTriggerExit2D(Collider2D other)
-	{
-		if(other.gameObject == player)
-		{
-			playerInZone = false;
-			ClosePharmacyScreen();
-		}
-	}
+
 	
 	void Update()
 	{
-		if(!playerInZone)
-		{
-			return;
-		}
-		else if(inv.HitSpecificObject("PharmacyCollider") && Input.GetButtonDown ("LMB"))
-		{
-			OpenPharmacyScreen();			
-		}
 		
 	}
 	

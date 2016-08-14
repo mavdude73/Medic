@@ -10,10 +10,13 @@ public class PlayerController : MonoBehaviour {
 	public GameObject player1;
 	public Vector3 playerVector3;
 	public bool itemOnCursor;
-	private  SluiceItems sluiceItems; 
+	private SluiceItems sluiceItems;
+	private Pharmacy pharmacy;
 
-	void Awake(){
+	void Start()
+	{
 		sluiceItems = new SluiceItems();
+		pharmacy = GameObject.Find("Pharmacy").GetComponent<Pharmacy>();
 	}
 
 	void FixedUpdate()
@@ -57,6 +60,8 @@ public class PlayerController : MonoBehaviour {
 			if(hit.collider.gameObject.name != null)
 			{
 				sluiceItems.ItemPickup(hit.collider.gameObject.name);
+				Debug.Log(hit.collider.gameObject.name);
+				pharmacy.OpenPharmacyScreen(hit.collider.gameObject.name);
 				rayHitobject = hit.collider.gameObject.name;
 				return;
 			}
@@ -141,9 +146,6 @@ public class PlayerController : MonoBehaviour {
 			transform.Translate(-Vector2.up * Input.GetAxis("Vertical") * Time.deltaTime * speed, Space.Self);
 		}
 	}
-
-
-
 
 
 }
