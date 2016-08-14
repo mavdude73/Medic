@@ -4,7 +4,6 @@ using System.Collections;
 public class PatientTreatment : MonoBehaviour {
 	
 	PlayerData playerData;
-	PlayerController pc;
 	PatientData pd;
 	Inventory inv;
 	
@@ -12,39 +11,44 @@ public class PatientTreatment : MonoBehaviour {
 	{
 		playerData = GameObject.Find("Player1").GetComponent<PlayerData>();
 		pd = this.gameObject.GetComponent<PatientData> ();
-		pc = GameObject.Find("Player1").GetComponent<PlayerController>();
 		inv = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
 	}
 	
-	public void AdministerTreatment()
+	public void AdministerTreatment(bool inZone, bool isMouse, int hotkey)
 	{
-		if(!inv.mouseOverHotbar && !pd.treatmentInProgress && !pd.patientDead)
+		if(inZone)
 		{
+			if(!inv.mouseOverHotbar && !pd.treatmentInProgress && !pd.patientDead)
+			{
 		
-			if(pc.HotkeyPress() >= 0 && inv.Items[pc.HotkeyPress()].itemType == "Drug")
-			{
-				StartCoroutine(DrugEffect(inv.Items[pc.HotkeyPress()].itemDesc));
-				inv.Items[pc.HotkeyPress()] = new Item ();
+				if(!isMouse)
+				{
+					if(inv.Items[hotkey].itemType == "Drug")
+					{
+						StartCoroutine(DrugEffect(inv.Items[hotkey].itemDesc));
+						inv.Items[hotkey] = new Item ();
+					}
+					if(inv.Items[hotkey].itemName == "Pillow")
+					{
+						pd.health--;
+						CheckHealth();
+					}
+				}
+				if(isMouse)
+				{
+					if(inv.draggedItem.itemType == "Drug")
+					{
+						StartCoroutine(DrugEffect(inv.draggedItem.itemDesc));
+						inv.CloseDraggedItem();
+					}
+					if (inv.draggedItem.itemName == "Pillow")
+					{
+						pd.health--;
+						CheckHealth();
+					}
+				}
 			}
-			else if(Input.GetButtonDown("LMB") && inv.draggedItem.itemType == "Drug")
-			{
-				StartCoroutine(DrugEffect(inv.draggedItem.itemDesc));
-				inv.CloseDraggedItem();
-			}
-			
-			if (pc.HotkeyPress() >= 0 && inv.Items[pc.HotkeyPress()].itemName == "Pillow")
-			{
-				pd.health--;
-				CheckHealth();
-			}
-			else if (Input.GetButtonDown("LMB") && inv.draggedItem.itemName == "Pillow")
-			{
-				pd.health--;
-				CheckHealth();
-			}
-			
 		}
-			
 	}
 	
 	public IEnumerator DrugEffect(string treatment)

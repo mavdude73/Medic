@@ -135,12 +135,15 @@ public class Inventory : MonoBehaviour {
 			
 			if(draggedItem.itemType == "Sample")
 			{
+				floorIDCount++;
+
 				Vector3 posi = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z + 1f);
 				
 				GameObject itemAsGameObject = (GameObject)Instantiate(Resources.Load<GameObject>(draggedItem.itemName+"spill"), posi, Quaternion.identity);
-				itemAsGameObject.GetComponent<DroppedItem>().item = db.items[0];
+				Item clonedItem = new Item(db.items[0].itemID, db.items[0].itemName, db.items[0].itemType, db.items[0].itemDesc, floorIDCount, db.items[0].itemObj);
+				itemAsGameObject.GetComponent<DroppedItem>().item = clonedItem;
 				itemAsGameObject.transform.SetParent(floorItemTransform, false);
-				itemAsGameObject.name = draggedItem.itemName+"spill";
+				itemAsGameObject.name = clonedItem.itemName+clonedItem.floorID;
 				CloseDraggedItem();
 			}
 			else
@@ -152,10 +155,8 @@ public class Inventory : MonoBehaviour {
 				Item clonedItem = new Item(draggedItem.itemID, draggedItem.itemName, draggedItem.itemType, draggedItem.itemDesc, floorIDCount, draggedItem.itemObj);
 				itemAsGameObject.GetComponent<DroppedItem>().item = clonedItem;
 				itemAsGameObject.GetComponentInChildren<SpriteRenderer>().sprite = clonedItem.itemIcon;
-
 				itemAsGameObject.transform.SetParent(floorItemTransform, false);
 				itemAsGameObject.name = clonedItem.itemName+clonedItem.floorID;
-
 				CloseDraggedItem();
 			}
 		}

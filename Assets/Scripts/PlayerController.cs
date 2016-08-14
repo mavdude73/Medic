@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour {
 	private Inventory inv;
 	private PatientZone patientZone;
 	private PatientInvestigations patientInvestigations;
+	private PatientTreatment patientTreatment;
+	private DroppedItem droppedItem;
 
 	void Start()
 	{
@@ -36,7 +38,7 @@ public class PlayerController : MonoBehaviour {
 	{
 		PlayerMovement();
 		MouseDirection();
-		playerVector3 = player1.transform.position;
+		playerVector3 = transform.position;
 		Raycasting();		
 	}
 	
@@ -83,9 +85,15 @@ public class PlayerController : MonoBehaviour {
 					patientInvestigations = GameObject.Find(hit.collider.gameObject.name).GetComponent<PatientInvestigations>();
 					patientInvestigations.ObtainBloodSample(true, true, -1);
 
+					patientTreatment = GameObject.Find(hit.collider.gameObject.name).GetComponent<PatientTreatment>();
+					patientTreatment.AdministerTreatment(true, true, -1);
 				}
 
-			
+				if(GameObject.Find(hit.collider.gameObject.name).GetComponent<DroppedItem>())
+				{
+					droppedItem = GameObject.Find(hit.collider.gameObject.name).GetComponent<DroppedItem>();
+					droppedItem.PickUpItem(hit.collider.gameObject.name, true, -1);
+				}
 
 				return;
 			}
@@ -93,6 +101,40 @@ public class PlayerController : MonoBehaviour {
 
 
 	}
+
+
+	public void OnTriggerStay2D(Collider2D other)
+	{
+		if(other.gameObject.name.Contains("ThePatient"))
+		{
+			patientInvestigations = GameObject.Find(other.gameObject.name).GetComponentInParent<PatientInvestigations>();
+			if(HotkeyPress() >= 0)
+			{
+				patientInvestigations.ObtainBloodSample(true, false, HotkeyPress());
+			}
+
+			patientTreatment = GameObject.Find(other.gameObject.name).GetComponentInParent<PatientTreatment>();
+			if(HotkeyPress() >= 0)
+			{
+				patientTreatment.AdministerTreatment(true, false, HotkeyPress());
+			}
+		}
+
+		if(other.gameObject.name == "Lab" && HotkeyPress() >= 0)
+		{
+			laboratory.CheckForSamples(true, false, HotkeyPress());
+		}
+
+		if(other.gameObject.name.Contains("spill"))
+		{
+			droppedItem = GameObject.Find(other.gameObject.name).GetComponent<DroppedItem>();
+			if(HotkeyPress() >= 0)
+			{
+				droppedItem.PickUpItem(other.gameObject.name, false, HotkeyPress());
+			}
+		}
+	}
+
 
 	private KeyCode[] keyCodes =
 	{
@@ -107,7 +149,7 @@ public class PlayerController : MonoBehaviour {
 		KeyCode.Alpha9,
 	};
 
-	public int HotkeyPress ()
+	private int HotkeyPress ()
 	{
 		for(int i = 0 ; i < inv.Items.Count; i ++ )
 		{
@@ -119,25 +161,7 @@ public class PlayerController : MonoBehaviour {
 		return -1;
 	}
 
-	public void OnTriggerStay2D(Collider2D other)
-	{
-		if(other.gameObject.name.Contains("ThePatient"))
-		{
-			patientInvestigations = GameObject.Find(other.gameObject.name).GetComponentInParent<PatientInvestigations>();
-			if(HotkeyPress() >= 0)
-			{
-				patientInvestigations.ObtainBloodSample(true, false, HotkeyPress());
-				Debug.Log(patientInvestigations);
-			}
-		}
 
-		if(other.gameObject.name == "Lab" && HotkeyPress() >= 0)
-		{
-			laboratory.CheckForSamples(true, false, HotkeyPress());
-		}
-	}
-
-	
 	
 	void SpriteOrientation(int degree)
 	{

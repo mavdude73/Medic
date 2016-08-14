@@ -7,17 +7,14 @@ using System.Collections.Generic;
 public class PatientZone : MonoBehaviour {
 	
 	PatientData pd;
-	PatientTreatment pt;
 	UIManager uim;
 	GameObject player;
-	bool playerInZone;
 	
 	
 	void Awake()
 	{
 		player = GameObject.Find("Player1");
 		pd = this.gameObject.GetComponent<PatientData> ();
-		pt = this.gameObject.GetComponent<PatientTreatment> ();
 		uim = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager> ();
 
 	}
@@ -64,7 +61,6 @@ public class PatientZone : MonoBehaviour {
 	{
 		if(other.gameObject == player)
 		{
-			playerInZone = true;
 			pd.PlayerInZoneBool (true);
 		}
 	}
@@ -72,7 +68,6 @@ public class PatientZone : MonoBehaviour {
 	{
 		if(other.gameObject == player)
 		{
-			playerInZone = false;
 			pd.PlayerInZoneBool (false);
 			CloseMedicalRecord();
 		}
@@ -85,25 +80,6 @@ public class PatientZone : MonoBehaviour {
 	
 	void Update()
 	{
-		if (!playerInZone)
-		{
-			return;
-		}
-		else if(playerInZone)
-		{
-			pt.AdministerTreatment();
-		}
-
-
-//		if(Input.GetKeyDown(KeyCode.Delete))
-//		{
-//			if(inv.Items[0].itemObj != null)
-//			{
-//				Destroy(inv.Items[0].itemObj);
-//			}
-//			inv.Items[0] = new Item();
-//		}
-		
 		
 	}
 	
