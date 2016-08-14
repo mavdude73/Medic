@@ -73,6 +73,7 @@ public class PlayerController : MonoBehaviour {
 				sluiceItems.ItemPickup(hit.collider.gameObject.name);
 				pharmacy.OpenPharmacyScreen(hit.collider.gameObject.name);
 				pcTerminal.OpenComputerScreen(hit.collider.gameObject.name);
+				laboratory.CheckForSamples(true, true, -1);
 
 				if(hit.collider.gameObject.name.Contains("Patient"))
 				{
@@ -133,7 +134,7 @@ public class PlayerController : MonoBehaviour {
 
 		if(other.gameObject.name == "Lab" && HotkeyPress() >= 0)
 		{
-			laboratory.CheckForSamples(true, HotkeyPress());
+			laboratory.CheckForSamples(true, false, HotkeyPress());
 			Debug.Log(other.gameObject.name);
 		}
 	}

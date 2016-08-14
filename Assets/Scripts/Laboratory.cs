@@ -22,21 +22,20 @@ public class Laboratory : MonoBehaviour {
 	}
 
 
-	public void CheckForSamples (bool inLaboratory, int hotkey)
+	public void CheckForSamples (bool inLaboratory, bool isMouse, int hotkey)
 	{
-		if(inLaboratory && inv.Items[hotkey].itemName == "Blood")
+		if(inLaboratory)
 		{
-		
-			bloodQueue.Enqueue(inv.Items[hotkey].itemObj);
-			inv.Items[hotkey] = new Item();
-//			Debug.Log (inv.Items[0].itemObj.GetComponent<BloodSample>().bloodresult);
-//			Debug.Log(inv.Items[0].itemObj + " added to queue");
-		}
-		else if(Input.GetButtonDown("LMB") && inv.draggedItem.itemName == "Blood")
-		{
-			bloodQueue.Enqueue(inv.draggedItem.itemObj);
-//			inv.draggedItem = new Item();
-			inv.CloseDraggedItem();
+			if(!isMouse && inv.Items[hotkey].itemName == "Blood")
+			{
+				bloodQueue.Enqueue(inv.Items[hotkey].itemObj);
+				inv.Items[hotkey] = new Item();
+			}
+			else if(isMouse && inv.draggedItem.itemName == "Blood")
+			{
+				bloodQueue.Enqueue(inv.draggedItem.itemObj);
+				inv.CloseDraggedItem();
+			}
 		}
 	}
 	
