@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEditor.SceneManagement;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -9,17 +10,13 @@ public class LoadOnClick : MonoBehaviour {
 	
 	public GameObject loadingImage;
 	
-	public void LoadScene(int level) //1
+	public void LoadScene(string name)
 	{
 		loadingImage.SetActive(true);
-		Application.LoadLevel(level);
+		LoadScene(name);
 	}
 
-	public void LoadOptions(int level) //2
-	{
-//		loadingImage.SetActive(true);
-		Application.LoadLevel(level);
-	}
+
 
 	public void Quit()
 	{
