@@ -7,11 +7,8 @@ using System.Collections.Generic;
 public class PatientZone : MonoBehaviour {
 	
 	PatientData pd;
-	PlayerController pc;
-	PatientInvestigations pi;
 	PatientTreatment pt;
 	UIManager uim;
-	Inventory inv;
 	GameObject player;
 	bool playerInZone;
 	
@@ -19,24 +16,17 @@ public class PatientZone : MonoBehaviour {
 	void Awake()
 	{
 		player = GameObject.Find("Player1");
-		pc = GameObject.Find ("Player1").GetComponent<PlayerController>();
 		pd = this.gameObject.GetComponent<PatientData> ();
-		pi = this.gameObject.GetComponent<PatientInvestigations> ();
 		pt = this.gameObject.GetComponent<PatientTreatment> ();
-		inv = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
 		uim = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager> ();
 
 	}
 	
 		
 	
-	void OpenMedicalRecord()
+	public void OpenMedicalRecord(bool itemOnCursor, string name)
 	{
-		if(!Input.GetButtonDown ("LMB"))
-		{
-			return;
-		}
-		else if(!pc.itemOnCursor && inv.HitSpecificObject("ThePatient"))
+		if(!itemOnCursor && name == "Patient"+pd.visitorNumber)
 		{
 			uim.medicalPages[0].SetActive(true);
 	
@@ -101,9 +91,7 @@ public class PatientZone : MonoBehaviour {
 		}
 		else if(playerInZone)
 		{
-			pi.ObtainBloodSample();
 			pt.AdministerTreatment();
-			OpenMedicalRecord();
 		}
 
 

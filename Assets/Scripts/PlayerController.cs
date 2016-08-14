@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour {
 	private PCTerminal pcTerminal;
 	private Laboratory laboratory;
 	private Inventory inv;
+	private PatientZone patientZone;
+	private PatientInvestigations patientInvestigations;
 
 	void Start()
 	{
@@ -23,7 +25,6 @@ public class PlayerController : MonoBehaviour {
 		pcTerminal = GameObject.Find("PCTerminal").GetComponent<PCTerminal>();
 		laboratory = GameObject.Find("Laboratory").GetComponent<Laboratory>();
 		inv =  GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory> ();
-
 	}
 
 	void FixedUpdate()
@@ -66,11 +67,25 @@ public class PlayerController : MonoBehaviour {
 
 			if(hit.collider.gameObject.name != null)
 			{
-				Debug.Log(hit.collider.gameObject.name);
+				rayHitobject = hit.collider.gameObject.name;
+				Debug.Log(rayHitobject);
+
 				sluiceItems.ItemPickup(hit.collider.gameObject.name);
 				pharmacy.OpenPharmacyScreen(hit.collider.gameObject.name);
 				pcTerminal.OpenComputerScreen(hit.collider.gameObject.name);
-				rayHitobject = hit.collider.gameObject.name;
+
+				if(hit.collider.gameObject.name.Contains("Patient"))
+				{
+					patientZone = GameObject.Find(hit.collider.gameObject.name).GetComponent<PatientZone>();
+					patientZone.OpenMedicalRecord(itemOnCursor, hit.collider.gameObject.name);
+
+					patientInvestigations = GameObject.Find(hit.collider.gameObject.name).GetComponent<PatientInvestigations>();
+					patientInvestigations.ObtainBloodSample(true, true, -1);
+
+				}
+
+			
+
 				return;
 			}
 		}
@@ -105,6 +120,17 @@ public class PlayerController : MonoBehaviour {
 
 	public void OnTriggerStay2D(Collider2D other)
 	{
+		if(other.gameObject.name.Contains("ThePatient"))
+		{
+			Debug.Log(other.gameObject.name);
+			patientInvestigations = GameObject.Find(other.gameObject.name).GetComponentInParent<PatientInvestigations>();
+			if(HotkeyPress() >= 0)
+			{
+				patientInvestigations.ObtainBloodSample(true, false, HotkeyPress());
+				Debug.Log(patientInvestigations);
+			}
+		}
+
 		if(other.gameObject.name == "Lab" && HotkeyPress() >= 0)
 		{
 			laboratory.CheckForSamples(true, HotkeyPress());

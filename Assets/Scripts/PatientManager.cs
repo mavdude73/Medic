@@ -27,6 +27,7 @@ public class PatientManager : MonoBehaviour {
 			patientQueue.Enqueue(patientObject);
 			patientObject.transform.SetParent(this.gameObject.transform, false);
 			patientObject.name = "Patient" + k;
+			patientObject.GetComponentInChildren<SpriteRenderer>().gameObject.name = "ThePatient" + k;
 			
 			PatientData pd = patientObject.GetComponent<PatientData>();
 			pd.visitorNumber = k;
