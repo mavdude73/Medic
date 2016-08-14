@@ -36,7 +36,8 @@ public class Inventory : MonoBehaviour {
 			Slots.Add(slot);
 			Items.Add(new Item());
 			slot.transform.SetParent(this.gameObject.transform, false);
-			slot.name = "Slot" + k;
+			slot.name = "Slot" + k; // add +k to give slots unique id
+			slot.tag = "Slot";
 			slot.GetComponent<RectTransform>().localPosition = new Vector3(x,0,0);
 			slot.GetComponent<SlotManager>().slotNumber = slotAmount;
 			x = x + 80;

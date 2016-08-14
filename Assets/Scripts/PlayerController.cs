@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour {
 	private PatientInvestigations patientInvestigations;
 	private PatientTreatment patientTreatment;
 	private DroppedItem droppedItem;
+	private GameObject[] slotManager;
 	private SlotManager slotManager0;
 	private SlotManager slotManager1;
 	private SlotManager slotManager2;
@@ -30,9 +31,7 @@ public class PlayerController : MonoBehaviour {
 		pcTerminal = GameObject.Find("PCTerminal").GetComponent<PCTerminal>();
 		laboratory = GameObject.Find("Laboratory").GetComponent<Laboratory>();
 		inv =  GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory> ();
-		slotManager0 = GameObject.Find("Slot0").GetComponent<SlotManager>();
-		slotManager1 = GameObject.Find("Slot1").GetComponent<SlotManager>();
-		slotManager2 = GameObject.Find("Slot2").GetComponent<SlotManager>();
+		slotManager = GameObject.FindGameObjectsWithTag("Slot");
 	}
 
 	void FixedUpdate()
@@ -147,9 +146,10 @@ public class PlayerController : MonoBehaviour {
 	{
 		if(Input.GetButtonDown("LMB"))
 		{
-			slotManager0.ClickOnHotbar("left", itemOnCursor);
-			slotManager1.ClickOnHotbar("left", itemOnCursor);
-			slotManager2.ClickOnHotbar("left", itemOnCursor);
+			foreach(GameObject sM in slotManager)
+			{
+				sM.GetComponent<SlotManager>().ClickOnHotbar("left", itemOnCursor);
+			}
 
 
 		}
@@ -159,9 +159,10 @@ public class PlayerController : MonoBehaviour {
 	{
 		if(Input.GetButtonDown("RMB"))
 		{
-			slotManager0.ClickOnHotbar("right", itemOnCursor);
-			slotManager1.ClickOnHotbar("right", itemOnCursor);
-			slotManager2.ClickOnHotbar("right", itemOnCursor);
+			foreach(GameObject sM in slotManager)
+			{
+				sM.GetComponent<SlotManager>().ClickOnHotbar("right", itemOnCursor);
+			}
 
 		}
 	}
