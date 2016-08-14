@@ -123,5 +123,15 @@ public class Pharmacy : MonoBehaviour
 		
 	}
 	
-	
+//	public void setupBtn()
+//    {
+//        string param = "bar";
+//        btn.GetComponent<Button>().onClick.AddListener(delegate { btnClicked(param); });
+//    }
+//       
+//    public void btnClicked(string param)
+//    {
+//        Debug.Log("foo " + param);
+//    }
+ 
 }

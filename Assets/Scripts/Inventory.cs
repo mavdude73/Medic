@@ -69,32 +69,7 @@ public class Inventory : MonoBehaviour {
 	}
 
 	
-	
-	public RaycastHit2D HitObjectCheck()
-	{
-		Vector3 mousePosition = Camera.main.ScreenToWorldPoint (Input.mousePosition);
-		mousePosition = new Vector3(mousePosition.x, mousePosition.y, 0);
-		Vector3 deltaPosition = (mousePosition - pc.playerVector3);
-
-		RaycastHit2D hit = Physics2D.Raycast (pc.playerVector3, deltaPosition, 2f);
 		
-		Debug.DrawLine(pc.playerVector3, hit.point);
-		return hit;	
-		
-	}
-	
-	public bool HitSpecificObject(string objectName)
-	{
-		if(HitObjectCheck())
-		{
-			if(HitObjectCheck().collider.gameObject.name == objectName)
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-	
 
 	public void IsMouseOverHotbar(bool verdict)
 	{

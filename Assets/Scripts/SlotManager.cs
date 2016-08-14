@@ -88,12 +88,13 @@ public class SlotManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 	{
 		Debug.Log(this.gameObject.name);
 		mouseOverHotbar = true;
+		inv.IsMouseOverHotbar(mouseOverHotbar);
 	}
 	
 	public void OnPointerExit(PointerEventData data)
 	{
 		mouseOverHotbar = false;
-
+		inv.IsMouseOverHotbar(mouseOverHotbar);
 	}
 	
 	
