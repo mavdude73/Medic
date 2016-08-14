@@ -36,7 +36,7 @@ public class PatientZone : MonoBehaviour {
 		{
 			return;
 		}
-		else if(!pc.itemOnCursor && inv.HitSpecificObject("Patientsprite"))
+		else if(!pc.itemOnCursor && inv.HitSpecificObject("ThePatient"))
 		{
 			uim.medicalPages[0].SetActive(true);
 	
