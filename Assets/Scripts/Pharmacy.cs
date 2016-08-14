@@ -6,8 +6,6 @@ using System.Collections.Generic;
 public class Pharmacy : MonoBehaviour
 {
 	
-	
-	GameObject player;
 	UIManager uim;
 	Inventory inv;
 	Transform floorItemTransform;
@@ -25,7 +23,6 @@ public class Pharmacy : MonoBehaviour
 	void Awake()
 	{
 		uim = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager> ();
-		player = GameObject.Find("Player1");
 		inv = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
 		floorItemTransform = GameObject.Find ("Flooritems").transform;
 	}

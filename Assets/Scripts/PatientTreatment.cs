@@ -4,16 +4,16 @@ using System.Collections;
 public class PatientTreatment : MonoBehaviour {
 	
 	PlayerData playerData;
+	PlayerController pc;
 	PatientData pd;
 	Inventory inv;
-	UIManager uim;
 	
 	void Awake ()
 	{
 		playerData = GameObject.Find("Player1").GetComponent<PlayerData>();
 		pd = this.gameObject.GetComponent<PatientData> ();
+		pc = GameObject.Find("Player1").GetComponent<PlayerController>();
 		inv = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
-		uim = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager> ();
 	}
 	
 	public void AdministerTreatment()
@@ -21,10 +21,10 @@ public class PatientTreatment : MonoBehaviour {
 		if(!inv.mouseOverHotbar && !pd.treatmentInProgress && !pd.patientDead)
 		{
 		
-			if(uim.HotkeyPress() >= 0 && inv.Items[uim.HotkeyPress()].itemType == "Drug")
+			if(pc.HotkeyPress() >= 0 && inv.Items[pc.HotkeyPress()].itemType == "Drug")
 			{
-				StartCoroutine(DrugEffect(inv.Items[uim.HotkeyPress()].itemDesc));
-				inv.Items[uim.HotkeyPress()] = new Item ();
+				StartCoroutine(DrugEffect(inv.Items[pc.HotkeyPress()].itemDesc));
+				inv.Items[pc.HotkeyPress()] = new Item ();
 			}
 			else if(Input.GetButtonDown("LMB") && inv.draggedItem.itemType == "Drug")
 			{
@@ -32,7 +32,7 @@ public class PatientTreatment : MonoBehaviour {
 				inv.CloseDraggedItem();
 			}
 			
-			if (uim.HotkeyPress() >= 0 && inv.Items[uim.HotkeyPress()].itemName == "Pillow")
+			if (pc.HotkeyPress() >= 0 && inv.Items[pc.HotkeyPress()].itemName == "Pillow")
 			{
 				pd.health--;
 				CheckHealth();

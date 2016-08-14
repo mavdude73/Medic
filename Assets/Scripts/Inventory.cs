@@ -15,7 +15,6 @@ public class Inventory : MonoBehaviour {
 	Transform floorItemTransform;
 	public bool mouseOverHotbar = false;
 	ItemDatabase db;
-	UIManager uim;
 	GameObject player;
 	PlayerController pc;
 	int hotkey;	
@@ -54,7 +53,6 @@ public class Inventory : MonoBehaviour {
 			pc = GameObject.Find ("Player1").GetComponent<PlayerController>();
 			floorItemTransform = GameObject.Find ("Flooritems").transform;
 			db = GameObject.FindGameObjectWithTag ("ItemDatabase").GetComponent<ItemDatabase>();
-			uim = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager> ();
 			
 			CreateHotbar ();
 //			addItem (0);
@@ -216,15 +214,5 @@ public class Inventory : MonoBehaviour {
 		}
 		return false;
 	}
-	
-	public void DeleteItem0()
-	{
-		if(Items[uim.HotkeyPress()].itemName != null)
-		{
-			Destroy(Items[uim.HotkeyPress()].itemObj);
-		}
-		Items[uim.HotkeyPress()] = new Item();
-	}
-	
 
 }

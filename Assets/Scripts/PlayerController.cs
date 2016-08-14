@@ -12,11 +12,18 @@ public class PlayerController : MonoBehaviour {
 	public bool itemOnCursor;
 	private SluiceItems sluiceItems;
 	private Pharmacy pharmacy;
+	private PCTerminal pcTerminal;
+	private Laboratory laboratory;
+	private Inventory inv;
 
 	void Start()
 	{
 		sluiceItems = new SluiceItems();
 		pharmacy = GameObject.Find("Pharmacy").GetComponent<Pharmacy>();
+		pcTerminal = GameObject.Find("PCTerminal").GetComponent<PCTerminal>();
+		laboratory = GameObject.Find("Laboratory").GetComponent<Laboratory>();
+		inv =  GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory> ();
+
 	}
 
 	void FixedUpdate()
@@ -59,9 +66,10 @@ public class PlayerController : MonoBehaviour {
 
 			if(hit.collider.gameObject.name != null)
 			{
-				sluiceItems.ItemPickup(hit.collider.gameObject.name);
 				Debug.Log(hit.collider.gameObject.name);
+				sluiceItems.ItemPickup(hit.collider.gameObject.name);
 				pharmacy.OpenPharmacyScreen(hit.collider.gameObject.name);
+				pcTerminal.OpenComputerScreen(hit.collider.gameObject.name);
 				rayHitobject = hit.collider.gameObject.name;
 				return;
 			}
@@ -69,6 +77,41 @@ public class PlayerController : MonoBehaviour {
 
 
 	}
+
+	private KeyCode[] keyCodes =
+	{
+		KeyCode.Alpha1,
+		KeyCode.Alpha2,
+		KeyCode.Alpha3,
+		KeyCode.Alpha4,
+		KeyCode.Alpha5,
+		KeyCode.Alpha6,
+		KeyCode.Alpha7,
+		KeyCode.Alpha8,
+		KeyCode.Alpha9,
+	};
+	
+	public int HotkeyPress ()
+	{
+		for(int i = 0 ; i < inv.Items.Count; i ++ )
+		{
+			if(Input.GetKeyDown(keyCodes[i]))
+			{
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	public void OnTriggerStay2D(Collider2D other)
+	{
+		if(other.gameObject.name == "Lab" && HotkeyPress() >= 0)
+		{
+			laboratory.CheckForSamples(true, HotkeyPress());
+			Debug.Log(other.gameObject.name);
+		}
+	}
+
 	
 	
 	void SpriteOrientation(int degree)

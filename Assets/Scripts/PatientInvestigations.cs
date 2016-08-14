@@ -5,8 +5,8 @@ using System.Collections;
 public class PatientInvestigations : MonoBehaviour {
 
 	PatientData pd;
+	PlayerController pc;
 	Inventory inv;
-	UIManager uim;
 	public Transform bloodTransform;
 	public GameObject bloodsamplePrefab;
 	
@@ -14,9 +14,9 @@ public class PatientInvestigations : MonoBehaviour {
 	void Awake ()
 	{
 		pd = this.gameObject.GetComponent<PatientData> ();
+		pc = GameObject.Find("Player1").GetComponent<PlayerController>();
 		inv = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
 		bloodTransform = GameObject.FindGameObjectWithTag ("Blood").transform;
-		uim = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager> ();
 	}
 	
 	public void ObtainBloodSample() // code 6 = empty blood syringe
@@ -24,10 +24,10 @@ public class PatientInvestigations : MonoBehaviour {
 		if(!inv.mouseOverHotbar && !pd.patientDead)
 		{
 		
-			if (uim.HotkeyPress() >= 0 && inv.Items[uim.HotkeyPress()].itemID == 6)
+			if (pc.HotkeyPress() >= 0 && inv.Items[pc.HotkeyPress()].itemID == 6)
 			{
-				inv.Items[uim.HotkeyPress()] = new Item (); 								// sets the empty syringe slot to empty	
-				inv.Items[uim.HotkeyPress()] = GenerateSampleFunction(); 					// sets the empty slot into a blood filled syringe				
+				inv.Items[pc.HotkeyPress()] = new Item (); 								// sets the empty syringe slot to empty	
+				inv.Items[pc.HotkeyPress()] = GenerateSampleFunction(); 					// sets the empty slot into a blood filled syringe				
 			}
 			else if (Input.GetButtonDown("LMB") && inv.HitSpecificObject("Patientsprite") && inv.draggedItem.itemID == 6)
 			{

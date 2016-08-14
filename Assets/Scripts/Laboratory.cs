@@ -5,50 +5,30 @@ using UnityEngine.UI;
 
 public class Laboratory : MonoBehaviour {
 	
-	GameObject player;
-	bool playerInZone;
 	public int bloodAnalysisTimer;
 	Inventory inv;
 	UIManager uim;
 	public string allBloodResults;
 	
 	public List<string> bloodList = new List<string>();
-	
+
 	public Queue<GameObject> bloodQueue = new Queue<GameObject>();
 
 	void Awake ()
 	{
 		uim = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager> ();
 		inv = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
-		player = GameObject.Find("Player1");
 		StartCoroutine(AnalyseBlood(0f));
 	}
-	
-	public void OnTriggerEnter2D(Collider2D other)
+
+
+	public void CheckForSamples (bool inLaboratory, int hotkey)
 	{
-		if(other.gameObject == player)
-		{
-			playerInZone = true;
-		}
-	}
-	
-	public void OnTriggerExit2D(Collider2D other)
-	{
-		if(other.gameObject == player)
-		{
-			playerInZone = false;
-		}
-	}
-	
-	bool PlayerInZone() {return playerInZone;}
-	
-	void CheckForSamples ()
-	{
-		if(uim.HotkeyPress() >= 0 && inv.Items[uim.HotkeyPress()].itemName == "Blood")
+		if(inLaboratory && inv.Items[hotkey].itemName == "Blood")
 		{
 		
-			bloodQueue.Enqueue(inv.Items[uim.HotkeyPress()].itemObj);
-			inv.Items[uim.HotkeyPress()] = new Item();
+			bloodQueue.Enqueue(inv.Items[hotkey].itemObj);
+			inv.Items[hotkey] = new Item();
 //			Debug.Log (inv.Items[0].itemObj.GetComponent<BloodSample>().bloodresult);
 //			Debug.Log(inv.Items[0].itemObj + " added to queue");
 		}
@@ -92,10 +72,7 @@ public class Laboratory : MonoBehaviour {
 
 	void Update()
 	{
-		if(playerInZone)
-		{
-				CheckForSamples();
-		}
+
 	}
 	
 	

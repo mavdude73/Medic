@@ -24,8 +24,6 @@ public class UIManager : MonoBehaviour {
 	public GameObject pharmacyProgressBar;
 	public GameObject pharmacyProgressText;
 	
-	Inventory inv;
-	
 	GameObject medicalRecord;
 	GameObject biographicsPages;
 	GameObject diagnosticsPages;
@@ -61,10 +59,7 @@ public class UIManager : MonoBehaviour {
 		pharmacyMenu.SetActive (false);
 		deceasedStamp.SetActive (false);
 
-//		pharmacyProgressBar.SetActive(false);
 
-		
-		inv = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
 	}
 	
 
@@ -169,32 +164,7 @@ public class UIManager : MonoBehaviour {
 	}
 
 	
-	private KeyCode[] keyCodes =
-	{
-		KeyCode.Alpha1,
-		KeyCode.Alpha2,
-		KeyCode.Alpha3,
-		KeyCode.Alpha4,
-		KeyCode.Alpha5,
-		KeyCode.Alpha6,
-		KeyCode.Alpha7,
-		KeyCode.Alpha8,
-		KeyCode.Alpha9,
-	};
-	
-	public int HotkeyPress ()
-	{
-		for(int i = 0 ; i < inv.Items.Count; i ++ )
-		{
-			if(Input.GetKeyDown(keyCodes[i]))
-			{
-//				int numberPressed = i+1;
-//				Debug.Log("Hotkey: " + numberPressed);
-				return i;
-			}
-		}
-		return -1;
-	}
+
 	
 
 //	

@@ -9,17 +9,14 @@ public class DroppedItem : MonoBehaviour {
 	public bool playerInZone;
 	public string thisGameobjectname;
 	Inventory inv;
-	UIManager uim;
 	PlayerController pc;
+
 	
 	void Awake()
 	{
 		player = GameObject.Find ("Player1");
 		pc = GameObject.Find ("Player1").GetComponent<PlayerController>();
 		inv = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
-		uim = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager> ();
-
-
 	}
 
 	void Update()
@@ -59,7 +56,7 @@ public class DroppedItem : MonoBehaviour {
 			}
 
 		}
-		else if(uim.HotkeyPress() >= 0 && inv.Items[uim.HotkeyPress()].itemName == "Mop")
+		else if(pc.HotkeyPress() >= 0 && inv.Items[pc.HotkeyPress()].itemName == "Mop")
 		{
 			Destroy(this.gameObject);
 			Debug.Log("Clean up in Aisle 7");
