@@ -82,6 +82,7 @@ public class SlotManager : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 	
 	public void OnPointerEnter(PointerEventData data)
 	{
+		Debug.Log(this.gameObject.name);
 		mouseOverHotbar = true;
 		inv.IsMouseOverHotbar(mouseOverHotbar);
 	}
