@@ -6,7 +6,7 @@ public class PatientInvestigations : MonoBehaviour {
 
 	PatientData pd;
 	Inventory inv;
-	public Transform bloodTransform;
+	Transform bloodTransform;
 	public GameObject bloodsamplePrefab;
 	
 		
@@ -21,7 +21,6 @@ public class PatientInvestigations : MonoBehaviour {
 	{
 		if(inZone && !inv.mouseOverHotbar && !pd.patientDead)
 		{
-		
 			if (!isMouse && inv.Items[hotkey].itemID == 6)
 			{
 				inv.Items[hotkey] = new Item (); 								// sets the empty syringe slot to empty	
