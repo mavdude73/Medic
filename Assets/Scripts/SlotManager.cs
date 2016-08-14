@@ -3,19 +3,17 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class SlotManager : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler, IDragHandler {
+public class SlotManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDragHandler {
 
 	public int slotNumber;
 	public Item item;
 	Image itemImage;
 	Inventory inv;
-	PlayerController pc;
 	bool mouseOverHotbar = false;
 
 
 	void Start ()
 	{
-		pc = GameObject.Find ("Player1").GetComponent<PlayerController>();
 		inv = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
 		itemImage = gameObject.transform.GetChild (0).GetComponent<Image> ();
 	}
@@ -45,40 +43,46 @@ public class SlotManager : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 		}
 	}
 	
-	
-	
-	public void OnPointerDown(PointerEventData data)
+	public void ClickOnHotbar(string mouseButton, bool itemOnCursor)
 	{
-		if(data.button == PointerEventData.InputButton.Left)
+		if(mouseOverHotbar)
 		{
-			if (inv.Items[slotNumber].itemName == null && pc.itemOnCursor)
+			if(mouseButton == "left")
 			{
-				inv.Items[slotNumber] = inv.draggedItem;
-				inv.CloseDraggedItem();
+				if(itemOnCursor)
+				{
+					if (inv.Items[slotNumber].itemName == null)
+					{
+						inv.Items[slotNumber] = inv.draggedItem;
+						inv.CloseDraggedItem();
+					}
+					else if(inv.Items[slotNumber].itemName != null)
+					{
+						inv.Items[inv.draggedItemSlotOrigin] = inv.Items[slotNumber];
+						inv.Items[slotNumber] = inv.draggedItem;
+						inv.CloseDraggedItem();
+					}
+				}
+				else if(!itemOnCursor && inv.Items[slotNumber].itemName != null)
+				{
+					inv.ShowDraggedItem(inv.Items[slotNumber], slotNumber);
+					inv.Items[slotNumber] = new Item();
+				}
 			}
-			else if(inv.Items[slotNumber].itemName != null && pc.itemOnCursor)
+
+			if(mouseButton == "right")
 			{
-				inv.Items[inv.draggedItemSlotOrigin] = inv.Items[slotNumber];
-				inv.Items[slotNumber] = inv.draggedItem;
-				inv.CloseDraggedItem();
-			}
-			else if(inv.Items[slotNumber].itemName != null && !pc.itemOnCursor)
-			{
-				inv.ShowDraggedItem(inv.Items[slotNumber], slotNumber);
-				inv.Items[slotNumber] = new Item();
-			}
-		}
-		
-		if(data.button == PointerEventData.InputButton.Right)
-		{
-			if (!pc.itemOnCursor && inv.Items[slotNumber].itemName != null)
-			{
-				inv.ShowDraggedItem(inv.Items[slotNumber], slotNumber);
-				inv.Items[slotNumber] = new Item();
-				inv.DropItem();
+				if(!itemOnCursor && inv.Items[slotNumber].itemName != null)
+				{
+					inv.ShowDraggedItem(inv.Items[slotNumber], slotNumber);
+					inv.Items[slotNumber] = new Item();
+					inv.DropItem();
+				}
 			}
 		}
 	}
+
+
 	
 	public void OnPointerEnter(PointerEventData data)
 	{
