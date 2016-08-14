@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour {
 	}
 	
 
-	public void Raycasting ()
+	private void Raycasting ()
 	{
 		rayHitobject = null;
 
@@ -106,7 +106,7 @@ public class PlayerController : MonoBehaviour {
 		KeyCode.Alpha8,
 		KeyCode.Alpha9,
 	};
-	
+
 	public int HotkeyPress ()
 	{
 		for(int i = 0 ; i < inv.Items.Count; i ++ )
@@ -123,7 +123,6 @@ public class PlayerController : MonoBehaviour {
 	{
 		if(other.gameObject.name.Contains("ThePatient"))
 		{
-			Debug.Log(other.gameObject.name);
 			patientInvestigations = GameObject.Find(other.gameObject.name).GetComponentInParent<PatientInvestigations>();
 			if(HotkeyPress() >= 0)
 			{
@@ -135,7 +134,6 @@ public class PlayerController : MonoBehaviour {
 		if(other.gameObject.name == "Lab" && HotkeyPress() >= 0)
 		{
 			laboratory.CheckForSamples(true, false, HotkeyPress());
-			Debug.Log(other.gameObject.name);
 		}
 	}
 
