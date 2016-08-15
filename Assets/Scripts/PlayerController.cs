@@ -27,7 +27,6 @@ public class PlayerController : MonoBehaviour {
 	void Start()
 	{
 		sluiceItems = new SluiceItems();
-		pharmacy = GameObject.Find("Pharmacy").GetComponent<Pharmacy>();
 		pcTerminal = GameObject.Find("PCTerminal").GetComponent<PCTerminal>();
 		laboratory = GameObject.Find("Laboratory").GetComponent<Laboratory>();
 		inv =  GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory> ();
@@ -80,9 +79,14 @@ public class PlayerController : MonoBehaviour {
 				Debug.Log(rayHitobject);
 
 				sluiceItems.ItemPickup(hit.collider.gameObject.name);
-				pharmacy.OpenPharmacyScreen(hit.collider.gameObject.name);
 				pcTerminal.OpenComputerScreen(hit.collider.gameObject.name);
 				laboratory.CheckForSamples(true, true, -1);
+
+				if(hit.collider.gameObject.name.Contains("Pharmacy"))
+				{
+					pharmacy = GameObject.Find(hit.collider.gameObject.name).GetComponent<Pharmacy>();
+					pharmacy.OpenPharmacyScreen(hit.collider.gameObject.name);
+				}
 
 				if(hit.collider.gameObject.name.Contains("Patient"))
 				{

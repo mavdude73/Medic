@@ -19,15 +19,6 @@ public class ItemDatabase : MonoBehaviour {
 		items.Add (new Item (6, "Syringe", "Utility", "Fluid not included.", -1, empty));
 
 		// reserve IDs 30 onwards for custom drugs
-		items.Add (new Item (7, "RedPotion", "Drug", "Amoxcitol", -1, empty));
-		items.Add (new Item (8, "RedPotion", "Drug", "Placebolin", -1, empty));
-		items.Add (new Item (9, "RedPotion", "Drug", "Derpcillium", -1, empty));
-		items.Add (new Item (10, "BluePotion", "Drug", "Hypnotol", -1, empty));
-		items.Add (new Item (11, "BluePotion", "Drug", "Adamaxine", -1, empty));
-		items.Add (new Item (12, "BluePotion", "Drug", "Hydromax", -1, empty));
-		items.Add (new Item (13, "PurplePotion", "Drug", "Tixabrufen", -1, empty));
-		items.Add (new Item (14, "PurplePotion", "Drug", "Synapticol", -1, empty));
-		items.Add (new Item (15, "PurplePotion", "Drug", "Pseudodrine", -1, empty));
 		
 	}
 	

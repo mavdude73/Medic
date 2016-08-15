@@ -18,7 +18,6 @@ public class UIManager : MonoBehaviour {
 	public GameObject computerScreenText;
 	public GameObject seniorReviewText;
 	public GameObject bleepAlert;
-	public GameObject pharmacyMenu;
 	public GameObject deceasedStamp;
 
 	public GameObject pharmacyProgressBar;
@@ -56,7 +55,6 @@ public class UIManager : MonoBehaviour {
 		computerScreen.SetActive(false);
 		pauseMenu.SetActive (false);
 		bleepAlert.SetActive (false);
-		pharmacyMenu.SetActive (false);
 		deceasedStamp.SetActive (false);
 
 
@@ -89,15 +87,7 @@ public class UIManager : MonoBehaviour {
 		} 
 		
 	}
-	
-	public void ClosePharmacy()
-	{
-		if (pharmacyMenu.activeSelf)
-		{
-			pharmacyMenu.SetActive(false);
-		} 
-		
-	}
+
 	
 	public void BiographicsPanel()
 	{
