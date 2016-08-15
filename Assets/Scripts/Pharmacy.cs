@@ -6,13 +6,11 @@ using System.Collections.Generic;
 [System.Serializable]
 public class Pharmacy : MonoBehaviour
 {
-	
-	UIManager uim;
 	GameObject[] medicineButton;
 	GameObject pharmacyMenu;
 
-	public GameObject pharmacyProgressBar;
-	public GameObject pharmacyProgressText;
+	GameObject pharmacyProgressBar;
+	GameObject pharmacyProgressText;
 	public bool PharmacyProcessingBool = false;
 
 	Queue<string> pharmacyQueue = new Queue<string>();
@@ -27,9 +25,10 @@ public class Pharmacy : MonoBehaviour
 
 	void Start()
 	{
-		uim = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager> ();
-		pharmacyMenu = GetComponentInChildren<CanvasRenderer>().gameObject;
-		pharmacyMenu.GetComponentInChildren<Button>().onClick.AddListener(delegate{ClosePharmacyScreen();} );
+		pharmacyMenu = gameObject.transform.GetChild(1).gameObject.transform.GetChild(0).gameObject;
+		pharmacyProgressBar = pharmacyMenu.transform.GetChild(3).gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
+		pharmacyProgressText = pharmacyMenu.transform.GetChild(3).gameObject.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject;
+		pharmacyMenu.transform.GetChild(2).gameObject.GetComponent<Button>().onClick.AddListener(delegate{ClosePharmacyScreen();} );
 
 		PharmacySetup(difficulty);
 	}
@@ -59,7 +58,7 @@ public class Pharmacy : MonoBehaviour
 		{
 			GameObject button = (GameObject)Instantiate(Resources.Load("MedicineButton"));
 			button.name = "Button"+b;
-			button.transform.SetParent(pharmacyMenu.GetComponentInChildren<GridLayoutGroup>().transform, false);
+			button.transform.SetParent(pharmacyMenu.transform.GetChild(4).transform, false);
 		}
 
 		medicineButton = GameObject.FindGameObjectsWithTag("MedicineButton");

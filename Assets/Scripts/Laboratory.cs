@@ -22,9 +22,9 @@ public class Laboratory : MonoBehaviour {
 	}
 
 
-	public void CheckForSamples (bool inLaboratory, bool isMouse, int hotkey)
+	public void CheckForSamples (string name, bool isMouse, int hotkey)
 	{
-		if(inLaboratory)
+		if(name == "Lab")
 		{
 			if(!isMouse && inv.Items[hotkey].itemName == "Blood")
 			{

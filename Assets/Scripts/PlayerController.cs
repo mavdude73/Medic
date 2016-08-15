@@ -20,9 +20,6 @@ public class PlayerController : MonoBehaviour {
 	private PatientTreatment patientTreatment;
 	private DroppedItem droppedItem;
 	private GameObject[] slotManager;
-	private SlotManager slotManager0;
-	private SlotManager slotManager1;
-	private SlotManager slotManager2;
 
 	void Start()
 	{
@@ -78,32 +75,32 @@ public class PlayerController : MonoBehaviour {
 				rayHitobject = hit.collider.gameObject.name;
 				Debug.Log(rayHitobject);
 
-				sluiceItems.ItemPickup(hit.collider.gameObject.name);
-				pcTerminal.OpenComputerScreen(hit.collider.gameObject.name);
-				laboratory.CheckForSamples(true, true, -1);
+				sluiceItems.ItemPickup(rayHitobject);
+				pcTerminal.OpenComputerScreen(rayHitobject);
+				laboratory.CheckForSamples(rayHitobject, true, -1);
 
-				if(hit.collider.gameObject.name.Contains("Pharmacy"))
+				if(rayHitobject.Contains("Pharmacy"))
 				{
-					pharmacy = GameObject.Find(hit.collider.gameObject.name).GetComponent<Pharmacy>();
-					pharmacy.OpenPharmacyScreen(hit.collider.gameObject.name);
+					pharmacy = GameObject.Find(rayHitobject).GetComponent<Pharmacy>();
+					pharmacy.OpenPharmacyScreen(rayHitobject);
 				}
 
-				if(hit.collider.gameObject.name.Contains("Patient"))
+				if(rayHitobject.Contains("Patient"))
 				{
-					patientZone = GameObject.Find(hit.collider.gameObject.name).GetComponent<PatientZone>();
-					patientZone.OpenMedicalRecord(itemOnCursor, hit.collider.gameObject.name);
+					patientZone = GameObject.Find(rayHitobject).GetComponent<PatientZone>();
+					patientZone.OpenMedicalRecord(itemOnCursor, rayHitobject);
 
-					patientInvestigations = GameObject.Find(hit.collider.gameObject.name).GetComponent<PatientInvestigations>();
+					patientInvestigations = GameObject.Find(rayHitobject).GetComponent<PatientInvestigations>();
 					patientInvestigations.ObtainBloodSample(true, true, -1);
 
-					patientTreatment = GameObject.Find(hit.collider.gameObject.name).GetComponent<PatientTreatment>();
+					patientTreatment = GameObject.Find(rayHitobject).GetComponent<PatientTreatment>();
 					patientTreatment.AdministerTreatment(true, true, -1);
 				}
 
 				if(GameObject.Find(hit.collider.gameObject.name).GetComponent<DroppedItem>())
 				{
-					droppedItem = GameObject.Find(hit.collider.gameObject.name).GetComponent<DroppedItem>();
-					droppedItem.PickUpItem(hit.collider.gameObject.name, true, -1);
+					droppedItem = GameObject.Find(rayHitobject).GetComponent<DroppedItem>();
+					droppedItem.PickUpItem(rayHitobject, true, -1);
 				}
 
 				return;
@@ -133,7 +130,7 @@ public class PlayerController : MonoBehaviour {
 
 		if(other.gameObject.name == "Lab" && HotkeyPress() >= 0)
 		{
-			laboratory.CheckForSamples(true, false, HotkeyPress());
+			laboratory.CheckForSamples("Lab", false, HotkeyPress());
 		}
 
 		if(other.gameObject.name.Contains("spill"))
