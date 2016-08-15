@@ -17,7 +17,8 @@ public class ItemDatabase : MonoBehaviour {
 		items.Add (new Item (4, "Defibrillator", "Utility", "Delivers high voltage. Shocking.", -1, empty));
 		items.Add (new Item (5, "Scissors", "Utility", "Pair of blades. Do not run with.", -1, empty));
 		items.Add (new Item (6, "Syringe", "Utility", "Fluid not included.", -1, empty));
-		
+
+		// reserve IDs 30 onwards for custom drugs
 		items.Add (new Item (7, "RedPotion", "Drug", "Amoxcitol", -1, empty));
 		items.Add (new Item (8, "RedPotion", "Drug", "Placebolin", -1, empty));
 		items.Add (new Item (9, "RedPotion", "Drug", "Derpcillium", -1, empty));

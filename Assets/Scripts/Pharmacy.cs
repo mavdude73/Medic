@@ -3,33 +3,106 @@ using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
+[System.Serializable]
 public class Pharmacy : MonoBehaviour
 {
 	
 	UIManager uim;
-	Inventory inv;
 	Transform floorItemTransform;
+	GameObject[] medicineButton;
 
 
 	public bool PharmacyProcessingBool = false;
-	public Queue<int> pharmacyQueue = new Queue<int>();
+	Queue<string> pharmacyQueue = new Queue<string>();
 
 	float timer;
+	Item medicine;
 	float elapsedTime = 0f;
 	public string sponsor;
 	
+	List<Item> pharmacyDrugItems = new List<Item>();
 
-
-	void Awake()
+	void Start()
 	{
 		uim = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager> ();
-		inv = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
 		floorItemTransform = GameObject.Find ("Flooritems").transform;
+
+		int difficulty = 1;
+		PharmacySetup(difficulty);
 	}
+
+	void PharmacySetup(int difficulty)
+	{
+		List<string> startingMedicineList = new List<string>();
+
+		if(difficulty >= 0)
+		{
+			startingMedicineList.Add("Amoxcitol");
+			startingMedicineList.Add("Placebolin");
+			startingMedicineList.Add("Synapticol");
+			startingMedicineList.Add("Tixabrufen");
+		}
+
+		if(difficulty > 0)
+		{
+			startingMedicineList.Add("Derpcillium");
+			startingMedicineList.Add("Hypnotol");
+			startingMedicineList.Add("Adamaxine");
+			startingMedicineList.Add("Hydromax");
+			startingMedicineList.Add("Pseudodrine");
+		}
+
+		for(int b = 0; b < startingMedicineList.Count; b++)
+		{
+			GameObject button = (GameObject)Instantiate(Resources.Load("MedicineButton"));
+			button.name = "Button"+b;
+			button.transform.SetParent(GameObject.Find("ButtonList").transform, false);
+		}
+
+		medicineButton = GameObject.FindGameObjectsWithTag("MedicineButton");
+
+
+		Color32 redPotionColor = new Color32(255, 92, 92, 255);
+		Color32 bluePotionColor = new Color32(0, 212, 251, 255);
+		Color32 purplePotionColor = new Color32(255, 114, 234, 255);
+
+		List<PharmacySponsors> drugSponsorList = new List<PharmacySponsors>();
+		drugSponsorList.Add(new PharmacySponsors(0, "Red Company", "RedPotion", redPotionColor));
+		drugSponsorList.Add(new PharmacySponsors(1, "Blue Company", "BluePotion", bluePotionColor));
+		drugSponsorList.Add(new PharmacySponsors(2, "Purple Company", "PurplePotion", purplePotionColor));
+
+		int k = 30;
+
+		foreach(GameObject mB in medicineButton)
+		{
+			if(!mB.GetComponent<Image>().IsActive())
+			{
+				mB.GetComponent<Image>().enabled = true;
+				int rng1 = Random.Range (0,startingMedicineList.Count);
+				string drugSelected = startingMedicineList [rng1];						// random drug name
+				startingMedicineList.RemoveAt(rng1);
+
+				int rng2 = Random.Range (0,drugSponsorList.Count);
+				PharmacySponsors sponsorSelected = drugSponsorList [rng2];				// random drug sponsor (Astra Zenica), in this case "RedPotion" etc.
+//				drugSponsorList.RemoveAt(rng2);
+
+				pharmacyDrugItems.Add (new Item (k, sponsorSelected.sponsorIconName, "Drug", drugSelected, -1, null));
+				k++;
+				mB.GetComponent<Image>().color = sponsorSelected.sponsorColor32;
+
+
+				mB.GetComponentInChildren<Text>().text = drugSelected;
+				mB.GetComponent<Button>().onClick.AddListener(delegate{Medicine(drugSelected, sponsorSelected.sponsorName);} );
+			}
+		}
+
+	}
+
+
 	
 	public void OpenPharmacyScreen(string name)
 	{
-		if (name == "Pharmacy" && !uim.pharmacyMenu.activeSelf)
+		if (name == this.gameObject.name && !uim.pharmacyMenu.activeSelf)
 		{
 			uim.pharmacyMenu.SetActive(true);
 		} 
@@ -43,9 +116,9 @@ public class Pharmacy : MonoBehaviour
 		}
 	}
 	
-	public void Medicine(int i)
+	public void Medicine(string drugName, string sponsor)
 	{
-		pharmacyQueue.Enqueue (i);
+		pharmacyQueue.Enqueue (drugName);
 		StartCoroutine (ProcessPharmacyRequest());
 	}
 
@@ -63,26 +136,32 @@ public class Pharmacy : MonoBehaviour
 	}
 
 
-	void CheckForPharmacyUpgrade(int i)
-	{
-		if (inv.PharmacyRequest (i).itemName == sponsor)
-		{
-			timer = 1f;
-		}
-		else
-		{
-			timer = 3f;
-		}
-	}
-
 	IEnumerator ProcessPharmacyRequest()
 	{
 		if (pharmacyQueue.Count > 0 && !PharmacyProcessingBool)
 		{
 			elapsedTime = 0f;
-			int i = pharmacyQueue.Peek ();
+			string drugName = pharmacyQueue.Peek ();
+
+			for(int d = 0; d < pharmacyDrugItems.Count; d++)
+			{
+				if(pharmacyDrugItems[d].itemDesc == drugName)
+				{
+					sponsor = pharmacyDrugItems[d].itemName;
+					medicine = pharmacyDrugItems[d];
+				}
+			}
+
 			PharmacyProcessingBool = true;
-			CheckForPharmacyUpgrade(i);
+
+			if (sponsor == "Company x")
+			{
+				timer = 1f;
+			}
+			else
+			{
+				timer = 3f;
+			}
 
 			StartCoroutine(ProgressBar(timer));
 
@@ -94,7 +173,6 @@ public class Pharmacy : MonoBehaviour
 			Vector3 posi = new Vector3 (transform.position.x + rngVectModifierX, transform.position.y + rngVectModifierY);
 			
 			GameObject itemAsGameObject = (GameObject)Instantiate (Resources.Load<GameObject> ("DroppedItem"), posi, Quaternion.identity);
-			Item medicine = inv.PharmacyRequest (i);
 			itemAsGameObject.GetComponent<DroppedItem> ().item = medicine;
 			
 			

@@ -152,11 +152,11 @@ public class Inventory : MonoBehaviour {
 		
 	}
 
-	public Item PharmacyRequest(int itemid)
+	public Item PharmacyRequest(string drugName)
 	{
 		for (int i = 0; i < db.items.Count; i++)
 		{
-			if(db.items[i].itemID == itemid)
+			if(db.items[i].itemDesc == drugName)
 			{
 				Item item = db.items[i];
 				return item;
