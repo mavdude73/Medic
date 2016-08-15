@@ -13,9 +13,9 @@ public class PCTerminal : MonoBehaviour {
 		uim = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager> ();
 	}
 	
-	public void OpenComputerScreen(string name)
+	public void OpenComputerScreen(GameObject obj)
 	{
-		if (name == "PCTerminal" && !uim.computerScreen.activeSelf && !uim.medicalPages[0].activeSelf)
+		if (gameObject == obj && !uim.computerScreen.activeSelf && !uim.medicalPages[0].activeSelf)
 		{
 			uim.computerScreen.SetActive(true);
 		}

@@ -98,10 +98,10 @@ public class Pharmacy : MonoBehaviour
 	}
 
 
-	
-	public void OpenPharmacyScreen(string name)
+
+	public void OpenPharmacyScreen(GameObject obj)
 	{
-		if (this.gameObject.name == name && !pharmacyMenu.activeSelf)
+		if (gameObject == obj && !pharmacyMenu.activeSelf)
 		{
 			pharmacyMenu.SetActive(true);
 		} 

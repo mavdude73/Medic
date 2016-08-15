@@ -13,10 +13,10 @@ public class PatientTreatment : MonoBehaviour {
 		pd = this.gameObject.GetComponent<PatientData> ();
 		inv = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
 	}
-	
-	public void AdministerTreatment(bool inZone, bool isMouse, int hotkey)
+
+	public void AdministerTreatment(GameObject obj, bool isMouse, int hotkey)
 	{
-		if(inZone)
+		if(gameObject == obj)
 		{
 			if(!inv.mouseOverHotbar && !pd.treatmentInProgress && !pd.patientDead)
 			{

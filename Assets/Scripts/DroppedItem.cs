@@ -15,10 +15,10 @@ public class DroppedItem : MonoBehaviour
 	}
 
 
-	public void PickUpItem(string name, bool isMouse, int hotkey)
+	public void PickUpItem(GameObject obj, bool isMouse, int hotkey)
 	{
 
-		if (name == this.gameObject.name)
+		if (gameObject == obj)
 		{
 			if(!item.itemName.Contains("spill"))
 			{

@@ -21,28 +21,32 @@ public class PatientZone : MonoBehaviour {
 	
 		
 	
-	public void OpenMedicalRecord(bool itemOnCursor, string name)
+	public void OpenMedicalRecord(GameObject obj, bool itemOnCursor)
 	{
-		if(!itemOnCursor && name == "Patient"+pd.visitorNumber)
+		if(gameObject == obj)
 		{
-			uim.medicalPages[0].SetActive(true);
-	
-			uim.stickyLabels[0].GetComponent<Text>().text = pd.patientLabel;
-			uim.stickyLabels[1].GetComponent<Text>().text = pd.patientLabel;
-			uim.stickyLabels[2].GetComponent<Text>().text = pd.patientLabel;
-			uim.stickyLabels[3].GetComponent<Text>().text = pd.patientLabel;
-			uim.seniorReviewText.GetComponent<Text>().text = pd.seniorReview;
-			uim.treatmentHistoryLabel.GetComponent<Text>().text = pd.treatmentLog;
-			if(pd.patientDead)
+			if(!itemOnCursor)
 			{
-				uim.deceasedStamp.SetActive(true);
-			}
-			else if (!pd.patientDead)
-			{
-				uim.deceasedStamp.SetActive(false);
+				uim.medicalPages[0].SetActive(true);
+		
+				uim.stickyLabels[0].GetComponent<Text>().text = pd.patientLabel;
+				uim.stickyLabels[1].GetComponent<Text>().text = pd.patientLabel;
+				uim.stickyLabels[2].GetComponent<Text>().text = pd.patientLabel;
+				uim.stickyLabels[3].GetComponent<Text>().text = pd.patientLabel;
+				uim.seniorReviewText.GetComponent<Text>().text = pd.seniorReview;
+				uim.treatmentHistoryLabel.GetComponent<Text>().text = pd.treatmentLog;
+
+				if(pd.patientDead)
+				{
+					uim.deceasedStamp.SetActive(true);
+				}
+				else if (!pd.patientDead)
+				{
+					uim.deceasedStamp.SetActive(false);
+				}
+
 			}
 		}
-	
 	}
 
 	void CloseMedicalRecord()

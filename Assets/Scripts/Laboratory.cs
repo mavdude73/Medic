@@ -19,12 +19,13 @@ public class Laboratory : MonoBehaviour {
 		uim = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager> ();
 		inv = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
 		StartCoroutine(AnalyseBlood(0f));
+		Debug.Log(gameObject);
 	}
 
 
-	public void CheckForSamples (string name, bool isMouse, int hotkey)
+	public void CheckForSamples (GameObject obj, bool isMouse, int hotkey)
 	{
-		if(name == "Lab")
+		if(gameObject == obj)
 		{
 			if(!isMouse && inv.Items[hotkey].itemName == "Blood")
 			{
