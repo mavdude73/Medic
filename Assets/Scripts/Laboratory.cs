@@ -19,7 +19,6 @@ public class Laboratory : MonoBehaviour {
 		uim = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager> ();
 		inv = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
 		StartCoroutine(AnalyseBlood(0f));
-		Debug.Log(gameObject);
 	}
 
 

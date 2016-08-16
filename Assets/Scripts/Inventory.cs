@@ -53,7 +53,7 @@ public class Inventory : MonoBehaviour {
 			player = GameObject.Find ("Player1");
 			pc = GameObject.Find ("Player1").GetComponent<PlayerController>();
 			floorItemTransform = GameObject.Find ("Flooritems").transform;
-			db = GameObject.FindGameObjectWithTag ("ItemDatabase").GetComponent<ItemDatabase>();
+			db = gameObject.GetComponent<ItemDatabase>();
 			
 			CreateHotbar ();
 //			addItem (0);
