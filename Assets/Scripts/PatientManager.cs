@@ -27,12 +27,11 @@ public class PatientManager : MonoBehaviour {
 			patientQueue.Enqueue(patientObject);
 			patientObject.transform.SetParent(this.gameObject.transform, false);
 			patientObject.name = "Patient" + k;
-			patientObject.GetComponentInChildren<SpriteRenderer>().gameObject.name = "ThePatient" + k;
 			
 			PatientData pd = patientObject.GetComponent<PatientData>();
 			pd.visitorNumber = k;
 //			Debug.Log(patientObject.name);
-			patientObject.GetComponent<Transform>().localPosition = spawnLocation.transform.localPosition; // Vector3(0,0,0)
+			patientObject.GetComponent<Transform>().localPosition = spawnLocation.transform.localPosition; // e.g. Reception is where they first spawn
 //			yield return new WaitForSeconds(1f);
 			scriptStop = false;
 			k++;

@@ -15,7 +15,7 @@ public class Pharmacy : MonoBehaviour
 
 	Queue<string> pharmacyQueue = new Queue<string>();
 
-	int difficulty = 0;
+	int difficulty = 1;
 	float timer;
 	Item medicine;
 	float elapsedTime = 0f;

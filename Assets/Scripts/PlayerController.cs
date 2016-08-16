@@ -5,7 +5,7 @@ public class PlayerController : MonoBehaviour {
 
 	public bool itemOnCursor;
 
-	float speed = 4;
+	float speed = 6;
 	float fixationSpeed = 30;
 
 	GameObject hitGameobject;

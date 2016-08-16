@@ -61,9 +61,11 @@ public class BedManager : MonoBehaviour {
 			if (pm.patientQueue.Count > 0 && bedSlot[i] == null)
 			{
 			bedSlot[i] = (pm.patientQueue.Peek());
-			bedSlot[i].transform.localPosition = bedLocationVector[i];
+			bedLocationVector[i] = new Vector3(bedLocationVector[i].x, bedLocationVector[i].y, 0);
+			bedSlot[i].GetComponent<Transform>().localPosition = bedLocationVector[i];
 			PatientData pd = bedSlot[i].GetComponent<PatientData>();
 			pd.allocatedBedVector3 = bedLocationVector[i];
+
 			pd.assignedBedNumber = i;
 			pm.patientQueue.Dequeue();
 			
