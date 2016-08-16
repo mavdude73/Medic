@@ -5,11 +5,12 @@ using System.Collections.Generic;
 public class BedManager : MonoBehaviour {
 
 	public PatientManager pm;
-	public int bedCount;
+	int numberOfBeds;
 	public int allocationSpeed;
 	public GameObject bedPrefab;
-	public GameObject[] bedSlots;
-	public Vector3[] bedSlotsPos;
+	public GameObject[] bedSlot;
+	public Vector3[] bedLocationVector;
+	public GameObject[] beds;
 //	public List<GameObject> bedSlots = new List<GameObject> ();
 //	public List<BedAllocation> Bed = new List<BedAllocation> ();
 //	public Queue<GameObject> bedSlots = new Queue<GameObject>();
@@ -17,34 +18,52 @@ public class BedManager : MonoBehaviour {
 	
 	void CreateBedAreas()
 	{
-		bedSlots = new GameObject[bedCount];
-		bedSlotsPos = new Vector3[bedCount];
-		int x = (-bedCount + 1) * 5;
-		for(int k = 0; k < bedCount; k++)
+		beds = GameObject.FindGameObjectsWithTag("Bed");
+		numberOfBeds = beds.Length;
+
+		int b = 0;
+
+		bedSlot = new GameObject[numberOfBeds];
+		bedLocationVector = new Vector3[numberOfBeds];
+
+		foreach(GameObject bed in beds)
 		{
-			GameObject bed = (GameObject)Instantiate(bedPrefab);
-			
-//			Bed.Add(new BedAllocation());
 			bed.transform.SetParent(this.gameObject.transform, false);
-			bed.name = "Bed" + k;
-			bed.GetComponent<Transform>().localPosition = new Vector3(x,3,0);
-			bedSlotsPos[k] = new Vector3(x,3,0);
-//			bedSlots[k].transform.localPosition = new Vector3(x,3,0);
-			x = x + 10;
+			bed.name = "Bed" + b;
+			bedLocationVector[b] = bed.GetComponent<Transform>().localPosition;
+
+			b++;
 		}
+
+//		bedSlots = new GameObject[bedCount];
+//		bedSlotsPos = new Vector3[bedCount];
+//		int x = (-bedCount + 1) * 5;
+//		for(int k = 0; k < bedCount; k++)
+//		{
+//			GameObject bed = (GameObject)Instantiate(bedPrefab);
+//			
+//
+//			bed.transform.SetParent(this.gameObject.transform, false);
+//			bed.name = "Bed" + k;
+//			bed.GetComponent<Transform>().localPosition = new Vector3(x,3,0);
+//			bedSlotsPos[k] = new Vector3(x,3,0);
+//
+//			x = x + 10;
+//		}
+
 	}
 
 
 	void AllocatePatientToBed()
 	{
-		for(int i = 0; i < bedCount; i++)
+		for(int i = 0; i < numberOfBeds; i++)
 		{
-			if (pm.patientQueue.Count > 0 && bedSlots[i] == null)
+			if (pm.patientQueue.Count > 0 && bedSlot[i] == null)
 			{
-			bedSlots[i] = (pm.patientQueue.Peek());
-			bedSlots[i].transform.localPosition = bedSlotsPos[i];
-			PatientData pd = bedSlots[i].GetComponent<PatientData>();
-			pd.allocatedBedVector3 = bedSlotsPos[i];
+			bedSlot[i] = (pm.patientQueue.Peek());
+			bedSlot[i].transform.localPosition = bedLocationVector[i];
+			PatientData pd = bedSlot[i].GetComponent<PatientData>();
+			pd.allocatedBedVector3 = bedLocationVector[i];
 			pd.assignedBedNumber = i;
 			pm.patientQueue.Dequeue();
 			
@@ -57,7 +76,7 @@ public class BedManager : MonoBehaviour {
 	
 	void DeallocatePatientFromBed(int bedNumber)
 	{
-			bedSlots[bedNumber] = null;
+			bedSlot[bedNumber] = null;
 	}
 	
 	

@@ -3,21 +3,16 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
 
-	public float speed;
-	public float fixationSpeed;
-	public GameObject hitGameobject;
-	GameObject sprite;
-	public Vector3 playerVector3;
 	public bool itemOnCursor;
+
+	float speed = 4;
+	float fixationSpeed = 30;
+
+	GameObject hitGameobject;
+	GameObject sprite;
+
 	private SluiceItems sluiceItems;
-	private Pharmacy pharmacy;
-	private PCTerminal pcTerminal;
-	private Laboratory laboratory;
 	private Inventory inv;
-	private PatientZone patientZone;
-	private PatientInvestigations patientInvestigations;
-	private PatientTreatment patientTreatment;
-	private DroppedItem droppedItem;
 	private GameObject[] slotManager;
 
 	void Start()
@@ -113,7 +108,6 @@ public class PlayerController : MonoBehaviour {
 		{
 			if(other.gameObject.GetComponent<PatientZone>())
 			{
-				Debug.Log("ping");
 				other.gameObject.GetComponent<PatientInvestigations>().ObtainBloodSample(other.gameObject, false, HotkeyPress());
 				other.gameObject.GetComponent<PatientTreatment>().AdministerTreatment(other.gameObject, false, HotkeyPress());
 			}

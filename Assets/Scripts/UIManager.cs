@@ -20,9 +20,6 @@ public class UIManager : MonoBehaviour {
 	public GameObject bleepAlert;
 	public GameObject deceasedStamp;
 
-	public GameObject pharmacyProgressBar;
-	public GameObject pharmacyProgressText;
-	
 	GameObject medicalRecord;
 	GameObject biographicsPages;
 	GameObject diagnosticsPages;

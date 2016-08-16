@@ -6,15 +6,14 @@ public class PatientInvestigations : MonoBehaviour {
 
 	PatientData pd;
 	Inventory inv;
-	Transform bloodTransform;
-	public GameObject bloodsamplePrefab;
+	GameObject samplePrefab;
 	
 		
 	void Awake ()
 	{
 		pd = this.gameObject.GetComponent<PatientData> ();
 		inv = GameObject.FindGameObjectWithTag ("Inventory").GetComponent<Inventory> ();
-		bloodTransform = GameObject.FindGameObjectWithTag ("Blood").transform;
+		samplePrefab = Resources.Load<GameObject>("SamplePrefab");
 	}
 	
 	public void ObtainBloodSample(GameObject obj, bool isMouse, int hotkey) // code 6 = empty blood syringe
@@ -23,29 +22,29 @@ public class PatientInvestigations : MonoBehaviour {
 		{
 			if(!inv.mouseOverHotbar && !pd.patientDead)
 			{
-				if (!isMouse && inv.Items[hotkey].itemID == 6)
+				if (!isMouse && inv.Items[hotkey].itemName == "Syringe")
 				{
-					inv.Items[hotkey] = new Item (); 								// sets the empty syringe slot to empty	
-					inv.Items[hotkey] = GenerateSampleFunction(); 					// sets the empty slot into a blood filled syringe				
+					inv.Items[hotkey] = new Item (); 											// sets the empty syringe slot to empty	
+					inv.Items[hotkey] = GenerateSampleFunction("Blood"); 								// sets the empty slot into a blood filled syringe				
 				}
-				else if (isMouse && inv.draggedItem.itemID == 6)
+				else if (isMouse && inv.draggedItem.itemName == "Syringe")
 				{
 					inv.draggedItem = new Item (); 												// sets the empty syringe slot to empty	
-					inv.draggedItem = GenerateSampleFunction(); 								// sets the empty slot into a blood filled syringe
+					inv.draggedItem = GenerateSampleFunction("Blood"); 								// sets the empty slot into a blood filled syringe
 					inv.draggedItemGameobject.GetComponent<Image>().sprite = inv.draggedItem.itemIcon;
 				}
 			}
 		}
 	}
 
-	Item GenerateSampleFunction()
+	Item GenerateSampleFunction(string sampleName)
 	{
-		GameObject bloodGameobject = (GameObject)Instantiate(bloodsamplePrefab);
-		bloodGameobject.transform.SetParent(bloodTransform, false); //this.gameObject.transform
-		bloodGameobject.name = "BloodSample" + pd.visitorNumber;
-		Item item = new Item(-1, "Blood", "Sample", "Some thick red stuff.", pd.visitorNumber, bloodGameobject);
+		GameObject sampleGameobject = (GameObject)Instantiate(samplePrefab);
+		sampleGameobject.transform.SetParent(GameObject.Find (sampleName).transform, false);					//this.gameObject.transform
+		sampleGameobject.name = sampleName+"sample" + pd.visitorNumber;
+		Item item = new Item(-1, sampleName, "Sample", "Some bodily sample that needs analysing", pd.visitorNumber, sampleGameobject);
 		
-		BloodSample bs = bloodGameobject.GetComponent<BloodSample>();
+		BloodSample bs = sampleGameobject.GetComponent<BloodSample>();
 		bs.visitorID = pd.visitorNumber;
 		bs.visitorName = pd.patientName;
 		bs.hospitalID = pd.patientHospitalNumber;
