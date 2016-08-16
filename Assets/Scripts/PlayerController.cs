@@ -6,8 +6,7 @@ public class PlayerController : MonoBehaviour {
 	public float speed;
 	public float fixationSpeed;
 	public GameObject hitGameobject;
-	public GameObject sprite;
-	public GameObject player1;
+	GameObject sprite;
 	public Vector3 playerVector3;
 	public bool itemOnCursor;
 	private SluiceItems sluiceItems;
@@ -26,6 +25,7 @@ public class PlayerController : MonoBehaviour {
 		sluiceItems = new SluiceItems();
 		inv =  GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory> ();
 		slotManager = GameObject.FindGameObjectsWithTag("Slot");
+		sprite = transform.GetChild(0).gameObject;
 	}
 
 	void FixedUpdate()
@@ -37,7 +37,6 @@ public class PlayerController : MonoBehaviour {
 	{
 		PlayerMovement();
 		MouseDirection();
-		playerVector3 = transform.position;
 		Raycasting();
 		LMBInteractions();	
 		RMBInteractions();	
@@ -52,11 +51,11 @@ public class PlayerController : MonoBehaviour {
 		{
 			Vector3 mousePosition = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 			mousePosition = new Vector3(mousePosition.x, mousePosition.y, 0);
-			Vector3 deltaPosition = (mousePosition - playerVector3);
+			Vector3 deltaPosition = (mousePosition - transform.position);
 
-			RaycastHit2D hit = Physics2D.Raycast (playerVector3, deltaPosition, 1f);
+			RaycastHit2D hit = Physics2D.Raycast (transform.position, deltaPosition, 1f);
 			
-			Debug.DrawLine(playerVector3, hit.point);
+			Debug.DrawLine(transform.position, hit.point);
 
 			if(hit == false)
 			{
