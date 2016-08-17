@@ -9,7 +9,7 @@ public class BedManager : MonoBehaviour {
 	public int allocationSpeed;
 	public GameObject bedPrefab;
 	public GameObject[] bedSlot;
-	public Vector3[] bedLocationVector;
+	public Transform[] bedLocationTransform;
 	public GameObject[] beds;
 //	public List<GameObject> bedSlots = new List<GameObject> ();
 //	public List<BedAllocation> Bed = new List<BedAllocation> ();
@@ -24,13 +24,13 @@ public class BedManager : MonoBehaviour {
 		int b = 0;
 
 		bedSlot = new GameObject[numberOfBeds];
-		bedLocationVector = new Vector3[numberOfBeds];
+		bedLocationTransform = new Transform[numberOfBeds];
 
 		foreach(GameObject bed in beds)
 		{
 			bed.transform.SetParent(this.gameObject.transform, false);
 			bed.name = "Bed" + b;
-			bedLocationVector[b] = bed.GetComponent<Transform>().localPosition;
+			bedLocationTransform[b] = bed.GetComponent<Transform>();
 
 			b++;
 		}
@@ -61,10 +61,12 @@ public class BedManager : MonoBehaviour {
 			if (pm.patientQueue.Count > 0 && bedSlot[i] == null)
 			{
 			bedSlot[i] = (pm.patientQueue.Peek());
-			bedLocationVector[i] = new Vector3(bedLocationVector[i].x, bedLocationVector[i].y, 0);
-			bedSlot[i].GetComponent<Transform>().localPosition = bedLocationVector[i];
+//			bedLocationTransform[i].localPosition = new Vector3(bedLocationTransform[i].localPosition.x, bedLocationTransform[i].localPosition.y, 0);
+			bedSlot[i].GetComponent<Transform>().localPosition = bedLocationTransform[i].localPosition;
 			PatientData pd = bedSlot[i].GetComponent<PatientData>();
-			pd.allocatedBedVector3 = bedLocationVector[i];
+			pd.destinationTransform = bedLocationTransform[i];
+//			Vector3 changeZ = new Vector3(bedLocationTransform[i].localPosition.x, bedLocationTransform[i].localPosition.y, 0);
+//			pd.destinationTransform.localPosition = changeZ;
 
 			pd.assignedBedNumber = i;
 			pm.patientQueue.Dequeue();

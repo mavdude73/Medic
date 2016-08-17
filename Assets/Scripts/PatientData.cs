@@ -42,7 +42,7 @@ public class PatientData : MonoBehaviour {
 	
 	public bool playerInZone = false;
 	public bool patientInBedZone;
-	public Vector3 allocatedBedVector3;
+	public Transform destinationTransform;
 	
 	public void PlayerInZoneBool (bool inZone)
 	{
